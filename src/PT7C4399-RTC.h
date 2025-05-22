@@ -12,6 +12,8 @@
  * @version     0.1.0
  * @copyright   MIT License
  * 
+ * @todo Implement alarm functionality.
+ * 
 **/
 
 #ifndef PT7C4339_H
