@@ -1,12 +1,39 @@
 /**
  * @file PT7C4339-RTC.cpp
- * @brief Implementation file file for the PT7C4339-RTC library.
+ * @mainpage PT7C4339-RTC Library
+ * @section intro Introduction
  *
  * This library provides methods for communicating with the PT7C4339 RTC IC over I2C.
  * It enables users to read and set the current time and date, manage the square wave output,
  * control the trickle charger, and use the control mechanisms of the device.
  * More info on the GitHub page: https://github.com/depben/PT7C4339-RTC.git
  *
+ * ## How to use
+ *
+ * - **Initialization and Communication**
+ *   - `begin()`: Initializes the I2C bus, ensures the device is in 24-hour mode, and checks for stop flag.
+ *
+ * - **Time and Date Handling**
+ *   - `getTime()`, `setTime()`: Retrieve or set the current time (hours, minutes, seconds).
+ *   - `getDate()`, `setDate()`: Retrieve or set the current date (year, month, day, weekday).
+ *   - Individual getters/setters for each time/date component: `getHour()`, `setHour()`, etc.
+ *   - Automatic weekday calculation on every call of a date setter.
+ *
+ * - **Alarm and Output Control**
+ *   - Output mode selection: `getIntOrSqwFlag()`, `setIntOrSqwFlag()`.
+ *   - Square wave output configuration: `getSqwFrequency()`, `setSqwFrequency()`.
+ *   
+ * - **Oscillator and Power Management**
+ *   - Enable/disable oscillator: `isOscillatorEnabled()`, `enableOscillator()`.
+ *   - RTC stop flag handling: `getRtcStopFlag()`, `clearRtcStopFlag()`.
+ *   - Battery-backed interrupt setting: `isIntFromBatteryEnabled()`, `enableIntFromBattery()`.
+ *
+ * - **Trickle Charger Configuration**
+ *   - Query and configure the trickle charger: `getTrickleChargerEnabled()`, `getTrickleChargerDiode()`, `getTrickleChargerResistor()`, `setTrickleChargerConfig()`.
+ *
+ * - **Device Reset**
+ *   - `reset()`: Restores all registers to their default power-on values.
+ * 
  * @note This library uses 24-hour format for time representation and works from 1900/1/1 to 2099/12/31.
  * 
  * @author      Bence Murin
