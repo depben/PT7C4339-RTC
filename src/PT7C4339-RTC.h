@@ -5,6 +5,7 @@
  * This library provides methods for communicating with the PT7C4339 RTC IC over I2C in the Arduino framework.
  * It enables users to read and set the current time and date, manage the square wave output,
  * control the trickle charger, and use the control mechanisms of the device.
+ * More info on the GitHub page: https://github.com/depben/PT7C4339-RTC
  * 
  * @note This library uses 24-hour format for time representation and works from 1900/1/1 to 2099/12/31.
  *
@@ -17,8 +18,8 @@
  * 
 **/
 
-#ifndef PT7C4339_RTC_H
-#define PT7C4339_RTC_H
+#ifndef _PT7C4339_RTC_H_
+#define _PT7C4339_RTC_H_
 
 #include <Wire.h>
 
@@ -152,17 +153,17 @@ class PT7C4339
     bool isOscillatorEnabled();
     bool enableOscillator( bool enable );
 
-    bool isIntFromBatteryEnabled();
-    bool enableIntFromBattery( bool enable );
-
-    PT7C4339_sqwFrequency getSqwFrequency();
-    bool setSqwFrequency( PT7C4339_sqwFrequency frequency );
-
     bool getRtcStopFlag();
     bool clearRtcStopFlag();
 
+    bool isIntFromBatteryEnabled();
+    bool enableIntFromBattery( bool enable );
+
     bool getIntOrSqwFlag();
     bool setIntOrSqwFlag( bool setting );
+
+    PT7C4339_sqwFrequency getSqwFrequency();
+    bool setSqwFrequency( PT7C4339_sqwFrequency frequency );
 
     PT7C4339_trickleChargerEnabled getTrickleChargerEnabled();
     PT7C4339_trickleChargerDiode getTrickleChargerDiode();

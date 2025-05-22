@@ -1,6 +1,5 @@
 .pio
 .vscode
 platformio.ini
-.gitignore.main
-test
 src/main.cpp
+test

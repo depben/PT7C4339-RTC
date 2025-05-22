@@ -2,7 +2,6 @@
 #include <unity.h>
 #include "PT7C4339-RTC.h"
 
-
 PT7C4339 rtc( &Wire, 47, 48 );
 
 void test_dates_valid()

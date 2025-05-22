@@ -2,15 +2,14 @@
 #include <unity.h>
 #include "PT7C4339-RTC.h"
 
-
 PT7C4339 rtc( &Wire, 47, 48 );
 
 void test_times_all()
 {
 
-    uint32_t success = 0;
-    uint32_t fail = 0;
-    uint32_t totalTimes = 24 * 60 * 60;
+    int32_t success = 0;
+    int32_t fail = 0;
+    int32_t totalTimes = 24 * 60 * 60;
 
     for( uint8_t hour = 0; hour < 24; hour++ )
     {
@@ -35,8 +34,8 @@ void test_times_all()
 
     }
 
-    TEST_ASSERT_EQUAL_UINT32_MESSAGE( 0, fail, "Some time tests failed" );
-    TEST_ASSERT_EQUAL_UINT32( totalTimes, success + fail );
+    TEST_ASSERT_EQUAL_INT32_MESSAGE( 0, fail, "Some time tests failed" );
+    TEST_ASSERT_EQUAL_INT32( totalTimes, success + fail );
 
 }
 
