@@ -1,15 +1,14 @@
 /**
  * @file PT7C4339-RTC.cpp
- * @brief Implementation file for the PT7C4339 RTC (Real-Time Clock) driver library.
+ * @brief Implementation file file for the PT7C4339-RTC library.
  *
- * This library provides an interface for communicating with the PT7C4339
- * real-time clock chip over I2C. It enables users to read and set the current time and date,
- * manage the square wave output, control the trickle charger, and handle
- * various device-specific features such as oscillator and interrupt settings.
+ * This library provides methods for communicating with the PT7C4339 RTC IC over I2C.
+ * It enables users to read and set the current time and date, manage the square wave output,
+ * control the trickle charger, and use the control mechanisms of the device.
  *
  * ## Main Features and Functions
  * - **Initialization and Communication**
- *   - `begin()`: Initializes the RTC and I2C bus, ensures the device is in 24-hour mode, and checks for power loss.
+ *   - `begin()`: Initializes the I2C bus, ensures the device is in 24-hour mode, and checks for power loss.
  *
  * - **Time and Date Handling**
  *   - `getTime()`, `setTime()`: Retrieve or set the current time (hours, minutes, seconds).
@@ -25,7 +24,7 @@
  * - **Oscillator and Power Management**
  *   - Enable/disable oscillator: `isOscillatorEnabled()`, `enableOscillator()`.
  *   - Battery-backed interrupt: `isIntFromBatteryEnabled()`, `enableIntFromBattery()`.
- *   - RTC stopped flag handling: `getRtcStoppedFlag()`, `clearRtcStoppedFlag()`.
+ *   - RTC stop flag handling: `getRtcStopFlag()`, `clearRtcStopFlag()`.
  *
  * - **Trickle Charger Configuration**
  *   - Query and configure trickle charger: `getTrickleChargerEnabled()`, `getTrickleChargerDiode()`, `getTrickleChargerResistor()`, `setTrickleChargerConfig()`.
@@ -33,10 +32,11 @@
  * - **Device Reset**
  *   - `reset()`: Restores all RTC registers to their default power-on values.
  *
- *
+ * @note This library uses 24-hour format for time representation and works from 1900/1/1 to 2099/12/31.
+ * 
  * @author      Bence Murin
  * @date        2025-05-22
- * @version     0.1.0
+ * @version     0.1.1
  * @copyright   MIT License
  * 
  * 
@@ -44,21 +44,20 @@
  * 
 **/
 
-#include "PT7C4399-RTC.h"
-#include <Arduino.h>
+#include "PT7C4339-RTC.h"
 
 /**
  * @brief Constructs a PT7C4339 RTC object with specified I2C parameters.
  * 
- * @param i2cAddress The I2C address of the PT7C4339 device.
  * @param i2cWire Pointer to the TwoWire instance to use for I2C communication.
- * @param SDA The pin number used for the I2C SDA line.
- * @param SCL The pin number used for the I2C SCL line.
+ * @param SDA The pin number used for the I2C SDA line. Default is 0, where begin() will use the default SDA pin of your board.
+ * @param SCL The pin number used for the I2C SCL line. Default is 0, where begin() will use the default CL pin of your board.
+ * @param frequency The I2C clock frequency (default is 400000 Hz).
  */
-PT7C4339::PT7C4339( TwoWire *i2cWire, uint8_t SDA, uint8_t SCL, uint32_t frequency, uint8_t i2cAddress )
+PT7C4339::PT7C4339( TwoWire *i2cWire, uint8_t SDA, uint8_t SCL, uint32_t frequency )
 {
 
-  _i2cAddress = i2cAddress;
+  _i2cAddress = PT7C4339_I2C_ADDRESS;
   _i2cWire = i2cWire;
   _SDA = SDA;
   _SCL = SCL;
@@ -69,7 +68,7 @@ PT7C4339::PT7C4339( TwoWire *i2cWire, uint8_t SDA, uint8_t SCL, uint32_t frequen
 /**
  * @brief Initializes the PT7C4339 RTC over I2C.
  *
- * This function attempts to establish I2C communication with the PT7C4339 device.
+ * This function attempts to establish I2C communication with the PT7C4339 RTC.
  * If the initial transmission fails, it will reinitialize the I2C bus using either
  * default or custom SDA/SCL pins and the specified frequency. It also ensures the
  * RTC is set to 24-hour mode if it was previously in 12-hour mode.
@@ -77,12 +76,12 @@ PT7C4339::PT7C4339( TwoWire *i2cWire, uint8_t SDA, uint8_t SCL, uint32_t frequen
  * @return uint8_t
  *         - 0: Initialization failed (I2C communication error or failed to set 24-hour mode)
  *         - 1: Initialization successful and RTC is in 24-hour mode
- *         - 2: Initialization successful but RTC stopped flag is set - power failure or was reset
+ *         - 2: Initialization successful but RTC stop flag is set - power failure or was reset
  */
 uint8_t PT7C4339::begin()
 {
 
-  _i2cWire->beginTransmission( PT7C4339_I2C_ADDR );
+  _i2cWire->beginTransmission( _i2cAddress );
   uint8_t error = _i2cWire->endTransmission();
 
   if( error != 0 )
@@ -103,7 +102,7 @@ uint8_t PT7C4339::begin()
 
     }
 
-    _i2cWire->beginTransmission( PT7C4339_I2C_ADDR );
+    _i2cWire->beginTransmission( _i2cAddress );
     error = _i2cWire->endTransmission();
 
     if( error != 0 ) return 0;
@@ -121,7 +120,7 @@ uint8_t PT7C4339::begin()
 
   }
 
-  if( getRtcStoppedFlag() ) return 2;
+  if( getRtcStopFlag() ) return 2;
   else return 1;
 
 }
@@ -160,9 +159,9 @@ uint8_t PT7C4339::decToBcd( uint8_t dec )
 }
 
 /**
- * @brief Reads a single byte from the specified register of the PT7C4339 device via I2C.
+ * @brief Reads a single byte from the specified register of the PT7C4339 RTC via I2C.
  *
- * This function initiates an I2C transmission to the PT7C4339 device, writes the register address,
+ * This function initiates an I2C transmission to the PT7C4339 RTC, writes the register address,
  * ends the transmission, and then requests one byte of data from the specified register.
  *
  * @param REG The register address to read from.
@@ -173,11 +172,11 @@ uint8_t PT7C4339::readRegister( uint8_t REG )
 
   uint8_t registerData;
 
-  _i2cWire->beginTransmission( PT7C4339_I2C_ADDR );
+  _i2cWire->beginTransmission( _i2cAddress );
   _i2cWire->write( REG );
   _i2cWire->endTransmission();
 
-  _i2cWire->requestFrom( PT7C4339_I2C_ADDR, 1 );
+  _i2cWire->requestFrom( _i2cAddress, 1 );
   while( _i2cWire->available() )
   {
 
@@ -190,7 +189,7 @@ uint8_t PT7C4339::readRegister( uint8_t REG )
 }
 
 /**
- * @brief Writes a byte of data to a specified register of the PT7C4339 device over I2C.
+ * @brief Writes a byte of data to a specified register of the PT7C4339 RTC over I2C.
  *
  * This function sends the register address and data byte to the PT7C4339 via the I2C bus,
  * then reads back the register to verify that the write was successful.
@@ -204,7 +203,7 @@ bool PT7C4339::writeRegister( uint8_t REG, uint8_t DATA )
 
   bool writeSuccess;
 
-  _i2cWire->beginTransmission( PT7C4339_I2C_ADDR );
+  _i2cWire->beginTransmission( _i2cAddress );
   _i2cWire->write( REG );
   _i2cWire->write( DATA );
   _i2cWire->endTransmission();
@@ -299,6 +298,9 @@ PT7C4339_Date PT7C4339::getDate()
  *
  * @note The weekDay field of the input parameter is ignored. The correct weekday is automatically 
  * calculated and set based on the provided year, month, and day.
+ * 
+ * @note On failure to set any of the date components, the function will try to revert all date components
+ * to their previous values.
  */
 bool PT7C4339::setDate( PT7C4339_Date date )
 {
@@ -313,16 +315,16 @@ bool PT7C4339::setDate( PT7C4339_Date date )
  * @brief Calculates the day of the week for a given date.
  *
  * This function determines the day of the week (e.g., Monday, Tuesday, etc.)
- * for the specified year, month, and date using a variant of the Zeller's congruence algorithm.
+ * for the specified year, month, and day using a variant of the Zeller's congruence algorithm.
  *
- * @param year  The full year (e.g., 2024).
+ * @param year  The full year (1900-2099).
  * @param month The month (1 = January, 12 = December).
- * @param date  The day of the month (1-31).
- * @return daysOfWeek The calculated day of the week as an enum value, where 1 represents Monday, 7 Sunday.
+ * @param day  The day of the month (1-31).
+ * @return PT7C4339_daysOfWeek The calculated day of the week as an enum value, where 1 = Monday ... 7 = Sunday.
  *
  * @note The function assumes the Gregorian calendar and supports years before and after 2000.
  */
-daysOfWeek PT7C4339::calculateWeekDay( uint16_t year, uint8_t month, uint8_t date )
+PT7C4339_daysOfWeek PT7C4339::calculateWeekDay( uint16_t year, uint8_t month, uint8_t day )
 {
 
   uint8_t yearCode;
@@ -398,20 +400,20 @@ daysOfWeek PT7C4339::calculateWeekDay( uint16_t year, uint8_t month, uint8_t dat
   if( is2000 ) centuryCode = 6;
   else centuryCode = 0;
 
-  uint8_t offsetWeekday = ( yearCode + monthCode + centuryCode + date - leapYearMod ) % 7;
+  uint8_t offsetWeekday = ( yearCode + monthCode + centuryCode + day - leapYearMod ) % 7;
   if (offsetWeekday == 0) offsetWeekday = 7;
 
-  daysOfWeek calculatedWeekDay = static_cast<daysOfWeek>( offsetWeekday );
+  PT7C4339_daysOfWeek calculatedWeekDay = static_cast<PT7C4339_daysOfWeek>( offsetWeekday );
 
   return calculatedWeekDay;
 
 }
 
 /**
- * @brief Reads the value of a specific bit from a register.
+ * @brief Reads the value of a specific bit from a register of the PT7C4339 RTC.
  *
  * This function reads the value of the specified bit (BIT) from the given register (REG)
- * of the PT7C4339 device. It returns true if the bit is set (1), or false if the bit is clear (0).
+ * of the PT7C4339 RTC. It returns true if the bit is set (1), or false if the bit is clear (0).
  *
  * @param REG The address of the register to read from.
  * @param BIT The bit position within the register to read (0-7).
@@ -429,7 +431,7 @@ bool PT7C4339::readBit( uint8_t REG, uint8_t BIT )
 
 
 /**
- * @brief Sets or clears a specific bit in a register of the PT7C4339 device.
+ * @brief Sets or clears a specific bit in a register of the PT7C4339 RTC.
  *
  * This function reads the current value of the specified register, modifies the
  * specified bit according to the provided value, and writes the updated value
@@ -514,17 +516,17 @@ uint8_t PT7C4339::getHour()
  * @brief Retrieves the current day of the week from the PT7C4339 RTC.
  *
  * This function reads the day of the week register from the PT7C4339 real-time clock,
- * masks the relevant bits, and returns the value as a daysOfWeek enumeration.
+ * masks the relevant bits, and returns the value as a PT7C4339_daysOfWeek enumeration.
  *
- * @return daysOfWeek The current day of the week as an enum value where 1 = MO .... 7 = SU.
+ * @return PT7C4339_daysOfWeek The current day of the week as an enum value where 1 = Monday ... 7 = Sunday.
  */
-daysOfWeek PT7C4339::getWeekDay()
+PT7C4339_daysOfWeek PT7C4339::getWeekDay()
 {
 
   uint8_t weekDay = readRegister( PT7C4339_REG_DAYS_OF_WEEK );
   weekDay = ( weekDay & 0x07 );
 
-  return static_cast<daysOfWeek>( weekDay );
+  return static_cast<PT7C4339_daysOfWeek>( weekDay );
 
 }
 
@@ -547,12 +549,12 @@ uint8_t PT7C4339::getDay()
 }
 
 /**
- * @brief Retrieves the current month from the PT7C4339 RTC module.
+ * @brief Retrieves the current month from the PT7C4339 RTC.
  *
  * This function reads the month register from the PT7C4339 real-time clock,
  * masks out unused and control bits, converts the value from BCD to decimal, and returns it.
  *
- * @return uint8_t The current month (1-12).
+ * @return uint8_t The current month (1 = January, 12 = December).
  */
 uint8_t PT7C4339::getMonth()
 {
@@ -566,7 +568,7 @@ uint8_t PT7C4339::getMonth()
 }
 
 /**
- * @brief Retrieves the current year from the PT7C4339 RTC device.
+ * @brief Retrieves the current year from the PT7C4339 RTC.
  *
  * This function reads the year and month registers from the PT7C4339 real-time clock (RTC),
  * converts the year from BCD to decimal, and determines the century based on the highest bit
@@ -588,6 +590,16 @@ uint16_t PT7C4339::getYear()
 
 }
 
+/**
+ * @brief Sets the seconds value of the PT7C4339 RTC.
+ *
+ * This function sets the seconds register of the PT7C4339 real-time clock (RTC) to the specified value.
+ * The input value must be in the range [0, 59]. The value is converted from decimal to BCD format before being written
+ * to the seconds register. The function returns true if the operation is successful, false otherwise.
+ *
+ * @param seconds The seconds value to set (0-59).
+ * @return bool True if the seconds register was successfully updated, false otherwise.
+ */
 bool PT7C4339::setSecond( uint8_t seconds )
 {
 
@@ -613,6 +625,16 @@ bool PT7C4339::setSecond( uint8_t seconds )
 
 }
 
+/**
+ * @brief Sets the minutes value of the PT7C4339 RTC.
+ *
+ * This function sets the minutes register of the PT7C4339 real-time clock (RTC) to the specified value.
+ * The input value must be in the range [0, 59]. The value is converted from decimal to BCD format before being written
+ * to the minutes register. The function returns true if the operation is successful, false otherwise.
+ *
+ * @param minutes The seconds value to set (0-59).
+ * @return bool True if the minutes register was successfully updated, false otherwise.
+ */
 bool PT7C4339::setMinute( uint8_t minutes )
 {
 
@@ -638,6 +660,16 @@ bool PT7C4339::setMinute( uint8_t minutes )
 
 }
 
+/**
+ * @brief Sets the hours value of the PT7C4339 RTC.
+ *
+ * This function sets the hours register of the PT7C4339 real-time clock (RTC) to the specified value.
+ * The input value must be in the range [0, 23]. The value is converted from decimal to BCD format before being written
+ * to the hours register. The function returns true if the operation is successful, false otherwise.
+ *
+ * @param hours The seconds value to set (0-23).
+ * @return bool True if the hours register was successfully updated, false otherwise.
+ */
 bool PT7C4339::setHour( uint8_t hours )
 {
 
@@ -663,12 +695,20 @@ bool PT7C4339::setHour( uint8_t hours )
 
 }
 
+/**
+ * @brief Sets the correct weekday value in the PT7C4339 RTC.
+ *
+ * This function calculates the correct weekday based on the current date (year, month, day)
+ * and writes it to the weekday register of the PT7C4339 RTC.
+ *
+ * @return bool True if the weekday was successfully set, false otherwise.
+ */
 bool PT7C4339::setCorrectWeekDay()
 {
 
   bool setSuccess;
 
-  daysOfWeek calculatedWeekDay = calculateWeekDay( getYear(), getMonth(), getDay() );
+  PT7C4339_daysOfWeek calculatedWeekDay = calculateWeekDay( getYear(), getMonth(), getDay() );
 
   if( writeRegister( PT7C4339_REG_DAYS_OF_WEEK, calculatedWeekDay ) ) setSuccess = true;
   else setSuccess = false;
@@ -677,6 +717,18 @@ bool PT7C4339::setCorrectWeekDay()
 
 }
 
+/**
+ * @brief Sets the day of the month in the PT7C4339 RTC.
+ *
+ * This function sets the day of the month register of the PT7C4339 RTC to the specified value.
+ * The input value must be in the range [1, 31]. The function checks if the day is valid for the current month
+ * and year (including leap years). If successful, it also sets the correct weekday.
+ *
+ * @param day The day of the month to set (1-31).
+ * @return bool True if the day register was successfully updated, false otherwise.
+ * 
+ * @note The function will try to revert to the previous date if the operation fails.
+ */
 bool PT7C4339::setDay( uint8_t day )
 {
 
@@ -765,6 +817,18 @@ bool PT7C4339::setDay( uint8_t day )
 
 }
 
+/**
+ * @brief Sets the month value in the PT7C4339 RTC.
+ *
+ * This function attempts to set the month register of the PT7C4339 RTC.
+ * It validates the input month (must be between 1 and 12), preserves the century bit,
+ * and writes the new value to the device.
+ *
+ * @param month The month to set (1 = January, 12 = December).
+ * @return bool True if the month was successfully set, false otherwise.
+ * 
+ * @note The function will try to revert to the previous date if the operation fails.
+ */
 bool PT7C4339::setMonth( uint8_t month )
 {
 
@@ -797,6 +861,19 @@ bool PT7C4339::setMonth( uint8_t month )
 
 }
 
+/**
+ * @brief Sets the year value in the PT7C4339 RTC.
+ *
+ * This function attempts to set the year register of the PT7C4339 RTC.
+ * It checks if the year is within the valid range [1900-2099],
+ * sets the corresponding century bit in the month register,
+ * and writes the new year to the year register.
+ *
+ * @param year The year to set (1900-2099).
+ * @return bool True if the year was successfully set, false otherwise.
+ * 
+ * @note The function will try to revert to the previous date if the operation fails.
+ */
 bool PT7C4339::setYear( uint16_t year )
 {
 
@@ -808,8 +885,6 @@ bool PT7C4339::setYear( uint16_t year )
   uint8_t newMonth = decToBcd( oldMonth );
   newMonth &= 0x7F;
   oldMonth = newMonth;
-
-  
 
   if( year > 1899 && year < 2100 )
   {
@@ -845,6 +920,7 @@ bool PT7C4339::setYear( uint16_t year )
         setSuccess = false;
         writeRegister( PT7C4339_REG_MONTHS, oldMonth );
         writeRegister( PT7C4339_REG_YEARS, oldYear );
+        setCorrectWeekDay();
 
       }
 
@@ -865,6 +941,13 @@ bool PT7C4339::setYear( uint16_t year )
 
 }
 
+/**
+ * @brief Checks if the oscillator is enabled on the PT7C4339 RTC.
+ *
+ * Reads the /EOSC (Enable oscillator) bit from the control register.
+ *
+ * @return bool True if the oscillator is enabled, false otherwise.
+ */
 bool PT7C4339::isOscillatorEnabled()
 {
 
@@ -872,6 +955,17 @@ bool PT7C4339::isOscillatorEnabled()
 
 }
 
+/**
+ * @brief Enables or disables the oscillator of the PT7C4339 RTC.
+ *
+ * This function sets or clears the /EOSC (Enable oscillator) bit in the control register.
+ *
+ * @param enable Set to true to enable the oscillator, false to disable it.
+ * @return bool True if the operation was successful, false otherwise.
+ * 
+ * @note Disabling the oscillator will set the Oscillator Stop Flag. After enabling the oscillator,
+ * the flag should be cleared by calling clearRtcStopFlag().
+ */
 bool PT7C4339::enableOscillator( bool enable )
 {
 
@@ -879,6 +973,13 @@ bool PT7C4339::enableOscillator( bool enable )
 
 }
 
+/**
+ * @brief Checks if Interrupts/alarms or square wave output is enabled when the PT7C4339 RTC is operating on battery.
+ *
+ * Reads the BBSQI (Battery-Backed Square-Wave and Interrupt Enable) bit from the control register.
+ *
+ * @return bool True if operation on battery is enabled, false otherwise.
+ */
 bool PT7C4339::isIntFromBatteryEnabled()
 {
 
@@ -886,6 +987,14 @@ bool PT7C4339::isIntFromBatteryEnabled()
 
 }
 
+/**
+ * @brief Enables or disables the Interrupts/alarms or square wave output when the PT7C4339 RTC is operating on battery.
+ *
+ * This function sets or clears the BBSQI (Battery-Backed Square-Wave and Interrupt Enable) bit in the control register.
+ *
+ * @param enable Set to true to enable the oscillator, false to disable it.
+ * @return bool True if the operation was successful, false otherwise.
+ */
 bool PT7C4339::enableIntFromBattery( bool enable )
 {
 
@@ -893,16 +1002,34 @@ bool PT7C4339::enableIntFromBattery( bool enable )
 
 }
 
-sqwFrequency PT7C4339::getSqwFrequency()
+/**
+ * @brief Retrieves the current square wave frequency setting from the PT7C4339 RTC.
+ *
+ * This function reads the square wave frequency bits (RS2, RS1) from the control register
+ * and returns it as an enum value.
+ *
+ * @return PT7C4339_sqwFrequency The current square wave frequency setting.
+ */
+PT7C4339_sqwFrequency PT7C4339::getSqwFrequency()
 {
 
-  sqwFrequency freq = static_cast<sqwFrequency>( ( readRegister( PT7C4339_REG_CONTROL ) >> 3 ) & 0x03 );
+  PT7C4339_sqwFrequency freq = static_cast<PT7C4339_sqwFrequency>( ( readRegister( PT7C4339_REG_CONTROL ) >> 3 ) & 0x03 );
 
   return freq;
 
 }
 
-bool PT7C4339::setSqwFrequency( sqwFrequency frequency )
+/**
+ * @brief Sets the square wave frequency of the PT7C4339 RTC.
+ *
+ * This function sets the square wave frequency by writing the
+ * square wave frequency bits (RS2, RS1) bits to the control register.
+ * The input frequency must be one of the defined PT7C4339_sqwFrequency enum values.
+ *
+ * @param frequency PT7C4339_sqwFrequency The desired square wave frequency to set.
+ * @return bool True if the operation was successful, false otherwise.
+ */
+bool PT7C4339::setSqwFrequency( PT7C4339_sqwFrequency frequency )
 {
 
   bool setSuccess;
@@ -917,14 +1044,35 @@ bool PT7C4339::setSqwFrequency( sqwFrequency frequency )
 
 }
 
-bool PT7C4339::getRtcStoppedFlag()
+/**
+ * @brief Checks if the oscillator of the PT7C4339 RTC was stopped.
+ *
+ * This function reads the OSF (Oscillator Stop Flag) from the status register.
+ *
+ * @return bool True if the oscillator was stopped, false otherwise.
+ * 
+ * @note The Oscillator Stop Flag is set when the oscillator stops, or if some other factor
+ * causes the timekeeping to be inaccurate. If it is set, the accuracy of the kept time can not be guaranteed.
+ * The flag can be cleared by calling clearRtcStopFlag().
+ */
+bool PT7C4339::getRtcStopFlag()
 {
 
   return readBit( PT7C4339_REG_STATUS, 7 );
 
 }
 
-bool PT7C4339::clearRtcStoppedFlag()
+/**
+ * @brief Clears the Oscillator Stop Flag of the PT7C4339 RTC.
+ *
+ * This function clears the OSF (Oscillator Stop Flag) in the status register.
+ *
+ * @return bool True if the operation was successful, false otherwise.
+ * 
+ * @note The Oscillator Stop Flag is set when the oscillator stops, or if some other factor
+ * causes the timekeeping to be inaccurate. If it is set, the accuracy of the kept time can not be guaranteed.
+ */
+bool PT7C4339::clearRtcStopFlag()
 {
 
   return writeBit( PT7C4339_REG_STATUS, 7, false );
@@ -932,12 +1080,11 @@ bool PT7C4339::clearRtcStoppedFlag()
 }
 
 /**
- * @brief Checks the status of the INTCN flag in the control register.
+ * @brief Checks the wether the output of the PT7C4339 RTC is configured for Interrupt/alarm or square wave mode.
  *
- * This function reads bit 2 of the PT7C4339 control register to determine
- * whether the output is configured for Interrupt/alarm or squarewave mode.
+ * This function reads the INTCN (Interrupt output pin select) bit in the control register.
  *
- * @return bool True if the output is set to Interrupt/alarm mode, false if set to Squarewave mode.
+ * @return bool True if the output is set to Interrupt/alarm mode, false if set to square wave mode.
  */
 bool PT7C4339::getIntOrSqwFlag()
 {
@@ -947,11 +1094,11 @@ bool PT7C4339::getIntOrSqwFlag()
 }
 
 /**
- * @brief Sets the INTCN flag in the PT7C4339 control register.
+ * @brief Sets the output of the PT7C4339 RTC to either Interrupt/alarm or square wave mode.
  *
- * This function configures the INT/SQW (Interrupt or Squarewave) output mode.
+ * This function configures the INTCN (Interrupt output pin select) bit in the control register.
  *
- * @param setting true to enable interrupt/alarm mode, false for squarewave mode.
+ * @param setting true to enable interrupt/alarm mode, false for square wave mode.
  * @return bool True if the operation was successful, false otherwise.
  */
 bool PT7C4339::setIntOrSqwFlag( bool setting )
@@ -961,43 +1108,78 @@ bool PT7C4339::setIntOrSqwFlag( bool setting )
 
 }
 
-trickleChargerEnabled PT7C4339::getTrickleChargerEnabled()
+/**
+ * @brief Checks if the trickle charger is enabled on the PT7C4339 RTC.
+ *
+ * This function reads bits 4-7 of the trickle charger register and interprets them
+ * as the trickle charger enable state.
+ *
+ * @return PT7C4339_trickleChargerEnabled The current trickle charger enable state.
+ */
+PT7C4339_trickleChargerEnabled PT7C4339::getTrickleChargerEnabled()
 {
 
-  trickleChargerEnabled enabled = static_cast<trickleChargerEnabled>( ( readRegister( PT7C4339_REG_TRICKLE_CHG ) >> 4 ) & 0x0F );
+  PT7C4339_trickleChargerEnabled enabled = static_cast<PT7C4339_trickleChargerEnabled>( ( readRegister( PT7C4339_REG_TRICKLE_CHARGER ) >> 4 ) & 0x0F );
 
-  if( ( enabled != TRICKLE_DISABLE ) && ( enabled != TRICKLE_ENABLE ) ) enabled = TRICKLE_DISABLE;
+  if( ( enabled != PT7C4339_TRICKLE_DISABLE ) && ( enabled != PT7C4339_TRICKLE_ENABLE ) ) enabled = PT7C4339_TRICKLE_DISABLE;
 
   return enabled;
 
 }
 
-trickleChargerDiode PT7C4339::getTrickleChargerDiode()
+/**
+ * @brief Checks the trickle charger diode setting of the PT7C4339 RTC.
+ *
+ * This function reads bits 2-3 of the trickle charger register and interprets them
+ * as the trickle charger diode setting.
+ *
+ * @return trickleChargerDiode The current trickle charger diode setting.
+ */
+PT7C4339_trickleChargerDiode PT7C4339::getTrickleChargerDiode()
 {
 
-  trickleChargerDiode diode = static_cast<trickleChargerDiode>( ( readRegister( PT7C4339_REG_TRICKLE_CHG ) >> 2 ) & 0x03 );
-
-  if( ( diode != DIODE_DISABLE ) && ( diode != DIODE_ENABLE ) ) diode = DIODE_DISABLE;
+  PT7C4339_trickleChargerDiode diode = static_cast<PT7C4339_trickleChargerDiode>( ( readRegister( PT7C4339_REG_TRICKLE_CHARGER ) >> 2 ) & 0x03 );
 
   return diode;
 
 }
 
-trickleChargerResistor PT7C4339::getTrickleChargerResistor()
+/**
+ * @brief Checks the trickle charger resistor setting of the PT7C4339 RTC.
+ *
+ * This function reads bits 0-1 of the trickle charger register and interprets them
+ * as the trickle charger resistor setting.
+ *
+ * @return PT7C4339_trickleChargerResistor The current trickle charger resistor setting.
+ */
+PT7C4339_trickleChargerResistor PT7C4339::getTrickleChargerResistor()
 {
 
-  trickleChargerResistor resistor = static_cast<trickleChargerResistor>( readRegister( PT7C4339_REG_TRICKLE_CHG ) & 0x03 );
+  PT7C4339_trickleChargerResistor resistor = static_cast<PT7C4339_trickleChargerResistor>( readRegister( PT7C4339_REG_TRICKLE_CHARGER ) & 0x03 );
 
   return resistor;
 
 }
 
-bool PT7C4339::setTrickleChargerConfig( trickleChargerEnabled enable, trickleChargerDiode diode, trickleChargerResistor resistor )
+/**
+ * @brief Configures the trickle charger settings of the PT7C4339 RTC.
+ *
+ * This function sets the trickle charger configuration by writing to the
+ * trickle charger register. The configuration includes enabling or
+ * disabling the trickle charger, enabling or disabling the diode, 
+ * and choosing the resistor value.
+ *
+ * @param enable PT7C4339_trickleChargerEnabled Specifies whether the trickle charger is enabled or disabled.
+ * @param diode trickleChargerDiode Selects the diode configuration for the trickle charger.
+ * @param resistor PT7C4339_trickleChargerResistor Selects the resistor value for the trickle charger.
+ * @return true if the configuration was successfully written to the register, false otherwise.
+ */
+bool PT7C4339::setTrickleChargerConfig( PT7C4339_trickleChargerEnabled enable, PT7C4339_trickleChargerDiode diode, PT7C4339_trickleChargerResistor resistor )
 {
 
   bool setSuccess;
 
-  if( writeRegister( PT7C4339_REG_TRICKLE_CHG, ( enable << 4 ) | ( diode << 2 ) | resistor ) ) setSuccess = true;
+  if( writeRegister( PT7C4339_REG_TRICKLE_CHARGER, ( enable << 4 ) | ( diode << 2 ) | resistor ) ) setSuccess = true;
   else setSuccess = false;
 
   return setSuccess;
@@ -1005,11 +1187,11 @@ bool PT7C4339::setTrickleChargerConfig( trickleChargerEnabled enable, trickleCha
 }
 
 /**
- * @brief Resets all PT7C4339 RTC registers to their first power-on state.
+ * @brief Resets all registers of the PT7C4339 RTC to their first power-on state.
  *
- * This function writes the default values to all registers of the PT7C4339 RTC.
+ * This function writes the default values to all registers.
  *
- * @return true if all register writes succeed, false if any write fails.
+ * @return bool True if all register writes succeed, false if any write fails.
  */
 bool PT7C4339::reset()
 {
@@ -1034,7 +1216,7 @@ bool PT7C4339::reset()
 
   bool controlReset = writeRegister( PT7C4339_REG_CONTROL, 0x18 );
   bool statusReset = writeRegister( PT7C4339_REG_STATUS, 0x80 );
-  bool trickleChargerReset = writeRegister( PT7C4339_REG_TRICKLE_CHG, 0x00 );
+  bool trickleChargerReset = writeRegister( PT7C4339_REG_TRICKLE_CHARGER, 0x00 );
 
   return ( secondsReset && minutesReset && hoursReset && weekDayReset && daysReset && monthsReset
     && yearsReset && alarm1SecondsReset && alarm1MinutesReset && alarm1HoursReset && alarm1DayDateReset

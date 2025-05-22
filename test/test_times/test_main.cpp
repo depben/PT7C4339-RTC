@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include <unity.h>
-#include "PT7C4399-RTC.h"
+#include "PT7C4339-RTC.h"
 
 
 PT7C4339 rtc( &Wire, 47, 48 );
