@@ -34,10 +34,10 @@
  * - **Device Reset**
  *   - `reset()`: Restores all registers to their default power-on values.
  * 
- * @note This library uses 24-hour format for time representation and works from 1900/1/1 to 2099/12/31.
+ * @note This library uses 24-hour format for time representation and works from 1900-1-1 to 2099-12-31.
  * 
  * @author      Bence Murin
- * @date        2025-05-22
+ * @date        2025-05-23
  * @version     0.1.1
  * @copyright   MIT License
  * 

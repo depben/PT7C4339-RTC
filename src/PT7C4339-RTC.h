@@ -7,10 +7,10 @@
  * control the trickle charger, and use the control mechanisms of the device.
  * More info on the GitHub page: https://github.com/depben/PT7C4339-RTC
  * 
- * @note This library uses 24-hour format for time representation and works from 1900/1/1 to 2099/12/31.
+ * @note This library uses 24-hour format for time representation and works from 1900-1-1 to 2099-12-31.
  *
  * @author      Bence Murin
- * @date        2025-05-22
+ * @date        2025-05-23
  * @version     0.1.1
  * @copyright   MIT License
  * 
