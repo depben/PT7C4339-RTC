@@ -9,4 +9,4 @@ jobs:
     steps:
       - uses: bojit/platformio-publish@main
         with:
-          token: ${{ secrets.PLATFORMIO_TOKEN }}
+          token: ${{ secrets.PLATFORMIO_AUTH_TOKEN }}
