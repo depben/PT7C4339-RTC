@@ -1,0 +1,12 @@
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: bojit/platformio-publish@main
+        with:
+          token: ${{ secrets.PLATFORMIO_TOKEN }}
