@@ -104,7 +104,7 @@ typedef struct
   uint8_t minute; ///< Minutes (0-59)
   uint8_t second; ///< Seconds (0-59)
 
-} PT7C4339_Time; ///< Time structure for the PT7C4339 RTC
+} PT7C4339_Time;
 
 /**
  * @struct PT7C4339_Date
@@ -118,7 +118,7 @@ typedef struct
   uint8_t day; ///< Day (1-31)
   PT7C4339_daysOfWeek weekDay; ///< Day of the week (1-7, where 1 = Monday and 7 = Sunday)
 
-} PT7C4339_Date; ///< Date structure for the PT7C4339 RTC
+} PT7C4339_Date;
 
 class PT7C4339 ///< Class for the PT7C4339 RTC
 {
