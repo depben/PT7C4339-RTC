@@ -29,15 +29,15 @@ A library for interfacing with the PT7C4339 RTC chip over I2C in the Arduino fra
 - **Device Reset**
   - `reset()`: Restores all registers to their default power-on values.
 
-## To Do
-- Implement alarm functionality
-
 ## Limitations
 This library uses 24-hour format for time representation and works from 1900/1/1 to 2099/12/31.
 
+## To Do
+- Implement alarm functionality
+
 ## Installation
 
-1. Download the library with Arduino Library Manager, download from the [PlatformIO Registry](https://registry.platformio.org/libraries/depben/PT7C4339-RTC), or clone the repository:
+1. Download the library with the Arduino Library Manager, from the [PlatformIO Registry](https://registry.platformio.org/libraries/depben/PT7C4339-RTC/), or clone the repository:
    ```bash
    git clone https://github.com/depben/PT7C4339-RTC.git
    ```
@@ -58,19 +58,19 @@ This library uses 24-hour format for time representation and works from 1900/1/1
 #include "PT7C4339-RTC.h"
 
 // Construct PT7C4339 object called rtc
-PT7C4339 rtc( &Wire, 47, 48 );
+PT7C4339 rtc( &Wire );
 
 void setup()
 {
 
-    Serial.begin( 115200 );
-    delay( 200 );
+  Serial.begin( 115200 );
+  delay( 200 );
 
-    // Initialize the RTC
-    rtc.begin();
+  // Initialize the RTC
+  rtc.begin();
 
-    // Not needed as rtc.begin() initializes Wire automatically, setting the I2C frequency to 400kHz, but can be called if wanted
-    // Wire.begin();
+  // Not needed as rtc.begin() initializes Wire automatically, setting the I2C frequency to 400kHz, but can be called if wanted
+  // Wire.begin();
 
 }
 
@@ -137,4 +137,4 @@ This library is licensed under the MIT License. See `LICENSE` for more informati
 ## Acknowledgements
 
 - Both [RTClib](https://github.com/adafruit/RTClib.git) and [DS3231-RTC](https://github.com/hasenradball/DS3231-RTC.git) helped a great deal with writing this library.
-- Special thanks to LadyAda and the contributors of the [adafruit/ci-arduino](https://github.com/adafruit/ci-arduino), as well as BOJIT for the [platformio-publish](https://github.com/marketplace/actions/platformio-publish) for the GitHub Actions.
+- Special thanks to Lady Ada and the contributors of [adafruit/ci-arduino](https://github.com/adafruit/ci-arduino), as well as BOJIT for [platformio-publish](https://github.com/marketplace/actions/platformio-publish).

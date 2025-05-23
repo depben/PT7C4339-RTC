@@ -7,7 +7,7 @@
 #include "PT7C4339-RTC.h"
 
 // Construct PT7C4339 object called rtc
-PT7C4339 rtc( &Wire, 47, 48 );
+PT7C4339 rtc( &Wire );
 
 void setup()
 {
