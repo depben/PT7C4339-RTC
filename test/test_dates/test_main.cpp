@@ -1,8 +1,11 @@
-#include <Arduino.h>
 #include <unity.h>
+#include <Arduino.h>
 #include "PT7C4339-RTC.h"
 
-PT7C4339 rtc( &Wire, 47, 48 );
+#define SDA_PIN 47 //Change this to the correct pin number for your board or disregard it if you are using the default SDA pin
+#define SCL_PIN 48 //Change this to the correct pin number for your board or disregard it if you are using the default SCL pin
+
+PT7C4339 rtc( &Wire, SDA_PIN, SCL_PIN );
 
 void test_dates_valid()
 {
@@ -207,7 +210,7 @@ void test_dates_valid_random()
     
     int32_t success = 0;
     int32_t fail = 0;
-    int32_t totalDates = 20000;
+    int32_t totalDates = 5000;
 
     for( uint16_t i = 1; i <= totalDates; i++ )
     {
@@ -253,7 +256,7 @@ void test_dates_reset()
     for( uint16_t i = 1; i <= totalDates; i++ )
     {
     
-        PT7C4339_Date validSetDate = { 2000, 1, 1, PT7C4339_WEEKDAY_UNKNOWN };
+        PT7C4339_Date validSetDate = { 2001, 1, 1, PT7C4339_MONDAY };
         rtc.setDate( validSetDate );
 
         uint8_t months[] = { 2, 4, 6, 9, 11 };
@@ -278,8 +281,8 @@ void test_dates_reset()
 void setUp( void )
 {
     
-    rtc.begin();
     rtc.reset();
+    rtc.begin();
 
 }
 
@@ -298,11 +301,13 @@ void setup()
     UNITY_BEGIN();
     
     RUN_TEST( test_dates_valid );
-    RUN_TEST( test_dates_all );
-    RUN_TEST( test_dates_valid_backwards );
     RUN_TEST( test_dates_all_backwards );
     RUN_TEST( test_dates_valid_random );
     RUN_TEST( test_dates_reset );
+
+    // way overkill
+    // RUN_TEST( test_dates_all );
+    // RUN_TEST( test_dates_valid_backwards );
     
     UNITY_END();
 

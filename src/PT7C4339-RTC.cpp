@@ -306,7 +306,18 @@ PT7C4339_Date PT7C4339::getDate()
 bool PT7C4339::setDate( PT7C4339_Date date )
 {
 
+  PT7C4339_Date oldDate = getDate();
+
   bool setSuccess = setYear( date.year ) && setMonth( date.month ) && setDay( date.day );
+
+  if ( !setSuccess )
+  {
+
+    setYear( oldDate.year );
+    setMonth( oldDate.month );
+    setDay( oldDate.day );
+
+  }
 
   return setSuccess;
 
@@ -316,7 +327,8 @@ bool PT7C4339::setDate( PT7C4339_Date date )
  * @brief Calculates the day of the week for a given date.
  *
  * This function determines the day of the week (e.g., Monday, Tuesday, etc.)
- * for the specified year, month, and day using a variant of the Zeller's congruence algorithm.
+ * for the specified year, month, and day using a variant of the Zeller's congruence algorithm
+ * (AKA The Reddit Algorithm https://www.reddit.com/r/LearnUselessTalents/comments/avb5bi/comment/ehdy77e/).
  *
  * @param year  The full year (1900-2099).
  * @param month The month (1 = January, 12 = December).
@@ -747,51 +759,20 @@ bool PT7C4339::setDay( uint8_t day )
     case 1:
       monthLength = 31;
       break;
-
     case 2:
       if( !isLeapYear ) monthLength = 28;
       else monthLength = 29;
       break;
-
-    case 3:
-      monthLength = 31;
-      break;
-
-    case 4:
-      monthLength = 30;
-      break;
-
-    case 5:
-      monthLength = 31;
-      break;
-
-    case 6:
-      monthLength = 30;
-      break;
-
-    case 7:
-      monthLength = 31;
-      break;
-
-    case 8:
-      monthLength = 31;
-      break;
-
-    case 9:
-      monthLength = 30;
-      break;
-
-    case 10:
-      monthLength = 31;
-      break;
-
-    case 11:
-      monthLength = 30;
-      break;
-
-    case 12:
-      monthLength = 31;
-      break;
+    case 3: monthLength = 31; break;
+    case 4: monthLength = 30; break;
+    case 5: monthLength = 31; break;
+    case 6: monthLength = 30; break;
+    case 7: monthLength = 31; break;
+    case 8: monthLength = 31; break;
+    case 9: monthLength = 30; break;
+    case 10: monthLength = 31; break;
+    case 11: monthLength = 30; break;
+    case 12: monthLength = 31; break;
   
   }
 
@@ -1141,6 +1122,8 @@ PT7C4339_trickleChargerDiode PT7C4339::getTrickleChargerDiode()
 
   PT7C4339_trickleChargerDiode diode = static_cast<PT7C4339_trickleChargerDiode>( ( readRegister( PT7C4339_REG_TRICKLE_CHARGER ) >> 2 ) & 0x03 );
 
+  if( ( diode != PT7C4339_DIODE_DISABLE ) && ( diode != PT7C4339_DIODE_ENABLE ) ) diode = PT7C4339_DIODE_DISABLE;
+
   return diode;
 
 }
@@ -1193,9 +1176,14 @@ bool PT7C4339::setTrickleChargerConfig( PT7C4339_trickleChargerEnabled enable, P
  * This function writes the default values to all registers.
  *
  * @return bool True if all register writes succeed, false if any write fails.
+ * 
+ * @note The Oscillator Stop Flag is set by this function. It should be cleared by calling clearRtcStopFlag().
  */
 bool PT7C4339::reset()
 {
+
+  bool stopOscillator = enableOscillator( false );
+  delay(1);
 
   bool secondsReset = writeRegister( PT7C4339_REG_SECONDS, 0x00 );
   bool minutesReset = writeRegister( PT7C4339_REG_MINUTES, 0x00 );
@@ -1219,7 +1207,7 @@ bool PT7C4339::reset()
   bool statusReset = writeRegister( PT7C4339_REG_STATUS, 0x80 );
   bool trickleChargerReset = writeRegister( PT7C4339_REG_TRICKLE_CHARGER, 0x00 );
 
-  return ( secondsReset && minutesReset && hoursReset && weekDayReset && daysReset && monthsReset
+  return ( stopOscillator && secondsReset && minutesReset && hoursReset && weekDayReset && daysReset && monthsReset
     && yearsReset && alarm1SecondsReset && alarm1MinutesReset && alarm1HoursReset && alarm1DayDateReset
     && alarm2MinutesReset && alarm2HoursReset && alarm2DayDateReset && controlReset && statusReset && trickleChargerReset );
 
