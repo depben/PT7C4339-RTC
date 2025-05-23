@@ -6,7 +6,7 @@
  * This library provides methods for communicating with the PT7C4339 RTC IC over I2C.
  * It enables users to read and set the current time and date, manage the square wave output,
  * control the trickle charger, and use the control mechanisms of the device.
- * More info on the GitHub page: https://github.com/depben/PT7C4339-RTC.git
+ * More info on the GitHub page: https://github.com/depben/PT7C4339-RTC
  *
  * ## How to use
  *
