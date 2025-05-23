@@ -327,7 +327,8 @@ bool PT7C4339::setDate( PT7C4339_Date date )
  * @brief Calculates the day of the week for a given date.
  *
  * This function determines the day of the week (e.g., Monday, Tuesday, etc.)
- * for the specified year, month, and day using a variant of the Zeller's congruence algorithm.
+ * for the specified year, month, and day using a variant of the Zeller's congruence algorithm
+ * (AKA The Reddit Algorithm https://www.reddit.com/r/LearnUselessTalents/comments/avb5bi/comment/ehdy77e/).
  *
  * @param year  The full year (1900-2099).
  * @param month The month (1 = January, 12 = December).
