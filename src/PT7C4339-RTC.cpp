@@ -306,7 +306,18 @@ PT7C4339_Date PT7C4339::getDate()
 bool PT7C4339::setDate( PT7C4339_Date date )
 {
 
+  PT7C4339_Date oldDate = getDate();
+
   bool setSuccess = setYear( date.year ) && setMonth( date.month ) && setDay( date.day );
+
+  if ( !setSuccess )
+  {
+
+    setYear( oldDate.year );
+    setMonth( oldDate.month );
+    setDay( oldDate.day );
+
+  }
 
   return setSuccess;
 
@@ -747,51 +758,20 @@ bool PT7C4339::setDay( uint8_t day )
     case 1:
       monthLength = 31;
       break;
-
     case 2:
       if( !isLeapYear ) monthLength = 28;
       else monthLength = 29;
       break;
-
-    case 3:
-      monthLength = 31;
-      break;
-
-    case 4:
-      monthLength = 30;
-      break;
-
-    case 5:
-      monthLength = 31;
-      break;
-
-    case 6:
-      monthLength = 30;
-      break;
-
-    case 7:
-      monthLength = 31;
-      break;
-
-    case 8:
-      monthLength = 31;
-      break;
-
-    case 9:
-      monthLength = 30;
-      break;
-
-    case 10:
-      monthLength = 31;
-      break;
-
-    case 11:
-      monthLength = 30;
-      break;
-
-    case 12:
-      monthLength = 31;
-      break;
+    case 3: monthLength = 31; break;
+    case 4: monthLength = 30; break;
+    case 5: monthLength = 31; break;
+    case 6: monthLength = 30; break;
+    case 7: monthLength = 31; break;
+    case 8: monthLength = 31; break;
+    case 9: monthLength = 30; break;
+    case 10: monthLength = 31; break;
+    case 11: monthLength = 30; break;
+    case 12: monthLength = 31; break;
   
   }
 

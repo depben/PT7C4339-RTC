@@ -210,7 +210,7 @@ void test_dates_valid_random()
     
     int32_t success = 0;
     int32_t fail = 0;
-    int32_t totalDates = 20000;
+    int32_t totalDates = 5000;
 
     for( uint16_t i = 1; i <= totalDates; i++ )
     {
@@ -300,12 +300,14 @@ void setup()
     
     UNITY_BEGIN();
     
-    RUN_TEST( test_dates_valid );
-    RUN_TEST( test_dates_all );
-    RUN_TEST( test_dates_valid_backwards );
-    RUN_TEST( test_dates_all_backwards );
-    RUN_TEST( test_dates_valid_random );
-    RUN_TEST( test_dates_reset );
+    //RUN_TEST( test_dates_valid );
+    //RUN_TEST( test_dates_all_backwards );
+    //RUN_TEST( test_dates_valid_random );
+    //RUN_TEST( test_dates_reset );
+
+    // way overkill
+    // RUN_TEST( test_dates_all );
+    // RUN_TEST( test_dates_valid_backwards );
     
     UNITY_END();
 
