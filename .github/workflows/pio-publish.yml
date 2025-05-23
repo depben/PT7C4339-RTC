@@ -7,6 +7,6 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: bojit/platformio-publish@main@v1.0.0
+      - uses: bojit/platformio-publish@main
         with:
           token: ${{ secrets.PLATFORMIO_AUTH_TOKEN }}
