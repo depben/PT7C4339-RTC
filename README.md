@@ -148,4 +148,3 @@ This library is licensed under the MIT License. See `LICENSE` for more informati
 ## Acknowledgements
 
 - Both [RTClib](https://github.com/adafruit/RTClib.git) and [DS3231-RTC](https://github.com/hasenradball/DS3231-RTC.git) helped a great deal with writing this library.
-- Special thanks to Jeroen de Bruijn, Lady Ada and the contributors of [adafruit/ci-arduino](https://github.com/adafruit/ci-arduino) for the Doxygen automatic GitHub Pages build and deploy workflow.
