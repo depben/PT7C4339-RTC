@@ -1,8 +1,11 @@
-#include <Arduino.h>
 #include <unity.h>
+#include <Arduino.h>
 #include "PT7C4339-RTC.h"
 
-PT7C4339 rtc( &Wire, 47, 48 );
+#define SDA_PIN 47 //Change this to the correct pin number for your board or disregard it if you are using the default SDA pin
+#define SCL_PIN 48 //Change this to the correct pin number for your board or disregard it if you are using the default SCL pin
+
+PT7C4339 rtc( &Wire, SDA_PIN, SCL_PIN );
 
 void test_dates_valid()
 {
@@ -278,8 +281,8 @@ void test_dates_reset()
 void setUp( void )
 {
     
-    rtc.begin();
     rtc.reset();
+    rtc.begin();
 
 }
 

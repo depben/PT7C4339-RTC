@@ -1141,6 +1141,8 @@ PT7C4339_trickleChargerDiode PT7C4339::getTrickleChargerDiode()
 
   PT7C4339_trickleChargerDiode diode = static_cast<PT7C4339_trickleChargerDiode>( ( readRegister( PT7C4339_REG_TRICKLE_CHARGER ) >> 2 ) & 0x03 );
 
+  if( ( diode != PT7C4339_DIODE_DISABLE ) && ( diode != PT7C4339_DIODE_ENABLE ) ) diode = PT7C4339_DIODE_DISABLE;
+
   return diode;
 
 }
@@ -1193,9 +1195,14 @@ bool PT7C4339::setTrickleChargerConfig( PT7C4339_trickleChargerEnabled enable, P
  * This function writes the default values to all registers.
  *
  * @return bool True if all register writes succeed, false if any write fails.
+ * 
+ * @note The Oscillator Stop Flag is set by this function. It should be cleared by calling clearRtcStopFlag().
  */
 bool PT7C4339::reset()
 {
+
+  bool stopOscillator = enableOscillator( false );
+  delay(1);
 
   bool secondsReset = writeRegister( PT7C4339_REG_SECONDS, 0x00 );
   bool minutesReset = writeRegister( PT7C4339_REG_MINUTES, 0x00 );
@@ -1219,7 +1226,7 @@ bool PT7C4339::reset()
   bool statusReset = writeRegister( PT7C4339_REG_STATUS, 0x80 );
   bool trickleChargerReset = writeRegister( PT7C4339_REG_TRICKLE_CHARGER, 0x00 );
 
-  return ( secondsReset && minutesReset && hoursReset && weekDayReset && daysReset && monthsReset
+  return ( stopOscillator && secondsReset && minutesReset && hoursReset && weekDayReset && daysReset && monthsReset
     && yearsReset && alarm1SecondsReset && alarm1MinutesReset && alarm1HoursReset && alarm1DayDateReset
     && alarm2MinutesReset && alarm2HoursReset && alarm2DayDateReset && controlReset && statusReset && trickleChargerReset );
 
