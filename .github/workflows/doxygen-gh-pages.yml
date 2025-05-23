@@ -1,21 +1,28 @@
-name: Doxygen GitHub Pages Deploy Action
+name: Genearate Doxygen pages and deploy to gh-pages using Adafruit CI
 
 on:
   push:
-    branches:
-      - main
-  workflow_dispatch:
+    branches: main
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    
     steps:
-      - uses: DenverCoder1/doxygen-github-pages-action@v2.0.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: gh-pages
-          folder: docs/html
-          config_file: Doxyfile
-          doxygen_version: 1.9.6
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+    - uses: actions/checkout@v3
+    - uses: actions/checkout@v3
+      with:
+         repository: adafruit/ci-arduino
+         path: ci
+
+    - name: pre-install
+      run: bash ci/actions_install.sh
+
+    - name: doxygen
+      env:
+        GH_REPO_TOKEN: ${{ secrets.GH_REPO_TOKEN }}
+        PRETTYNAME : "PT7C4339-RTC"
+      run: bash ci/doxy_gen_and_deploy.sh src

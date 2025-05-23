@@ -1,91 +1,134 @@
-# Arduino I2C RTC Library
+# Arduino Library for the PT7C4339 RTC IC
 
-This library provides an interface for accessing real-time clock (RTC) devices over the I2C protocol. It is designed for Arduino and compatible platforms.
+A library for interfacing with the PT7C4339 RTC chip over I2C in the Arduino framework. Documentation can be found [here](https://depben.github.io/PT7C4339-RTC/).
 
 ## Features
 
-- Read and set the current date and time
-- Support for various RTC chips
-- Easy to use API
+- **Initialization and Communication**
+  - `begin()`: Initializes the I2C bus, ensures the device is in 24-hour mode, and checks for stop flag.
+  
+- **Time and Date Handling**
+  - `getTime()`, `setTime()`: Retrieve or set the current time (hours, minutes, seconds).
+  - `getDate()`, `setDate()`: Retrieve or set the current date (year, month, day, weekday).
+  - Individual getters/setters for each time/date component: `getHour()`, `setHour()`, etc.
+  - Automatic weekday calculation on every call of a date setter.
+
+- **Alarm and Output Control**
+  - Output mode selection: `getIntOrSqwFlag()`, `setIntOrSqwFlag()`.
+  - Square wave output configuration: `getSqwFrequency()`, `setSqwFrequency()`.
+  - Alarm functionality not yet implemented.
+  
+- **Oscillator and Power Management**
+  - Enable/disable oscillator: `isOscillatorEnabled()`, `enableOscillator()`.
+  - RTC stop flag handling: `getRtcStopFlag()`, `clearRtcStopFlag()`.
+  - Battery-backed interrupt setting: `isIntFromBatteryEnabled()`, `enableIntFromBattery()`.
+
+- **Trickle Charger Configuration**
+  - Query and configure the trickle charger: `getTrickleChargerEnabled()`, `getTrickleChargerDiode()`, `getTrickleChargerResistor()`, `setTrickleChargerConfig()`.
+
+- **Device Reset**
+  - `reset()`: Restores all registers to their default power-on values.
+
+## Limitations
+This library uses 24-hour format for time representation and works from 1900/1/1 to 2099/12/31.
+
+## To Do
+- Implement alarm functionality
 
 ## Installation
 
-1. Download the library or clone the repository:
+1. Download the library with the Arduino Library Manager, from the [PlatformIO Registry](https://registry.platformio.org/libraries/depben/PT7C4339-RTC/), or clone the repository:
    ```bash
-   git clone https://github.com/yourusername/Arduino-I2C-RTC.git
+   git clone https://github.com/depben/PT7C4339-RTC.git
    ```
 
-2. Copy the `I2C_RTC` folder into your Arduino `libraries` directory.
+2. Copy the `PT7C4339-RTC` folder into your Arduino `libraries` directory.
 
-3. Restart the Arduino IDE.
-
-## Example Usage
-
-Here's a simple example of how to use the I2C RTC library.
+3. Restart Arduino IDE.
 
 ### Example Sketch
-
+  This is the SetAndReadDateTime example included in the library
 ```cpp
+// Example code for the PT7C4339-RTC library
+// This example demonstrates how to set and read the date and time using both induvidual and single setters/getters.
+// More info on the GitHub page: https://github.com/depben/PT7C4339-RTC 
+
+#include <Arduino.h>
 #include <Wire.h>
-#include <I2C_RTC.h>
+#include "PT7C4339-RTC.h"
 
-I2C_RTC rtc;
+// Construct PT7C4339 object called rtc
+PT7C4339 rtc( &Wire );
 
-void setup() {
-  Serial.begin(9600);
+void setup()
+{
+
+  Serial.begin( 115200 );
+  delay( 200 );
+
+  // Initialize the RTC
   rtc.begin();
 
-  // set the time to January 1, 2023, 12:00:00
-  rtc.setDateTime(2023, 1, 1, 12, 0, 0);
+  // Not needed as rtc.begin() initializes Wire automatically, setting the I2C frequency to 400kHz, but can be called if wanted
+  // Wire.begin();
+
 }
 
-void loop() {
-  rtc.update();
-  Serial.print("Current time: ");
-  Serial.print(rtc.getHour());
-  Serial.print(":");
-  Serial.print(rtc.getMinute());
-  Serial.print(":");
-  Serial.println(rtc.getSecond());
-  
-  delay(1000); // Wait for 1 second
+void loop()
+{
+
+    // Report if RTC was stopped
+    if( rtc.getRtcStopFlag() )
+    {
+
+        Serial.println( "RTC Stop Flag set! Stored time may be inaccurate!" );
+        rtc.clearRtcStopFlag();
+
+    }
+
+    // Set the date using single setter
+    PT7C4339_Date wantDate = { 2025, 5, 23, PT7C4339_WEEKDAY_UNKNOWN };
+    rtc.setDate( wantDate );
+
+    // Set the time using individual setters
+    rtc.setHour( 13 );
+    rtc.setMinute( 30 );
+    rtc.setSecond( 45 );
+
+    // Read the date using individual getters
+    Serial.print( "Date and time set to: " );
+    Serial.print( rtc.getYear() );
+    Serial.print( "/" );
+    Serial.print( rtc.getMonth() );
+    Serial.print( "/" );
+    Serial.print( rtc.getDay() );
+    Serial.print( " " );
+    switch( rtc.getWeekDay() )
+    {
+
+        case PT7C4339_MONDAY: Serial.print("Monday "); break;
+        case PT7C4339_TUESDAY: Serial.print("Tuesday "); break;
+        case PT7C4339_WEDNESDAY: Serial.print("Wednesday "); break;
+        case PT7C4339_THURSDAY: Serial.print("Thursday "); break;
+        case PT7C4339_FRIDAY: Serial.print("Friday "); break;
+        case PT7C4339_SATURDAY: Serial.print("Saturday "); break;
+        case PT7C4339_SUNDAY: Serial.print("Sunday "); break;
+        default: Serial.print("Weekday was set incorrectly! "); break;
+    
+    }
+
+    // Read the time using single getter
+    PT7C4339_Time gotTime = rtc.getTime();
+    Serial.print( gotTime.hour );
+    Serial.print( ":" );
+    Serial.print( gotTime.minute );
+    Serial.print( ":" );
+    Serial.println( gotTime.second );
+    
+    delay( 5000 );
+
 }
 ```
-
-## API Reference
-
-### Initialization
-
-```cpp
-void begin();
-```
-
-### Set Date and Time
-
-```cpp
-void setDateTime(int year, int month, int day, int hour, int minute, int second);
-```
-
-### Get Current Date and Time
-
-```cpp
-int getYear();
-int getMonth();
-int getDay();
-int getHour();
-int getMinute();
-int getSecond();
-```
-
-## Supported RTC Chips
-
-- DS1307
-- DS3231
-- And more (check the source code for specific support)
-
-## Contributing
-
-Contributions are welcome! Please open an issue or submit a pull request.
 
 ## License
 
@@ -93,8 +136,5 @@ This library is licensed under the MIT License. See `LICENSE` for more informati
 
 ## Acknowledgements
 
-- Inspired by [RTC libraries](https://github.com/adafruit/RTClib)
-
-## Contact
-
-If you have any questions or feedback, please reach out at your.email@example.com.
+- Both [RTClib](https://github.com/adafruit/RTClib.git) and [DS3231-RTC](https://github.com/hasenradball/DS3231-RTC.git) helped a great deal with writing this library.
+- Special thanks to Lady Ada and the contributors of [adafruit/ci-arduino](https://github.com/adafruit/ci-arduino), as well as BOJIT for [platformio-publish](https://github.com/marketplace/actions/platformio-publish).

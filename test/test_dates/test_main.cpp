@@ -1,7 +1,6 @@
 #include <Arduino.h>
 #include <unity.h>
-#include "PT7C4399-RTC.h"
-
+#include "PT7C4339-RTC.h"
 
 PT7C4339 rtc( &Wire, 47, 48 );
 
@@ -32,16 +31,16 @@ void test_dates_valid()
             for( uint8_t day = 1; day <= daysInMonth; ++day )
             {
             
-                PT7C4339_Date setDate = { year, month, day, UNKNOWN };
+                PT7C4339_Date setDate = { year, month, day, PT7C4339_WEEKDAY_UNKNOWN };
                 bool setSuccess = rtc.setDate( setDate );
-                daysOfWeek currentWeekday = rtc.getWeekDay();
-                static daysOfWeek lastWeekday = UNKNOWN;
+                PT7C4339_daysOfWeek currentWeekday = rtc.getWeekDay();
+                static PT7C4339_daysOfWeek lastWeekday = PT7C4339_WEEKDAY_UNKNOWN;
 
                 bool firstDate = setDate.year == 1900 && setDate.month == 1 && setDate.day == 1;
                 bool correctWeekday = false;
                 
                 if( firstDate ) correctWeekday = true;
-                else correctWeekday = ( ( lastWeekday + 1 == currentWeekday ) || ( currentWeekday == MO && lastWeekday == SU ) ) && currentWeekday != UNKNOWN;
+                else correctWeekday = ( ( lastWeekday + 1 == currentWeekday ) || ( currentWeekday == PT7C4339_MONDAY && lastWeekday == PT7C4339_SUNDAY ) ) && currentWeekday != PT7C4339_WEEKDAY_UNKNOWN;
                 
                 lastWeekday = currentWeekday;
                 PT7C4339_Date getDate = rtc.getDate();
@@ -78,7 +77,7 @@ void test_dates_all()
             for( uint8_t day = 1; day <= 31; ++day )
             {
             
-                PT7C4339_Date setDate = { year, month, day, UNKNOWN };
+                PT7C4339_Date setDate = { year, month, day, PT7C4339_WEEKDAY_UNKNOWN };
                 bool setSuccess = rtc.setDate( setDate );
                 PT7C4339_Date getDate = rtc.getDate();
 
@@ -126,16 +125,16 @@ void test_dates_valid_backwards()
             for( uint8_t day = daysInMonth; day >= 1; day-- )
             {
             
-                PT7C4339_Date setDate = { year, month, day, UNKNOWN };
+                PT7C4339_Date setDate = { year, month, day, PT7C4339_WEEKDAY_UNKNOWN };
                 bool setSuccess = rtc.setDate( setDate );
                 
-                daysOfWeek currentWeekday = rtc.getWeekDay();
-                static daysOfWeek lastWeekday = UNKNOWN;
+                PT7C4339_daysOfWeek currentWeekday = rtc.getWeekDay();
+                static PT7C4339_daysOfWeek lastWeekday = PT7C4339_WEEKDAY_UNKNOWN;
                 bool firstDate = setDate.year == 2099 && setDate.month == 12 && setDate.day == 31;
                 
                 bool correctWeekday = false;
                 if( firstDate ) correctWeekday = true;
-                else correctWeekday = ( ( lastWeekday - 1 == currentWeekday ) || ( currentWeekday == SU && lastWeekday == MO ) ) && currentWeekday != UNKNOWN;
+                else correctWeekday = ( ( lastWeekday - 1 == currentWeekday ) || ( currentWeekday == PT7C4339_SUNDAY && lastWeekday == PT7C4339_MONDAY ) ) && currentWeekday != PT7C4339_WEEKDAY_UNKNOWN;
 
                 lastWeekday = currentWeekday;
                 PT7C4339_Date getDate = rtc.getDate();
@@ -183,7 +182,7 @@ void test_dates_all_backwards()
                 else if( month == 4 || month == 6 || month == 9 || month == 11 ) daysInMonth = 30;
                 else daysInMonth = 31;
             
-                PT7C4339_Date setDate = { year, month, day, UNKNOWN };
+                PT7C4339_Date setDate = { year, month, day, PT7C4339_WEEKDAY_UNKNOWN };
                 bool setSuccess = rtc.setDate( setDate );
                 PT7C4339_Date getDate = rtc.getDate();
 
@@ -229,7 +228,7 @@ void test_dates_valid_random()
 
         uint8_t day = random( 1, daysInMonth + 1 );
         
-        PT7C4339_Date setDate = { year, month, day, UNKNOWN };
+        PT7C4339_Date setDate = { year, month, day, PT7C4339_WEEKDAY_UNKNOWN };
         bool setSuccess = rtc.setDate( setDate );
         PT7C4339_Date getDate = rtc.getDate();
         
@@ -254,14 +253,14 @@ void test_dates_reset()
     for( uint16_t i = 1; i <= totalDates; i++ )
     {
     
-        PT7C4339_Date validSetDate = { 2000, 1, 1, SA };
+        PT7C4339_Date validSetDate = { 2000, 1, 1, PT7C4339_WEEKDAY_UNKNOWN };
         rtc.setDate( validSetDate );
 
         uint8_t months[] = { 2, 4, 6, 9, 11 };
         uint8_t month = months[random( 0, 5 )];
         uint16_t year = random( 1900, 2100 );
 
-        PT7C4339_Date setDate = { year, month, 31, UNKNOWN };
+        PT7C4339_Date setDate = { year, month, 31, PT7C4339_WEEKDAY_UNKNOWN };
 
         PT7C4339_Date getDate = rtc.getDate();
 

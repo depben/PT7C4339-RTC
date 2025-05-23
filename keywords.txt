@@ -1,0 +1,94 @@
+#######################################
+# Syntax Coloring Map For PT7C4339-RTC
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+PT7C4339_daysOfWeek KEYWORD1
+
+PT7C4339_sqwFrequency   KEYWORD1
+
+PT7C4339_trickleChargerEnabled  KEYWORD1
+PT7C4339_trickleChargerDiode    KEYWORD1
+PT7C4339_trickleChargerResistor KEYWORD1
+
+PT7C4339_Time   KEYWORD1
+PT7C4339_Date   KEYWORD1
+
+PT7C4339    KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin   KEYWORD2
+reset   KEYWORD2
+
+getTime KEYWORD2
+setTime KEYWORD2
+getSecond   KEYWORD2
+setSecond   KEYWORD2
+getMinute   KEYWORD2
+setMinute   KEYWORD2
+getHour KEYWORD2
+setHour KEYWORD2
+
+getDate KEYWORD2
+setDate KEYWORD2
+getYear KEYWORD2
+setYear KEYWORD2
+getMonth    KEYWORD2
+setMonth    KEYWORD2
+getDay  KEYWORD2
+setDay  KEYWORD2
+getWeekDay  KEYWORD2
+setCorrectWeekDay   KEYWORD2
+calculateWeekDay    KEYWORD2
+
+isOscillatorEnabled KEYWORD2
+enableOscillator    KEYWORD2
+getRtcStopFlag  KEYWORD2
+clearRtcStopFlag    KEYWORD2
+
+isIntFromBatteryEnabled KEYWORD2
+enableIntFromBattery    KEYWORD2
+getIntOrSqwFlag KEYWORD2
+setIntOrSqwFlag KEYWORD2
+getSqwFrequency KEYWORD2
+setSqwFrequency KEYWORD2
+
+getTrickleChargerEnabled    KEYWORD2
+getTrickleChargerDiode  KEYWORD2
+getTrickleChargerResistor   KEYWORD2
+setTrickleChargerConfig KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+PT7C4339_WEEKDAY_UNKNOWN    LITERAL1
+PT7C4339_MONDAY LITERAL1
+PT7C4339_TUESDAY    LITERAL1
+PT7C4339_WEDNESDAY  LITERAL1
+PT7C4339_THURSDAY   LITERAL1
+PT7C4339_FRIDAY LITERAL1
+PT7C4339_SATURDAY   LITERAL1
+PT7C4339_SUNDAY LITERAL1
+
+PT7C4339_SQW_1HZ    LITERAL1
+PT7C4339_SQW_4_96KHZ    LITERAL1
+PT7C4339_SQW_8_192KHZ   LITERAL1
+PT7C4339_SQW_32_768KHZ  LITERAL1
+
+PT7C4339_TRICKLE_DISABLE    LITERAL1
+PT7C4339_TRICKLE_ENABLE LITERAL1
+
+PT7C4339_DIODE_DISABLE  LITERAL1
+PT7C4339_DIODE_ENABLE   LITERAL1
+
+PT7C4339_RESISTOR_DISABLE   LITERAL1
+PT7C4339_RESISTOR_200R  LITERAL1
+PT7C4339_RESISTOR_2K    LITERAL1
+PT7C4339_RESISTOR_4K    LITERAL1
