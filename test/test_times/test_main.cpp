@@ -39,6 +39,35 @@ void test_times_all()
 
 }
 
+void test_times_random()
+{
+    
+    int32_t success = 0;
+    int32_t fail = 0;
+    int32_t totalTimes = 5000;
+
+    for( uint16_t i = 1; i <= totalTimes; i++ )
+    {
+    
+        uint8_t hour = random( 1, 24 );
+        uint8_t minute = random( 1, 60 );
+        uint8_t second = random( 1, 60 );
+        
+        PT7C4339_Time wantTime = { hour, minute, second };
+        bool setSuccess = rtc.setTime( wantTime );
+        PT7C4339_Time gotTime = rtc.getTime();
+        
+        bool dateOk = setSuccess && gotTime.hour == wantTime.hour && gotTime.minute == wantTime.minute && gotTime.second == wantTime.second;
+        if( dateOk ) success++;
+        else fail++;
+
+    }
+
+    TEST_ASSERT_EQUAL_INT32_MESSAGE( 0, fail, "Incorrect number of random time tests failed" );
+    TEST_ASSERT_EQUAL_INT32( totalTimes, success + fail );
+
+}
+
 void setUp( void )
 {
 
@@ -62,6 +91,7 @@ void setup()
     UNITY_BEGIN();
     
     RUN_TEST( test_times_all );
+    RUN_TEST( test_times_random );
     
     UNITY_END();
 

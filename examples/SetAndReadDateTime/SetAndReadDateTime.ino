@@ -12,14 +12,14 @@ PT7C4339 rtc( &Wire, 47, 48 );
 void setup()
 {
 
-    Serial.begin( 115200 );
-    delay( 200 );
+  Serial.begin( 115200 );
+  delay( 200 );
 
-    // Initialize the RTC
-    rtc.begin();
+  // Initialize the RTC
+  rtc.begin();
 
-    // Not needed as rtc.begin() initializes Wire automatically, setting the I2C frequency to 400kHz, but can be called if wanted
-    // Wire.begin();
+  // Not needed as rtc.begin() initializes Wire automatically, setting the I2C frequency to 400kHz, but can be called if wanted
+  // Wire.begin();
 
 }
 
@@ -35,20 +35,16 @@ void loop()
 
     }
 
+    // Set the date using single setter
+    PT7C4339_Date wantDate = { 2025, 5, 23, PT7C4339_WEEKDAY_UNKNOWN };
+    rtc.setDate( wantDate );
+
     // Set the time using individual setters
     rtc.setHour( 13 );
     rtc.setMinute( 30 );
     rtc.setSecond( 45 );
 
-    // Set the date using single setter
-    PT7C4339_Date wantDate;
-    wantDate.year = 2025;
-    wantDate.month = 5;
-    wantDate.day = 23;
-    wantDate.weekDay = PT7C4339_WEEKDAY_UNKNOWN;
-    rtc.setDate( wantDate );
-
-    // Read the time using individual getters
+    // Read the date using individual getters
     Serial.print( "Date and time set to: " );
     Serial.print( rtc.getYear() );
     Serial.print( "/" );
@@ -71,7 +67,7 @@ void loop()
     }
 
     // Read the time using single getter
-    PT7C4339_Time gotTime;
+    PT7C4339_Time gotTime = rtc.getTime();
     Serial.print( gotTime.hour );
     Serial.print( ":" );
     Serial.print( gotTime.minute );
