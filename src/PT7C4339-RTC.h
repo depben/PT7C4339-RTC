@@ -23,27 +23,27 @@
 
 #include <Wire.h>
 
-#define PT7C4339_I2C_ADDRESS          0x68
+#define PT7C4339_I2C_ADDRESS          0x68 ///< 7bit I2C address of the PT7C4339 RTC
 
-#define PT7C4339_REG_SECONDS          0x00
-#define PT7C4339_REG_MINUTES          0x01
-#define PT7C4339_REG_HOURS            0x02
-#define PT7C4339_REG_DAYS_OF_WEEK     0x03
-#define PT7C4339_REG_DATES            0x04
-#define PT7C4339_REG_MONTHS           0x05
-#define PT7C4339_REG_YEARS            0x06
-#define PT7C4339_REG_A1_SECONDS       0x07
-#define PT7C4339_REG_A1_MINUTES       0x08
-#define PT7C4339_REG_A1_HOURS         0x09
-#define PT7C4339_REG_A1_DAY_DATE      0x0A
-#define PT7C4339_REG_A2_MINUTES       0x0B
-#define PT7C4339_REG_A2_HOURS         0x0C
-#define PT7C4339_REG_A2_DAY_DATE      0x0D
-#define PT7C4339_REG_CONTROL          0x0E
-#define PT7C4339_REG_STATUS           0x0F
-#define PT7C4339_REG_TRICKLE_CHARGER  0x10
+#define PT7C4339_REG_SECONDS          0x00 ///< Register address for seconds
+#define PT7C4339_REG_MINUTES          0x01 ///< Register address for minutes
+#define PT7C4339_REG_HOURS            0x02 ///< Register address for hours
+#define PT7C4339_REG_DAYS_OF_WEEK     0x03 ///< Register address for days of the week
+#define PT7C4339_REG_DATES            0x04 ///< Register address for days
+#define PT7C4339_REG_MONTHS           0x05 ///< Register address for months
+#define PT7C4339_REG_YEARS            0x06 ///< Register address for years
+#define PT7C4339_REG_A1_SECONDS       0x07 ///< Register address for alarm 1 seconds
+#define PT7C4339_REG_A1_MINUTES       0x08 ///< Register address for alarm 1 minutes
+#define PT7C4339_REG_A1_HOURS         0x09 ///< Register address for alarm 1 hours
+#define PT7C4339_REG_A1_DAY_DATE      0x0A ///< Register address for alarm 1 day/date
+#define PT7C4339_REG_A2_MINUTES       0x0B ///< Register address for alarm 2 minutes
+#define PT7C4339_REG_A2_HOURS         0x0C ///< Register address for alarm 2 hours
+#define PT7C4339_REG_A2_DAY_DATE      0x0D ///< Register address for alarm 2 day/date
+#define PT7C4339_REG_CONTROL          0x0E ///< Register address for control bits
+#define PT7C4339_REG_STATUS           0x0F ///< Register address for status bits
+#define PT7C4339_REG_TRICKLE_CHARGER  0x10 ///< Register address for the trickle charger
 
-enum PT7C4339_daysOfWeek
+enum PT7C4339_daysOfWeek ///< Enum for the days of the week of the PT7C4339 RTC
 {
 
   PT7C4339_WEEKDAY_UNKNOWN = 0, ///< Used for calling setDate()
@@ -57,7 +57,7 @@ enum PT7C4339_daysOfWeek
 
 };
 
-enum PT7C4339_sqwFrequency
+enum PT7C4339_sqwFrequency ///< Enum for the frequency of the square wave output of the PT7C4339 RTC
 {
 
   PT7C4339_SQW_1HZ = 0x00, ///< 1Hz square wave output
@@ -67,7 +67,7 @@ enum PT7C4339_sqwFrequency
 
 };
 
-enum PT7C4339_trickleChargerEnabled
+enum PT7C4339_trickleChargerEnabled ///< Enum for the trickle charger enable setting of the PT7C43339 RTC
 {
 
   PT7C4339_TRICKLE_DISABLE = 0x00, ///< The trickle charger is disabled
@@ -75,7 +75,7 @@ enum PT7C4339_trickleChargerEnabled
 
 };
 
-enum PT7C4339_trickleChargerDiode
+enum PT7C4339_trickleChargerDiode ///< Enum for the trickle charger diode enable setting of the PT7C43339 RTC
 {
 
   PT7C4339_DIODE_DISABLE = 0x01, ///< No series diode from Vcc to Vbackup
@@ -83,7 +83,7 @@ enum PT7C4339_trickleChargerDiode
 
 };
 
-enum PT7C4339_trickleChargerResistor
+enum PT7C4339_trickleChargerResistor ///< Enum for the trickle charger resistor settings of the PT7C43339 RTC
 {
 
   PT7C4339_RESISTOR_DISABLE = 0x00, ///< No resistor from Vcc to Vbackup - trickle charger disabled
@@ -100,7 +100,7 @@ typedef struct
   uint8_t minute; ///< Minutes (0-59)
   uint8_t second; ///< Seconds (0-59)
 
-} PT7C4339_Time;
+} PT7C4339_Time; ///< Time structure for the PT7C4339 RTC
 
 typedef struct
 {
@@ -110,9 +110,9 @@ typedef struct
   uint8_t day; ///< Day (1-31)
   PT7C4339_daysOfWeek weekDay; ///< Day of the week (1-7, where 1 = Monday and 7 = Sunday)
 
-} PT7C4339_Date;
+} PT7C4339_Date; ///< Date structure for the PT7C4339 RTC
 
-class PT7C4339
+class PT7C4339 ///< Class for the PT7C4339 RTC
 {
   
   public:
