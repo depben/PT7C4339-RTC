@@ -300,9 +300,9 @@ void setup()
     
     UNITY_BEGIN();
     
-    //RUN_TEST( test_dates_valid );
-    //RUN_TEST( test_dates_all_backwards );
-    //RUN_TEST( test_dates_valid_random );
+    RUN_TEST( test_dates_valid );
+    RUN_TEST( test_dates_all_backwards );
+    RUN_TEST( test_dates_valid_random );
     RUN_TEST( test_dates_reset );
 
     // way overkill
