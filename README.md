@@ -47,7 +47,6 @@ This library uses 24-hour format for time representation and works from 1900/1/1
 3. Restart Arduino IDE.
 
 ### Example Sketch
-  This is the SetAndReadDateTime example included in the library
 ```cpp
 // SetAndReadDateTime example code for the PT7C4339-RTC library
 // This example demonstrates how to set and read the date and time using both induvidual and single setters/getters,
@@ -58,8 +57,11 @@ This library uses 24-hour format for time representation and works from 1900/1/1
 //#include <Wire.h> No need to include as the RTC library includes it already, but can be included if wanted
 #include "PT7C4339-RTC.h"
 
+static const uint8_t SDA_PIN = SDA; // Set to the SDA pin of the microcontroller
+static const uint8_t SCL_PIN = SCL; // Set to the SCL pin of the microcontroller
+
 // Construct PT7C4339 object called rtc
-PT7C4339 rtc( &Wire );
+PT7C4339 rtc( &Wire, SDA_PIN, SCL_PIN );
 
 void setup()
 {
@@ -74,7 +76,7 @@ void setup()
     // Wire.begin();
 
     // Set the date using single setter
-    PT7C4339_Date wantDate = { 2025, 5, 23, PT7C4339_WEEKDAY_UNKNOWN };
+    PT7C4339_Date wantDate = { 2025, 5, 23, PT7C4339_WEEKDAY_UNKNOWN }; // Weekday will be set automatically, input parameter is ignored
     rtc.setDate( wantDate );
 
     // Set the time using individual setters
@@ -107,7 +109,7 @@ void loop()
         last = now;
     
         // Read the date using individual getters
-        Serial.print( "Date and time set to: " );
+        Serial.print( "Date and time: " );
         Serial.print( rtc.getYear() );
         Serial.print( "/" );
         Serial.print( rtc.getMonth() );
@@ -116,7 +118,6 @@ void loop()
         Serial.print( " " );
         switch( rtc.getWeekDay() )
         {
-
             case PT7C4339_MONDAY: Serial.print("Monday "); break;
             case PT7C4339_TUESDAY: Serial.print("Tuesday "); break;
             case PT7C4339_WEDNESDAY: Serial.print("Wednesday "); break;
@@ -125,7 +126,6 @@ void loop()
             case PT7C4339_SATURDAY: Serial.print("Saturday "); break;
             case PT7C4339_SUNDAY: Serial.print("Sunday "); break;
             default: Serial.print("Weekday was set incorrectly! "); break;
-        
         }
 
         // Read the time using single getter
