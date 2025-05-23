@@ -177,7 +177,7 @@ uint8_t PT7C4339::readRegister( uint8_t REG )
   _i2cWire->write( REG );
   _i2cWire->endTransmission();
 
-  _i2cWire->requestFrom( _i2cAddress, 1 );
+  _i2cWire->requestFrom( _i2cAddress, static_cast<uint8_t>(1) );
   while( _i2cWire->available() )
   {
 
