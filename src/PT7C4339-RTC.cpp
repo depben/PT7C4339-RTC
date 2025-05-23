@@ -38,7 +38,7 @@
  * 
  * @author      Bence Murin
  * @date        2025-05-23
- * @version     0.1.1
+ * @version     0.1.2
  * @copyright   MIT License
  * 
  * @todo Implement alarm functionality.
