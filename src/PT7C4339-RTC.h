@@ -93,6 +93,10 @@ enum PT7C4339_trickleChargerResistor ///< Enum for the trickle charger resistor 
 
 };
 
+/**
+ * @struct PT7C4339_Time
+ * Time structure for the PT7C4339 RTC
+ */
 typedef struct
 {
 
@@ -102,6 +106,10 @@ typedef struct
 
 } PT7C4339_Time; ///< Time structure for the PT7C4339 RTC
 
+/**
+ * @struct PT7C4339_Date
+ * Date structure for the PT7C4339 RTC
+ */
 typedef struct
 {
 
