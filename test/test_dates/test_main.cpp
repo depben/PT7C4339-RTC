@@ -256,7 +256,7 @@ void test_dates_reset()
     for( uint16_t i = 1; i <= totalDates; i++ )
     {
     
-        PT7C4339_Date validSetDate = { 2000, 1, 1, PT7C4339_WEEKDAY_UNKNOWN };
+        PT7C4339_Date validSetDate = { 2001, 1, 1, PT7C4339_MONDAY };
         rtc.setDate( validSetDate );
 
         uint8_t months[] = { 2, 4, 6, 9, 11 };
@@ -303,7 +303,7 @@ void setup()
     //RUN_TEST( test_dates_valid );
     //RUN_TEST( test_dates_all_backwards );
     //RUN_TEST( test_dates_valid_random );
-    //RUN_TEST( test_dates_reset );
+    RUN_TEST( test_dates_reset );
 
     // way overkill
     // RUN_TEST( test_dates_all );
