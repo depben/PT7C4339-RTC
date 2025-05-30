@@ -10,11 +10,9 @@
  * @note This library uses 24-hour format for time representation and works from 1900-1-1 to 2099-12-31.
  *
  * @author      Bence Murin
- * @date        2025-05-23
- * @version     0.1.3
+ * @date        2025-05-30
+ * @version     1.0.0
  * @copyright   MIT License
- * 
- * @todo Implement alarm functionality.
  * 
 **/
 
@@ -45,7 +43,6 @@
 
 enum PT7C4339_daysOfWeek ///< Enum for the days of the week of the PT7C4339 RTC
 {
-
   PT7C4339_WEEKDAY_UNKNOWN = 0, ///< Used for calling setDate()
   PT7C4339_MONDAY = 1, ///< Monday
   PT7C4339_TUESDAY = 2, ///< Tuesday
@@ -54,43 +51,55 @@ enum PT7C4339_daysOfWeek ///< Enum for the days of the week of the PT7C4339 RTC
   PT7C4339_FRIDAY = 5, ///< Friday
   PT7C4339_SATURDAY = 6, ///< Saturday
   PT7C4339_SUNDAY = 7 ///< Sunday
-
 };
 
 enum PT7C4339_sqwFrequency ///< Enum for the frequency of the square wave output of the PT7C4339 RTC
 {
-
   PT7C4339_SQW_1HZ = 0x00, ///< 1Hz square wave output
   PT7C4339_SQW_4_96KHZ = 0x01, ///< 4.96kHz square wave output
   PT7C4339_SQW_8_192KHZ = 0x02, ///< 8.192kHz square wave output
   PT7C4339_SQW_32_768KHZ = 0x03 ///< 32.768kHz square wave output
-
 };
 
 enum PT7C4339_trickleChargerEnabled ///< Enum for the trickle charger enable setting of the PT7C43339 RTC
 {
-
   PT7C4339_TRICKLE_DISABLE = 0x00, ///< The trickle charger is disabled
   PT7C4339_TRICKLE_ENABLE = 0x0A ///< The trickle charger is enabled
-
 };
 
 enum PT7C4339_trickleChargerDiode ///< Enum for the trickle charger diode enable setting of the PT7C43339 RTC
 {
-
   PT7C4339_DIODE_DISABLE = 0x01, ///< No series diode from Vcc to Vbackup
   PT7C4339_DIODE_ENABLE = 0x02 ///< Series diode from Vcc to Vbackup
-
 };
 
 enum PT7C4339_trickleChargerResistor ///< Enum for the trickle charger resistor settings of the PT7C43339 RTC
 {
-
   PT7C4339_RESISTOR_DISABLE = 0x00, ///< No resistor from Vcc to Vbackup - trickle charger disabled
   PT7C4339_RESISTOR_200R = 0x01, ///< 200 Ohm resistor from Vcc to Vbackup
   PT7C4339_RESISTOR_2K = 0x02, ///< 2K Ohm resistor from Vcc to Vbackup
   PT7C4339_RESISTOR_4K = 0x03 ///< 4K Ohm resistor from Vcc to Vbackup
+};
 
+enum PT7C4339_A1_rate ///< Enum for the trigger rate of alarm 1 of the PT7C43339 RTC
+{
+  PT7C4339_A1_EVERY_SECOND = 0x0F, ///< Trigger alarm every second
+  PT7C4339_A1_SECONDS_MATCH = 0x0E, ///< Trigger alarm if seconds match
+  PT7C4339_A1_MINUTES_SECONDS_MATCH = 0x0C, ///< Trigger alarm if minutes and seconds match
+  PT7C4339_A1_HOURS_MINUTES_SECONDS_MATCH = 0x08, ///< Trigger alarm if hours, minutes, and seconds match
+  PT7C4339_A1_DAY_HOURS_MINUTES_SECONDS_MATCH = 0x00, ///< Trigger alarm if day of the month, hours, minutes, and seconds match
+  PT7C4339_A1_WEEKDAY_HOURS_MINUTES_SECONDS_MATCH = 0x10, ///< Trigger alarm if day of the week, hours, minutes, and seconds match
+  PT7C4339_A1_DISABLE = 0x01 ///< Disable alarm
+};
+
+enum PT7C4339_A2_rate ///< Enum for the trigger rate of alarm 2 of the PT7C43339 RTC
+{
+  PT7C4339_A2_EVERY_MINUTE = 0x07, ///< Trigger alarm at 00 seconds of every minute
+  PT7C4339_A2_MINUTES_MATCH = 0x06, ///< Trigger alarm if minutes match
+  PT7C4339_A2_HOURS_MINUTES_MATCH = 0x04, ///< Trigger alarm if hours and minutes match
+  PT7C4339_A2_DAY_HOURS_MINUTES_MATCH = 0x00, ///< Trigger alarm if day of the month, hours, and minutes match
+  PT7C4339_A2_WEEKDAY_HOURS_MINUTES_MATCH = 0x10, ///< Trigger alarm if day of the week, hours, and minutes match
+  PT7C4339_A2_DISABLE = 0x01 ///< Disable alarm
 };
 
 /**
@@ -99,11 +108,9 @@ enum PT7C4339_trickleChargerResistor ///< Enum for the trickle charger resistor 
  */
 typedef struct
 {
-
   uint8_t hour; ///< Hours (0-23)
   uint8_t minute; ///< Minutes (0-59)
   uint8_t second; ///< Seconds (0-59)
-
 } PT7C4339_Time; ///< Time structure for the PT7C4339 RTC
 
 /**
@@ -112,24 +119,22 @@ typedef struct
  */
 typedef struct
 {
-
   uint16_t year; ///< Year (1900-2099)
   uint8_t month; ///< Month (1-12)
   uint8_t day; ///< Day (1-31)
   PT7C4339_daysOfWeek weekDay; ///< Day of the week (1-7, where 1 = Monday and 7 = Sunday)
-
 } PT7C4339_Date; ///< Date structure for the PT7C4339 RTC
 
 class PT7C4339 ///< Class for the PT7C4339 RTC
 {
-  
   public:
-    
+    /* Setup */
     PT7C4339( TwoWire *i2cWire = &Wire, uint8_t SDA = 0, uint8_t SCL = 0, uint32_t frequency = 400000 );
     
     uint8_t begin();
     bool reset();
-    
+
+    /* Date, time */
     PT7C4339_Time getTime();
     bool setTime( PT7C4339_Time time );
     
@@ -158,6 +163,7 @@ class PT7C4339 ///< Class for the PT7C4339 RTC
     bool setCorrectWeekDay(); // Should not be needed as it gets called by every date setter, but leaving it public just in case
     PT7C4339_daysOfWeek calculateWeekDay( uint16_t year, uint8_t month, uint8_t day );
 
+    /* Control */
     bool isOscillatorEnabled();
     bool enableOscillator( bool enable );
 
@@ -178,6 +184,37 @@ class PT7C4339 ///< Class for the PT7C4339 RTC
     PT7C4339_trickleChargerResistor getTrickleChargerResistor();
     bool setTrickleChargerConfig( PT7C4339_trickleChargerEnabled enable, PT7C4339_trickleChargerDiode diode, PT7C4339_trickleChargerResistor resistor );
 
+    /* Alarms */
+    bool isA1IntEnabled();
+    bool enableA1Int( bool enable );
+
+    bool getA1Flag();
+    bool clearA1Flag();
+
+    PT7C4339_A1_rate getA1Rate();
+    bool setA1Rate( PT7C4339_A1_rate rate );
+
+    PT7C4339_Time getA1Time();
+    bool setA1Time( PT7C4339_Time time );
+
+    PT7C4339_Date getA1DayDate();
+    bool setA1DayDate( PT7C4339_Date date );
+
+    bool isA2IntEnabled();
+    bool enableA2Int( bool enable );
+
+    bool getA2Flag();
+    bool clearA2Flag();
+
+    PT7C4339_A2_rate getA2Rate();
+    bool setA2Rate( PT7C4339_A2_rate rate );
+
+    PT7C4339_Time getA2Time();
+    bool setA2Time( PT7C4339_Time time );
+
+    PT7C4339_Date getA2DayDate();
+    bool setA2DayDate( PT7C4339_Date date );
+
   private:
 
     uint8_t _i2cAddress;
@@ -194,7 +231,6 @@ class PT7C4339 ///< Class for the PT7C4339 RTC
 
     bool readBit( uint8_t REG, uint8_t BIT );
     bool writeBit( uint8_t REG, uint8_t BIT, bool value );
-
 };
 
 #endif

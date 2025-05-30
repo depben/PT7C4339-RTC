@@ -16,7 +16,20 @@ A library for interfacing with the PT7C4339 RTC chip over I2C in the Arduino fra
 - **Alarm and Output Control**
   - Output mode selection: `getIntOrSqwFlag()`, `setIntOrSqwFlag()`.
   - Square wave output configuration: `getSqwFrequency()`, `setSqwFrequency()`.
-  - Alarm functionality not yet implemented.
+
+- **Alarm 1 Functions**
+  - `isA1IntEnabled()`, `enableA1Int()`: Check or set if alarm 1 can trigger INT/SQW output.
+  - `getA1Flag()`, `clearA1Flag()`: Check or clear alarm 1 match flag.
+  - `getA1Rate()`, `setA1Rate()`: Get or set alarm 1 match rate.
+  - `getA1Time()`, `setA1Time()`: Get or set alarm 1 time (hour, minute, second).
+  - `getA1DayDate()`, `setA1DayDate()`: Get or set alarm 1 day/date (by day or weekday).
+
+- **Alarm 2 Functions**
+  - `isA2IntEnabled()`, `enableA2Int()`: Check or set if alarm 2 can trigger INT/SQW output.
+  - `getA2Flag()`, `clearA2Flag()`: Check or clear alarm 2 match flag.
+  - `getA2Rate()`, `setA2Rate()`: Get or set alarm 2 match rate.
+  - `getA2Time()`, `setA2Time()`: Get or set alarm 2 time (hour, minute).
+  - `getA2DayDate()`, `setA2DayDate()`: Get or set alarm 2 day/date (by day or weekday).
   
 - **Oscillator and Power Management**
   - Enable/disable oscillator: `isOscillatorEnabled()`, `enableOscillator()`.
@@ -32,19 +45,11 @@ A library for interfacing with the PT7C4339 RTC chip over I2C in the Arduino fra
 ## Limitations
 This library uses 24-hour format for time representation and works from 1900/1/1 to 2099/12/31.
 
-## To Do
-- Implement alarm functionality
-
 ## Installation
 
-1. Download the library with the Arduino Library Manager, from the [PlatformIO Registry](https://registry.platformio.org/libraries/depben/PT7C4339-RTC/), or clone the repository:
-   ```bash
-   git clone https://github.com/depben/PT7C4339-RTC.git
-   ```
+1. Download the library with the [Arduino Library Manager](https://docs.arduino.cc/libraries/pt7c4339-rtc/), from the [PlatformIO Registry](https://registry.platformio.org/libraries/depben/PT7C4339-RTC/), or get the latest [release from GitHub](https://github.com/depben/PT7C4339-RTC/releases/)
 
-2. Copy the `PT7C4339-RTC` folder into your Arduino `libraries` directory.
-
-3. Restart Arduino IDE.
+2. If you went with downloading the release, copy the `PT7C4339-RTC` folder into your Arduino `libraries` directory and restart Arduino IDE.
 
 ### Example Sketch
 ```cpp

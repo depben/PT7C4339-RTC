@@ -22,6 +22,20 @@
  * - **Alarm and Output Control**
  *   - Output mode selection: `getIntOrSqwFlag()`, `setIntOrSqwFlag()`.
  *   - Square wave output configuration: `getSqwFrequency()`, `setSqwFrequency()`.
+ * 
+ * - **Alarm 1 Functions**
+ *   - `isA1IntEnabled()`, `enableA1Int()`: Check or set if alarm 1 can trigger INT/SQW output.
+ *   - `getA1Flag()`, `clearA1Flag()`: Check or clear alarm 1 match flag.
+ *   - `getA1Rate()`, `setA1Rate()`: Get or set alarm 1 match rate.
+ *   - `getA1Time()`, `setA1Time()`: Get or set alarm 1 time (hour, minute, second).
+ *   - `getA1DayDate()`, `setA1DayDate()`: Get or set alarm 1 day/date (by day or weekday).
+ * 
+ * - **Alarm 2 Functions**
+ *   - `isA2IntEnabled()`, `enableA2Int()`: Check or set if alarm 2 can trigger INT/SQW output.
+ *   - `getA2Flag()`, `clearA2Flag()`: Check or clear alarm 2 match flag.
+ *   - `getA2Rate()`, `setA2Rate()`: Get or set alarm 2 match rate.
+ *   - `getA2Time()`, `setA2Time()`: Get or set alarm 2 time (hour, minute).
+ *   - `getA2DayDate()`, `setA2DayDate()`: Get or set alarm 2 day/date (by day or weekday).
  *   
  * - **Oscillator and Power Management**
  *   - Enable/disable oscillator: `isOscillatorEnabled()`, `enableOscillator()`.
@@ -37,11 +51,9 @@
  * @note This library uses 24-hour format for time representation and works from 1900-1-1 to 2099-12-31.
  * 
  * @author      Bence Murin
- * @date        2025-05-23
- * @version     0.1.3
+ * @date        2025-05-30
+ * @version     1.0.0
  * @copyright   MIT License
- * 
- * @todo Implement alarm functionality.
  * 
 **/
 
@@ -57,13 +69,11 @@
  */
 PT7C4339::PT7C4339( TwoWire *i2cWire, uint8_t SDA, uint8_t SCL, uint32_t frequency )
 {
-
   _i2cAddress = PT7C4339_I2C_ADDRESS;
   _i2cWire = i2cWire;
   _SDA = SDA;
   _SCL = SCL;
   _frequency = frequency;
-
 }
 
 /**
@@ -81,49 +91,54 @@ PT7C4339::PT7C4339( TwoWire *i2cWire, uint8_t SDA, uint8_t SCL, uint32_t frequen
  */
 uint8_t PT7C4339::begin()
 {
-
   _i2cWire->beginTransmission( _i2cAddress );
   uint8_t error = _i2cWire->endTransmission();
 
   if( error != 0 )
   {
-
     if( _SDA == 0 && _SCL == 0 )
     {
-
       _i2cWire->begin();
       _i2cWire->setClock( _frequency );
-
     }
     else
     {
-
       _i2cWire->begin( _SDA, _SCL );
       _i2cWire->setClock( _frequency );
-
     }
 
     _i2cWire->beginTransmission( _i2cAddress );
     error = _i2cWire->endTransmission();
 
     if( error != 0 ) return 0;
-
   }
 
   uint8_t hours = readRegister( PT7C4339_REG_HOURS );
-
   bool is12H = hours & 0x40;
   if( is12H )
   {
-
     hours &= 0xBF;
     if( !writeRegister( PT7C4339_REG_HOURS, hours ) ) return 0;
+  }
 
+  uint8_t hoursA1 = readRegister( PT7C4339_REG_A1_HOURS );
+  bool A1Is12H = hoursA1 & 0x40;
+  if( A1Is12H )
+  {
+    hoursA1 &= 0xBF;
+    if( !writeRegister( PT7C4339_REG_A1_HOURS, hoursA1 ) ) return 0;
+  }
+
+  uint8_t hoursA2 = readRegister( PT7C4339_REG_A2_HOURS );
+  bool A2Is12H = hoursA2 & 0x40;
+  if( A2Is12H )
+  {
+    hoursA2 &= 0xBF;
+    if( !writeRegister( PT7C4339_REG_A2_HOURS, hoursA2 ) ) return 0;
   }
 
   if( getRtcStopFlag() ) return 2;
   else return 1;
-
 }
 
 /**
@@ -137,9 +152,7 @@ uint8_t PT7C4339::begin()
  */
 uint8_t PT7C4339::bcdToDec( uint8_t bcd )
 {
-
   return ( ( ( bcd >> 4 ) * 10 ) + ( bcd & 0x0F ) );
-
 }
 
 /**
@@ -154,9 +167,7 @@ uint8_t PT7C4339::bcdToDec( uint8_t bcd )
  */
 uint8_t PT7C4339::decToBcd( uint8_t dec )
 {
-
   return ( ( ( dec / 10 ) << 4) | ( dec % 10 ) );
-
 }
 
 /**
@@ -170,7 +181,6 @@ uint8_t PT7C4339::decToBcd( uint8_t dec )
  */
 uint8_t PT7C4339::readRegister( uint8_t REG )
 {
-
   uint8_t registerData;
 
   _i2cWire->beginTransmission( _i2cAddress );
@@ -180,13 +190,10 @@ uint8_t PT7C4339::readRegister( uint8_t REG )
   _i2cWire->requestFrom( _i2cAddress, static_cast<uint8_t>(1) );
   while( _i2cWire->available() )
   {
-
     registerData = _i2cWire->read();
-
   }
 
   return registerData;
-
 }
 
 /**
@@ -201,7 +208,6 @@ uint8_t PT7C4339::readRegister( uint8_t REG )
  */
 bool PT7C4339::writeRegister( uint8_t REG, uint8_t DATA )
 {
-
   bool writeSuccess;
 
   _i2cWire->beginTransmission( _i2cAddress );
@@ -213,7 +219,6 @@ bool PT7C4339::writeRegister( uint8_t REG, uint8_t DATA )
   else writeSuccess = false;
 
   return writeSuccess;
-
 }
 
 /**
@@ -226,7 +231,6 @@ bool PT7C4339::writeRegister( uint8_t REG, uint8_t DATA )
  */
 PT7C4339_Time PT7C4339::getTime()
 {
-
   PT7C4339_Time time;
 
   time.hour = getHour();
@@ -234,7 +238,6 @@ PT7C4339_Time PT7C4339::getTime()
   time.second = getSecond();
   
   return time;
-
 }
 
 /**
@@ -251,19 +254,15 @@ PT7C4339_Time PT7C4339::getTime()
  */
 bool PT7C4339::setTime( PT7C4339_Time time )
 {
-
   bool setSuccess = false;
 
   if( time.hour < 24 && time.minute < 60 && time.second < 60 )
   {
-
     setSuccess = setHour( time.hour ) && setMinute( time.minute ) && setSecond( time.second );
-
   }
   else setSuccess = false;
 
   return setSuccess;
-
 }
 
 /**
@@ -276,7 +275,6 @@ bool PT7C4339::setTime( PT7C4339_Time time )
  */
 PT7C4339_Date PT7C4339::getDate()
 {
-
   PT7C4339_Date date;
 
   date.year = getYear();
@@ -285,7 +283,6 @@ PT7C4339_Date PT7C4339::getDate()
   date.weekDay = getWeekDay();
 
   return date;
-
 }
 
 /**
@@ -305,22 +302,18 @@ PT7C4339_Date PT7C4339::getDate()
  */
 bool PT7C4339::setDate( PT7C4339_Date date )
 {
-
   PT7C4339_Date oldDate = getDate();
 
   bool setSuccess = setYear( date.year ) && setMonth( date.month ) && setDay( date.day );
 
   if ( !setSuccess )
   {
-
     setYear( oldDate.year );
     setMonth( oldDate.month );
     setDay( oldDate.day );
-
   }
 
   return setSuccess;
-
 }
 
 /**
@@ -339,7 +332,6 @@ bool PT7C4339::setDate( PT7C4339_Date date )
  */
 PT7C4339_daysOfWeek PT7C4339::calculateWeekDay( uint16_t year, uint8_t month, uint8_t day )
 {
-
   uint8_t yearCode;
   uint8_t monthCode;
   uint8_t centuryCode;
@@ -352,57 +344,44 @@ PT7C4339_daysOfWeek PT7C4339::calculateWeekDay( uint16_t year, uint8_t month, ui
 
   switch ( month )
   {
-    
     case 1:
       monthCode = 0;
       if( isLeapYear ) leapYearMod = true;
       break;
-
     case 2:
       monthCode = 3;
       if( isLeapYear ) leapYearMod = true;
       break;
-
     case 3:
       monthCode = 3;
       break;
-
     case 4:
       monthCode = 6;
       break;
-
     case 5:
       monthCode = 1;
       break;
-
     case 6:
       monthCode = 4;
       break;
-
     case 7:
       monthCode = 6;
       break;
-
     case 8:
       monthCode = 2;
       break;
-
     case 9:
       monthCode = 5;
       break;
-
     case 10:
       monthCode = 0;
       break;
-
     case 11:
       monthCode = 3;
       break;
-
     case 12:
       monthCode = 5;
       break;
-  
   }
 
   bool is2000;
@@ -419,7 +398,6 @@ PT7C4339_daysOfWeek PT7C4339::calculateWeekDay( uint16_t year, uint8_t month, ui
   PT7C4339_daysOfWeek calculatedWeekDay = static_cast<PT7C4339_daysOfWeek>( offsetWeekday );
 
   return calculatedWeekDay;
-
 }
 
 /**
@@ -434,12 +412,10 @@ PT7C4339_daysOfWeek PT7C4339::calculateWeekDay( uint16_t year, uint8_t month, ui
  */
 bool PT7C4339::readBit( uint8_t REG, uint8_t BIT )
 {
-
   uint8_t registerData = readRegister( REG );
   bool bitValue = ( registerData >> BIT ) & 0x01;
 
   return bitValue;
-
 }
 
 
@@ -457,7 +433,6 @@ bool PT7C4339::readBit( uint8_t REG, uint8_t BIT )
  */
 bool PT7C4339::writeBit( uint8_t REG, uint8_t BIT, bool value )
 {
-
   uint8_t registerData = readRegister( REG );
 
   if( value == true ) registerData |= ( 1 << BIT );
@@ -466,7 +441,6 @@ bool PT7C4339::writeBit( uint8_t REG, uint8_t BIT, bool value )
   bool writeSuccess = writeRegister( REG, registerData );
 
   return writeSuccess;
-  
 }
 
 /**
@@ -479,12 +453,10 @@ bool PT7C4339::writeBit( uint8_t REG, uint8_t BIT, bool value )
  */
 uint8_t PT7C4339::getSecond()
 {
-
   uint8_t seconds = readRegister( PT7C4339_REG_SECONDS );
   seconds = bcdToDec( seconds & 0x7F );
 
   return seconds;
-
 }
 
 /**
@@ -498,12 +470,10 @@ uint8_t PT7C4339::getSecond()
  */
 uint8_t PT7C4339::getMinute()
 {
-
   uint8_t minutes = readRegister( PT7C4339_REG_MINUTES );
   minutes = bcdToDec( minutes & 0x7F );
 
   return minutes;
-
 }
 
 /**
@@ -517,12 +487,10 @@ uint8_t PT7C4339::getMinute()
  */
 uint8_t PT7C4339::getHour()
 {
-
   uint8_t hours = readRegister( PT7C4339_REG_HOURS );
   hours = bcdToDec( hours & 0x3F );
 
   return hours;
-
 }
 
 /**
@@ -535,12 +503,10 @@ uint8_t PT7C4339::getHour()
  */
 PT7C4339_daysOfWeek PT7C4339::getWeekDay()
 {
-
   uint8_t weekDay = readRegister( PT7C4339_REG_DAYS_OF_WEEK );
   weekDay = ( weekDay & 0x07 );
 
   return static_cast<PT7C4339_daysOfWeek>( weekDay );
-
 }
 
 /**
@@ -553,12 +519,10 @@ PT7C4339_daysOfWeek PT7C4339::getWeekDay()
  */
 uint8_t PT7C4339::getDay()
 {
-
   uint8_t day = readRegister( PT7C4339_REG_DATES );
   day = bcdToDec( day & 0x3F );
 
   return day;
-
 }
 
 /**
@@ -571,13 +535,11 @@ uint8_t PT7C4339::getDay()
  */
 uint8_t PT7C4339::getMonth()
 {
-
   uint8_t month = readRegister( PT7C4339_REG_MONTHS );
   month &= 0x1F;
   month = bcdToDec( month );
 
   return month;
-
 }
 
 /**
@@ -591,7 +553,6 @@ uint8_t PT7C4339::getMonth()
  */
 uint16_t PT7C4339::getYear()
 {
-
   uint16_t year = readRegister( PT7C4339_REG_YEARS );
   uint8_t month = readRegister( PT7C4339_REG_MONTHS );
   year = bcdToDec( year );
@@ -600,7 +561,6 @@ uint16_t PT7C4339::getYear()
   else year += 1900;
 
   return year;
-
 }
 
 /**
@@ -615,27 +575,18 @@ uint16_t PT7C4339::getYear()
  */
 bool PT7C4339::setSecond( uint8_t seconds )
 {
-
   bool setSuccess;
 
   if( seconds < 60 )
   {
-
     seconds = decToBcd( seconds );
 
     if( writeRegister( PT7C4339_REG_SECONDS, seconds ) ) setSuccess = true;
     else setSuccess = false;
-
   }
-  else
-  {
-
-    setSuccess = false;
-
-  }
+  else setSuccess = false;
 
   return setSuccess;
-
 }
 
 /**
@@ -650,27 +601,18 @@ bool PT7C4339::setSecond( uint8_t seconds )
  */
 bool PT7C4339::setMinute( uint8_t minutes )
 {
-
   bool setSuccess;
 
   if( minutes < 60 )
   {
-
     minutes = decToBcd( minutes );
 
     if( writeRegister( PT7C4339_REG_MINUTES, minutes ) ) setSuccess = true;
     else setSuccess = false;
-
   }
-  else
-  {
-
-    setSuccess = false;
-
-  }
+  else setSuccess = false;
 
   return setSuccess;
-
 }
 
 /**
@@ -685,27 +627,18 @@ bool PT7C4339::setMinute( uint8_t minutes )
  */
 bool PT7C4339::setHour( uint8_t hours )
 {
-
   bool setSuccess;
 
   if( hours < 24 )
   {
-
     hours = decToBcd( hours );
 
     if( writeRegister( PT7C4339_REG_HOURS, hours ) ) setSuccess = true;
     else setSuccess = false;
-
   }
-  else
-  {
-
-    setSuccess = false;
-
-  }
+  else setSuccess = false;
 
   return setSuccess;
-
 }
 
 /**
@@ -718,7 +651,6 @@ bool PT7C4339::setHour( uint8_t hours )
  */
 bool PT7C4339::setCorrectWeekDay()
 {
-
   bool setSuccess;
 
   PT7C4339_daysOfWeek calculatedWeekDay = calculateWeekDay( getYear(), getMonth(), getDay() );
@@ -727,7 +659,6 @@ bool PT7C4339::setCorrectWeekDay()
   else setSuccess = false;
 
   return setSuccess;
-
 }
 
 /**
@@ -744,7 +675,6 @@ bool PT7C4339::setCorrectWeekDay()
  */
 bool PT7C4339::setDay( uint8_t day )
 {
-
   bool setSuccess;
 
   uint8_t monthLength;
@@ -755,7 +685,6 @@ bool PT7C4339::setDay( uint8_t day )
 
   switch( oldDate.month )
   {
-
     case 1:
       monthLength = 31;
       break;
@@ -773,30 +702,24 @@ bool PT7C4339::setDay( uint8_t day )
     case 10: monthLength = 31; break;
     case 11: monthLength = 30; break;
     case 12: monthLength = 31; break;
-  
   }
 
   if( day <= monthLength && day > 0 )
   {
-
     day = decToBcd( day );
     uint8_t oldDay = decToBcd( oldDate.day );
 
     if( writeRegister( PT7C4339_REG_DATES, day ) && setCorrectWeekDay() ) setSuccess = true;
     else
     {
-    
       setSuccess = false;
       writeRegister( PT7C4339_REG_DATES, oldDay );
       setCorrectWeekDay();
-
     }
-
   }
   else setSuccess = false;
 
   return setSuccess;
-
 }
 
 /**
@@ -813,14 +736,12 @@ bool PT7C4339::setDay( uint8_t day )
  */
 bool PT7C4339::setMonth( uint8_t month )
 {
-
   bool setSuccess;
 
   uint8_t oldMonth = getMonth();
 
   if( month <= 12 && month > 0 )
   {
-    
     bool is2000 = getYear() > 1999;
 
     month = ( is2000 << 7 ) | decToBcd( month );
@@ -829,18 +750,14 @@ bool PT7C4339::setMonth( uint8_t month )
     if( writeRegister( PT7C4339_REG_MONTHS, month ) && setCorrectWeekDay() ) setSuccess = true;
     else
     {
-    
       setSuccess = false;
       writeRegister( PT7C4339_REG_MONTHS, oldMonth );
       setCorrectWeekDay();
-
     }
-
   }
   else setSuccess = false;
 
   return setSuccess;
-
 }
 
 /**
@@ -858,7 +775,6 @@ bool PT7C4339::setMonth( uint8_t month )
  */
 bool PT7C4339::setYear( uint16_t year )
 {
-
   bool setSuccess;
 
   uint8_t oldYear = getYear();
@@ -870,22 +786,17 @@ bool PT7C4339::setYear( uint16_t year )
 
   if( year > 1899 && year < 2100 )
   {
-
     if( year > 1999 )
     {
-
       newMonth |= 0x80;
       year -= 2000;
-    
     }
     else year -= 1900;
 
     if( oldYear > 1999 )
     {
-
       oldMonth |= 0x80;
       oldYear -= 2000;
-    
     }
     else oldYear -= 1900;
 
@@ -894,33 +805,25 @@ bool PT7C4339::setYear( uint16_t year )
     
     if( writeRegister( PT7C4339_REG_YEARS, year ) )
     {
-
       if( writeRegister( PT7C4339_REG_MONTHS, newMonth ) && setCorrectWeekDay() ) setSuccess = true;
       else
       {
-
         setSuccess = false;
         writeRegister( PT7C4339_REG_MONTHS, oldMonth );
         writeRegister( PT7C4339_REG_YEARS, oldYear );
         setCorrectWeekDay();
-
       }
-
     }
     else
     {
-
       setSuccess = false;
       writeRegister( PT7C4339_REG_YEARS, oldYear );
       setCorrectWeekDay();
-
     }
-
   }
   else setSuccess = false;
   
   return setSuccess;
-
 }
 
 /**
@@ -932,9 +835,7 @@ bool PT7C4339::setYear( uint16_t year )
  */
 bool PT7C4339::isOscillatorEnabled()
 {
-
   return !readBit( PT7C4339_REG_CONTROL, 7 );
-
 }
 
 /**
@@ -950,9 +851,7 @@ bool PT7C4339::isOscillatorEnabled()
  */
 bool PT7C4339::enableOscillator( bool enable )
 {
-
   return writeBit( PT7C4339_REG_CONTROL, 7, !enable );
-
 }
 
 /**
@@ -964,9 +863,7 @@ bool PT7C4339::enableOscillator( bool enable )
  */
 bool PT7C4339::isIntFromBatteryEnabled()
 {
-
   return readBit( PT7C4339_REG_CONTROL, 5 );
-
 }
 
 /**
@@ -979,9 +876,7 @@ bool PT7C4339::isIntFromBatteryEnabled()
  */
 bool PT7C4339::enableIntFromBattery( bool enable )
 {
-
   return writeBit( PT7C4339_REG_CONTROL, 5, enable );
-
 }
 
 /**
@@ -994,11 +889,9 @@ bool PT7C4339::enableIntFromBattery( bool enable )
  */
 PT7C4339_sqwFrequency PT7C4339::getSqwFrequency()
 {
-
   PT7C4339_sqwFrequency freq = static_cast<PT7C4339_sqwFrequency>( ( readRegister( PT7C4339_REG_CONTROL ) >> 3 ) & 0x03 );
 
   return freq;
-
 }
 
 /**
@@ -1013,7 +906,6 @@ PT7C4339_sqwFrequency PT7C4339::getSqwFrequency()
  */
 bool PT7C4339::setSqwFrequency( PT7C4339_sqwFrequency frequency )
 {
-
   bool setSuccess;
 
   uint8_t buf = readRegister( PT7C4339_REG_CONTROL );
@@ -1023,7 +915,6 @@ bool PT7C4339::setSqwFrequency( PT7C4339_sqwFrequency frequency )
   else setSuccess = false;
 
   return setSuccess;
-
 }
 
 /**
@@ -1039,9 +930,7 @@ bool PT7C4339::setSqwFrequency( PT7C4339_sqwFrequency frequency )
  */
 bool PT7C4339::getRtcStopFlag()
 {
-
   return readBit( PT7C4339_REG_STATUS, 7 );
-
 }
 
 /**
@@ -1056,9 +945,7 @@ bool PT7C4339::getRtcStopFlag()
  */
 bool PT7C4339::clearRtcStopFlag()
 {
-
   return writeBit( PT7C4339_REG_STATUS, 7, false );
-
 }
 
 /**
@@ -1070,9 +957,7 @@ bool PT7C4339::clearRtcStopFlag()
  */
 bool PT7C4339::getIntOrSqwFlag()
 {
-
   return readBit( PT7C4339_REG_CONTROL, 2 );
-
 }
 
 /**
@@ -1085,9 +970,7 @@ bool PT7C4339::getIntOrSqwFlag()
  */
 bool PT7C4339::setIntOrSqwFlag( bool setting )
 {
-
   return writeBit( PT7C4339_REG_CONTROL, 2, setting );
-
 }
 
 /**
@@ -1100,13 +983,11 @@ bool PT7C4339::setIntOrSqwFlag( bool setting )
  */
 PT7C4339_trickleChargerEnabled PT7C4339::getTrickleChargerEnabled()
 {
-
   PT7C4339_trickleChargerEnabled enabled = static_cast<PT7C4339_trickleChargerEnabled>( ( readRegister( PT7C4339_REG_TRICKLE_CHARGER ) >> 4 ) & 0x0F );
 
   if( ( enabled != PT7C4339_TRICKLE_DISABLE ) && ( enabled != PT7C4339_TRICKLE_ENABLE ) ) enabled = PT7C4339_TRICKLE_DISABLE;
 
   return enabled;
-
 }
 
 /**
@@ -1119,13 +1000,11 @@ PT7C4339_trickleChargerEnabled PT7C4339::getTrickleChargerEnabled()
  */
 PT7C4339_trickleChargerDiode PT7C4339::getTrickleChargerDiode()
 {
-
   PT7C4339_trickleChargerDiode diode = static_cast<PT7C4339_trickleChargerDiode>( ( readRegister( PT7C4339_REG_TRICKLE_CHARGER ) >> 2 ) & 0x03 );
 
   if( ( diode != PT7C4339_DIODE_DISABLE ) && ( diode != PT7C4339_DIODE_ENABLE ) ) diode = PT7C4339_DIODE_DISABLE;
 
   return diode;
-
 }
 
 /**
@@ -1138,11 +1017,9 @@ PT7C4339_trickleChargerDiode PT7C4339::getTrickleChargerDiode()
  */
 PT7C4339_trickleChargerResistor PT7C4339::getTrickleChargerResistor()
 {
-
   PT7C4339_trickleChargerResistor resistor = static_cast<PT7C4339_trickleChargerResistor>( readRegister( PT7C4339_REG_TRICKLE_CHARGER ) & 0x03 );
 
   return resistor;
-
 }
 
 /**
@@ -1160,14 +1037,12 @@ PT7C4339_trickleChargerResistor PT7C4339::getTrickleChargerResistor()
  */
 bool PT7C4339::setTrickleChargerConfig( PT7C4339_trickleChargerEnabled enable, PT7C4339_trickleChargerDiode diode, PT7C4339_trickleChargerResistor resistor )
 {
-
   bool setSuccess;
 
   if( writeRegister( PT7C4339_REG_TRICKLE_CHARGER, ( enable << 4 ) | ( diode << 2 ) | resistor ) ) setSuccess = true;
   else setSuccess = false;
 
   return setSuccess;
-
 }
 
 /**
@@ -1181,7 +1056,6 @@ bool PT7C4339::setTrickleChargerConfig( PT7C4339_trickleChargerEnabled enable, P
  */
 bool PT7C4339::reset()
 {
-
   bool stopOscillator = enableOscillator( false );
   delay(1);
 
@@ -1210,5 +1084,397 @@ bool PT7C4339::reset()
   return ( stopOscillator && secondsReset && minutesReset && hoursReset && weekDayReset && daysReset && monthsReset
     && yearsReset && alarm1SecondsReset && alarm1MinutesReset && alarm1HoursReset && alarm1DayDateReset
     && alarm2MinutesReset && alarm2HoursReset && alarm2DayDateReset && controlReset && statusReset && trickleChargerReset );
+}
 
+/**
+ * @brief Checks if a match with alarm 1 can trigger the INT/SQW output on the PT7C4339 RTC.
+ *
+ * This function reads bit 0 of the control register and returns it.
+ *
+ * @return bool True if enabled, false otherwise.
+ */
+bool PT7C4339::isA1IntEnabled()
+{
+  return readBit( PT7C4339_REG_CONTROL, 0 );
+}
+
+/**
+ * @brief Enables or disables triggering the INT/SQW output by alarm 1 on the PT7C4339 RTC.
+ *
+ * This function writes to bit 0 of the control register.
+ *
+ * @param enable true to enable, false to disable.
+ * @return bool True if the operation was successful, false otherwise.
+ */
+bool PT7C4339::enableA1Int( bool enable )
+{
+  return writeBit( PT7C4339_REG_CONTROL, 0, enable );
+}
+
+/**
+ * @brief Checks if there was a match with alarm 1 on the PT7C4339 RTC.
+ *
+ * This function reads bit 0 of the status register and returns it.
+ *
+ * @return bool True if a match has happened, false otherwise.
+ */
+bool PT7C4339::getA1Flag()
+{
+  return readBit( PT7C4339_REG_STATUS, 0 );
+}
+
+/**
+ * @brief Clears the alarm 1 matched flag on the PT7C4339 RTC.
+ *
+ * This function clears bit 0 of the status register.
+ *
+ * @return bool True if the operation was successful, false otherwise.
+ */
+bool PT7C4339::clearA1Flag()
+{
+  return writeBit( PT7C4339_REG_STATUS, 0, false );
+}
+
+/**
+ * @brief Retrieves the configured match rate of alarm 1 in the PT7C4339 RTC.
+ *
+ * This function reads the alarm 1 mask bits and day/date bit, combines them and
+ * returns it as the alarm 1 rate.
+ *
+ * @return PT7C4339_A1_rate Enum of the possible match rates.
+ */
+PT7C4339_A1_rate PT7C4339::getA1Rate()
+{
+  PT7C4339_A1_rate rate;
+
+  uint8_t buf = ( readBit( PT7C4339_REG_A1_DAY_DATE, 6 ) << 4 ) | ( readBit( PT7C4339_REG_A1_DAY_DATE, 7 ) << 3 ) | ( readBit( PT7C4339_REG_A1_HOURS, 7 ) << 2 )
+    | ( readBit( PT7C4339_REG_A1_MINUTES, 7 ) << 1 ) | readBit( PT7C4339_REG_A1_SECONDS, 7 );
+  
+  rate = static_cast<PT7C4339_A1_rate>(buf);
+
+  return rate;
+}
+
+/**
+ * @brief Sets the match rate of alarm 1 on the PT7C4339 RTC.
+ *
+ * This function sets the alarm 1 mask bits and day/date bit based on the provided match rate.
+ *
+ * @param rate PT7C4339_A1_rate The chosen match rate.
+ * @return bool True if all writes were successful, false otherwise.
+ */
+bool PT7C4339::setA1Rate( PT7C4339_A1_rate rate )
+{
+  bool setSuccess = false;
+
+  setSuccess = writeBit( PT7C4339_REG_A1_DAY_DATE, 6, rate & 0x10 ) && writeBit( PT7C4339_REG_A1_DAY_DATE, 7, rate & 0x08 ) && writeBit( PT7C4339_REG_A1_HOURS, 7, rate & 0x04 )
+    && writeBit( PT7C4339_REG_A1_MINUTES, 7, rate & 0x02 ) && writeBit( PT7C4339_REG_A1_SECONDS, 7, rate & 0x01 );
+
+  return setSuccess;
+}
+
+/**
+ * @brief Retrieves the alarm 1 match time from the PT7C4339 RTC.
+ *
+ * This function reads the alarm 1 match seconds, minutes, and hour from the RTC
+ * and returns them encapsulated in a PT7C4339_Time structure.
+ *
+ * @return PT7C4339_Time Structure containing the alarm 1 match time (hours, minutes, seconds).
+ */
+PT7C4339_Time PT7C4339::getA1Time()
+{
+  PT7C4339_Time time;
+
+  time.hour = bcdToDec( readRegister( PT7C4339_REG_A1_HOURS ) & 0x3F );
+  time.minute = bcdToDec( readRegister( PT7C4339_REG_A1_MINUTES ) & 0x7F );
+  time.second = bcdToDec( readRegister( PT7C4339_REG_A1_SECONDS ) & 0x7F );
+
+  return time;
+}
+
+/**
+ * @brief Sets the alarm 1 match time of the PT7C4339 RTC.
+ *
+ * This function sets the alarm 1 match seconds, minutes, and hour of the RTC.
+ *
+ * @param time A PT7C4339_Time struct containing the hour, minute, and second to set.
+ * @return bool True if all writes were successful, false otherwise.
+ */
+bool PT7C4339::setA1Time( PT7C4339_Time time )
+{
+  bool setSuccess = false;
+
+  bool A1M1 = readBit( PT7C4339_REG_A1_SECONDS, 7 );
+  bool A1M2 = readBit( PT7C4339_REG_A1_MINUTES, 7 );
+  bool A1M3 = readBit( PT7C4339_REG_A1_HOURS, 7 );
+
+  if( time.hour < 24 && time.minute < 60 && time.second < 60 )
+  {
+    setSuccess = writeRegister( PT7C4339_REG_A1_HOURS, ( decToBcd( time.hour ) | ( A1M3 << 7 ) ) )
+      && writeRegister( PT7C4339_REG_A1_MINUTES, ( decToBcd( time.minute ) | ( A1M2 << 7 ) ) )
+      && writeRegister( PT7C4339_REG_A1_SECONDS, ( decToBcd( time.second ) | ( A1M1 << 7 ) ) );
+  }
+
+  return setSuccess;
+}
+
+/**
+ * @brief Retrieves the alarm 1 date information from the PT7C4339 RTC.
+ *
+ * This function reads the alarm 1 date register and determines whether the alarm is set
+ * by day of the month or by day of the week. It then populates a PT7C4339_Date structure
+ * with the corresponding values. The year and month fields are set to 0, as the alarm
+ * register does not store this information.
+ *
+ * @return PT7C4339_Date Structure containing the alarm 1 date or weekday information.
+ *         - If the alarm is set by weekday, 'weekDay' is set and 'day' is 0.
+ *         - If the alarm is set by day, 'day' is set and 'weekDay' is PT7C4339_WEEKDAY_UNKNOWN.
+ */
+PT7C4339_Date PT7C4339::getA1DayDate()
+{
+  PT7C4339_Date date;
+
+  date.year = 0;
+  date.month = 0;
+
+  if( readBit( PT7C4339_REG_A1_DAY_DATE, 6 ) )
+  {
+    date.weekDay = static_cast<PT7C4339_daysOfWeek>( bcdToDec( readRegister( PT7C4339_REG_A1_DAY_DATE ) & 0x07 ) );
+    date.day = 0;
+  }
+  else
+  {
+    date.day = bcdToDec( readRegister( PT7C4339_REG_A1_DAY_DATE ) & 0x3F );
+    date.weekDay = PT7C4339_WEEKDAY_UNKNOWN;
+  }
+  
+  return date;
+}
+
+/**
+ * @brief Sets the alarm 1 day/date register for the PT7C4339 RTC.
+ *
+ * This function configures the alarm 1 day/date register based on the provided date.
+ * It supports setting either a specific day of the month or a specific weekday.
+ * - If `date.day` is 0 and `date.weekDay` is valid, the alarm is set for the specified weekday.
+ * - If `date.day` is valid and `date.weekDay` is PT7C4339_WEEKDAY_UNKNOWN, the alarm is set for the specified day of the month.
+ *
+ * @param date The PT7C4339_Date structure containing the day and/or weekday to set for the alarm.
+ * @return true if the register was successfully written, false otherwise.
+ */
+bool PT7C4339::setA1DayDate( PT7C4339_Date date )
+{
+  bool setSuccess = false;
+
+  bool maskBit = readBit( PT7C4339_REG_A1_DAY_DATE, 7 );
+  if( date.day <= 31 && ( date.weekDay <= 7 ) )
+  {
+    if( date.day == 0 && date.weekDay != PT7C4339_WEEKDAY_UNKNOWN )
+    {
+      setSuccess = writeRegister( PT7C4339_REG_A1_DAY_DATE, ( decToBcd( date.weekDay ) & 0x07 ) | ( true << 6 ) | ( maskBit << 7 ) );
+    }
+    else if( date.day != 0 && date.weekDay == PT7C4339_WEEKDAY_UNKNOWN )
+    {
+
+      setSuccess = writeRegister( PT7C4339_REG_A1_DAY_DATE, ( decToBcd( date.day ) & 0x3F ) | ( maskBit << 7 ) );
+    }
+  }
+
+  return setSuccess;
+}
+
+/**
+ * @brief Checks if a match with alarm 2 can trigger the INT/SQW output on the PT7C4339 RTC.
+ *
+ * This function reads bit 1 of the control register and returns it.
+ *
+ * @return bool True if enabled, false otherwise.
+ */
+bool PT7C4339::isA2IntEnabled()
+{
+  return readBit( PT7C4339_REG_CONTROL, 1 );
+}
+
+/**
+ * @brief Enables or disables triggering the INT/SQW output by alarm 2 on the PT7C4339 RTC.
+ *
+ * This function writes to bit 1 of the control register.
+ *
+ * @param enable true to enable, false to disable.
+ * @return bool True if the operation was successful, false otherwise.
+ */
+bool PT7C4339::enableA2Int( bool enable )
+{
+  return writeBit( PT7C4339_REG_CONTROL, 1, enable );
+}
+
+/**
+ * @brief Checks if there was a match with alarm 2 on the PT7C4339 RTC.
+ *
+ * This function reads bit 1 of the status register and returns it.
+ *
+ * @return bool True if a match has happened, false otherwise.
+ */
+bool PT7C4339::getA2Flag()
+{
+  return readBit( PT7C4339_REG_STATUS, 1 );
+}
+
+/**
+ * @brief Clears the alarm 2 matched flag on the PT7C4339 RTC.
+ *
+ * This function clears bit 1 of the status register.
+ *
+ * @return bool True if the operation was successful, false otherwise.
+ */
+bool PT7C4339::clearA2Flag()
+{
+  return writeBit( PT7C4339_REG_STATUS, 1, false );
+}
+
+/**
+ * @brief Retrieves the configured match rate of alarm 2 in the PT7C4339 RTC.
+ *
+ * This function reads the alarm 2 mask bits and day/date bit, combines them and
+ * returns it as the alarm 2 rate.
+ *
+ * @return PT7C4339_A2_rate Enum of the possible match rates.
+ */
+PT7C4339_A2_rate PT7C4339::getA2Rate()
+{
+  PT7C4339_A2_rate rate;
+
+  uint8_t buf = ( readBit( PT7C4339_REG_A2_DAY_DATE, 6 ) << 3 ) | ( readBit( PT7C4339_REG_A2_DAY_DATE, 7 ) << 2 ) | ( readBit( PT7C4339_REG_A2_HOURS, 7 ) << 1 )
+    | ( readBit( PT7C4339_REG_A2_MINUTES, 7 ) );
+  
+  rate = static_cast<PT7C4339_A2_rate>(buf);
+
+  return rate;
+}
+
+/**
+ * @brief Sets the match rate of alarm 2 on the PT7C4339 RTC.
+ *
+ * This function sets the alarm 2 mask bits and day/date bit based on the provided match rate.
+ *
+ * @param rate PT7C4339_A2_rate The chosen match rate.
+ * @return bool True if all writes were successful, false otherwise.
+ */
+bool PT7C4339::setA2Rate( PT7C4339_A2_rate rate )
+{
+  bool setSuccess = false;
+
+  setSuccess = writeBit( PT7C4339_REG_A2_DAY_DATE, 6, rate & 0x08 ) && writeBit( PT7C4339_REG_A2_DAY_DATE, 7, rate & 0x04 ) && writeBit( PT7C4339_REG_A2_HOURS, 7, rate & 0x02 )
+    && writeBit( PT7C4339_REG_A2_MINUTES, 7, rate & 0x01 );
+
+  return setSuccess;
+}
+
+/**
+ * @brief Retrieves the alarm 2 match time from the PT7C4339 RTC.
+ *
+ * This function reads the alarm 2 match minutes and hour from the RTC
+ * and returns them encapsulated in a PT7C4339_Time structure. 
+ * Alarm 2 does not store seconds, so this will always return 0 for seconds.
+ *
+ * @return PT7C4339_Time Structure containing the alarm 1 match time (hours, minutes).
+ */
+PT7C4339_Time PT7C4339::getA2Time()
+{
+  PT7C4339_Time time;
+
+  time.hour = bcdToDec( readRegister( PT7C4339_REG_A2_HOURS ) & 0x3F );
+  time.minute = bcdToDec( readRegister( PT7C4339_REG_A2_MINUTES ) & 0x7F );
+  time.second = 0;
+
+  return time;
+}
+
+/**
+ * @brief Sets the alarm 2 match time of the PT7C4339 RTC.
+ *
+ * This function sets the alarm 2 match minutes and hour of the RTC.
+ * Alarm 2 does not store seconds, so the input seconds will be ignored.
+ *
+ * @param time A PT7C4339_Time struct containing the hour and minute to set.
+ * @return bool True if all writes were successful, false otherwise.
+ */
+bool PT7C4339::setA2Time( PT7C4339_Time time )
+{
+  bool setSuccess = false;
+
+  bool A2M2 = readBit( PT7C4339_REG_A2_MINUTES, 7 );
+  bool A2M3 = readBit( PT7C4339_REG_A2_HOURS, 7 );
+
+  if( time.hour < 24 && time.minute < 60 )
+  {
+    setSuccess = writeRegister( PT7C4339_REG_A2_HOURS, ( decToBcd( time.hour ) | ( A2M3 << 7 ) ) )
+      && writeRegister( PT7C4339_REG_A2_MINUTES, ( decToBcd( time.minute ) | A2M2 << 7 ) );
+  }
+
+  return setSuccess;
+}
+
+/**
+ * @brief Retrieves the alarm 2 date information from the PT7C4339 RTC.
+ *
+ * This function reads the alarm 2 date register and determines whether the alarm is set
+ * by day of the month or by day of the week. It then populates a PT7C4339_Date structure
+ * with the corresponding values. The year and month fields are set to 0, as the alarm
+ * register does not store this information.
+ *
+ * @return PT7C4339_Date Structure containing the alarm 2 date or weekday information.
+ *         - If the alarm is set by weekday, 'weekDay' is set and 'day' is 0.
+ *         - If the alarm is set by day, 'day' is set and 'weekDay' is PT7C4339_WEEKDAY_UNKNOWN.
+ */
+PT7C4339_Date PT7C4339::getA2DayDate()
+{
+  PT7C4339_Date date;
+
+  date.year = 0;
+  date.month = 0;
+
+  if( readBit( PT7C4339_REG_A2_DAY_DATE, 6 ) )
+  {
+    date.weekDay = static_cast<PT7C4339_daysOfWeek>( bcdToDec( readRegister( PT7C4339_REG_A2_DAY_DATE ) & 0x07 ) );
+    date.day = 0;
+  }
+  else
+  {
+    date.day = bcdToDec( readRegister( PT7C4339_REG_A2_DAY_DATE ) & 0x3F );
+    date.weekDay = PT7C4339_WEEKDAY_UNKNOWN;
+  }
+  
+  return date;
+}
+
+/**
+ * @brief Sets the alarm 2 day/date register for the PT7C4339 RTC.
+ *
+ * This function configures the alarm 2 day/date register based on the provided date.
+ * It supports setting either a specific day of the month or a specific weekday.
+ * - If `date.day` is 0 and `date.weekDay` is valid, the alarm is set for the specified weekday.
+ * - If `date.day` is valid and `date.weekDay` is PT7C4339_WEEKDAY_UNKNOWN, the alarm is set for the specified day of the month.
+ *
+ * @param date The PT7C4339_Date structure containing the day and/or weekday to set for the alarm.
+ * @return true if the register was successfully written, false otherwise.
+ */
+bool PT7C4339::setA2DayDate( PT7C4339_Date date )
+{
+  bool setSuccess = false;
+
+  bool maskBit = readBit( PT7C4339_REG_A2_DAY_DATE, 7 );
+  if( date.day <= 31 && ( date.weekDay <= 7 ) )
+  {
+    if( date.day == 0 && date.weekDay != PT7C4339_WEEKDAY_UNKNOWN )
+    {
+      setSuccess = writeRegister( PT7C4339_REG_A2_DAY_DATE, ( decToBcd( date.weekDay ) & 0x07 ) | ( true << 6 ) | ( maskBit << 7 ) );
+    }
+    else if( date.day != 0 && date.weekDay == PT7C4339_WEEKDAY_UNKNOWN )
+    {
+      setSuccess = writeRegister( PT7C4339_REG_A2_DAY_DATE, ( decToBcd( date.day ) & 0x3F ) | ( maskBit << 7 ) );
+    }
+  }
+
+  return setSuccess;
 }
