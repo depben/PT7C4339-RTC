@@ -98,7 +98,7 @@ enum PT7C4339_A2_rate ///< Enum for the trigger rate of alarm 2 of the PT7C43339
   PT7C4339_A2_MINUTES_MATCH = 0x06, ///< Trigger alarm if minutes match
   PT7C4339_A2_HOURS_MINUTES_MATCH = 0x04, ///< Trigger alarm if hours and minutes match
   PT7C4339_A2_DAY_HOURS_MINUTES_MATCH = 0x00, ///< Trigger alarm if day of the month, hours, and minutes match
-  PT7C4339_A2_WEEKDAY_HOURS_MINUTES_MATCH = 0x10, ///< Trigger alarm if day of the week, hours, and minutes match
+  PT7C4339_A2_WEEKDAY_HOURS_MINUTES_MATCH = 0x08, ///< Trigger alarm if day of the week, hours, and minutes match
   PT7C4339_A2_DISABLE = 0x01 ///< Disable alarm
 };
 
