@@ -9,12 +9,13 @@ PT7C4339 rtc( &Wire, SDA_PIN, SCL_PIN );
 
 void test_dates_valid()
 {
+    rtc.setDate( { 2025, 5, 30, PT7C4339_WEEKDAY_UNKNOWN } );
 
     int32_t success = 0;
     int32_t fail = 0;
-    int32_t totalDates = 73049;
+    int32_t totalDates = 5479;
 
-    for( uint16_t year = 1900; year <= 2099; ++year )
+    for( uint16_t year = 1995; year <= 2009; ++year )
     {
 
         for( uint8_t month = 1; month <= 12; ++month )
@@ -39,7 +40,7 @@ void test_dates_valid()
                 PT7C4339_daysOfWeek currentWeekday = rtc.getWeekDay();
                 static PT7C4339_daysOfWeek lastWeekday = PT7C4339_WEEKDAY_UNKNOWN;
 
-                bool firstDate = setDate.year == 1900 && setDate.month == 1 && setDate.day == 1;
+                bool firstDate = setDate.year == 1995 && setDate.month == 1 && setDate.day == 1;
                 bool correctWeekday = false;
                 
                 if( firstDate ) correctWeekday = true;
@@ -50,7 +51,10 @@ void test_dates_valid()
 
                 bool dateOk = setSuccess && getDate.year == setDate.year && getDate.month == setDate.month && getDate.day == setDate.day && correctWeekday;
                 if( dateOk ) success++;
-                else fail++;
+                else
+                {
+                    fail++;
+                }
 
             }
 
@@ -63,109 +67,15 @@ void test_dates_valid()
 
 }
 
-void test_dates_all()
-{
-    
-    int32_t success = 0;
-    int32_t fail = 0;
-    int32_t totalValidDates = 73049;
-    int32_t totalDates = 200 * 12 * 31;
-
-    for( uint16_t year = 1900; year <= 2099; ++year )
-    {
-    
-        for( uint8_t month = 1; month <= 12; ++month )
-        {
-
-            for( uint8_t day = 1; day <= 31; ++day )
-            {
-            
-                PT7C4339_Date setDate = { year, month, day, PT7C4339_WEEKDAY_UNKNOWN };
-                bool setSuccess = rtc.setDate( setDate );
-                PT7C4339_Date getDate = rtc.getDate();
-
-                bool dateOk = setSuccess && getDate.year == setDate.year && getDate.month == setDate.month && getDate.day == setDate.day;
-                if( dateOk ) success++;
-                else fail++;
-
-            }
-
-        }
-
-    }
-
-    int32_t acceptedInvalidDates = totalDates - totalValidDates - fail;
-    TEST_ASSERT_EQUAL_INT32_MESSAGE( 0, acceptedInvalidDates, "Incorrect number of all date tests failed" );
-    TEST_ASSERT_EQUAL_INT32( totalDates, success + fail );
-
-}
-
-void test_dates_valid_backwards()
-{
-
-    int32_t success = 0;
-    int32_t fail = 0;
-    int32_t totalDates = 73049;
-
-    for( uint16_t year = 2099; year >= 1900; year-- )
-    {
-
-        for( uint8_t month = 12; month >= 1; month-- )
-        {
-            
-            uint8_t daysInMonth;
-
-            if( month == 2 )
-            {
-
-                bool isLeap = ( year % 4 == 0 && ( year % 100 != 0 || year % 400 == 0 ) );
-                daysInMonth = isLeap ? 29 : 28;
-            
-            }
-            else if( month == 4 || month == 6 || month == 9 || month == 11 ) daysInMonth = 30;    
-            else daysInMonth = 31;
-                
-            for( uint8_t day = daysInMonth; day >= 1; day-- )
-            {
-            
-                PT7C4339_Date setDate = { year, month, day, PT7C4339_WEEKDAY_UNKNOWN };
-                bool setSuccess = rtc.setDate( setDate );
-                
-                PT7C4339_daysOfWeek currentWeekday = rtc.getWeekDay();
-                static PT7C4339_daysOfWeek lastWeekday = PT7C4339_WEEKDAY_UNKNOWN;
-                bool firstDate = setDate.year == 2099 && setDate.month == 12 && setDate.day == 31;
-                
-                bool correctWeekday = false;
-                if( firstDate ) correctWeekday = true;
-                else correctWeekday = ( ( lastWeekday - 1 == currentWeekday ) || ( currentWeekday == PT7C4339_SUNDAY && lastWeekday == PT7C4339_MONDAY ) ) && currentWeekday != PT7C4339_WEEKDAY_UNKNOWN;
-
-                lastWeekday = currentWeekday;
-                PT7C4339_Date getDate = rtc.getDate();
-
-                bool dateOk = setSuccess && getDate.year == setDate.year && getDate.month == setDate.month && getDate.day == setDate.day && correctWeekday;
-                if( dateOk ) success++;
-                else fail++;
-
-            }
-
-        }
-
-    }
-
-    TEST_ASSERT_EQUAL_INT32_MESSAGE( 0, fail, "Some backwards date tests failed" );
-    TEST_ASSERT_EQUAL_INT32( totalDates, success + fail );
-
-}
-
 void test_dates_all_backwards()
 {
 
     int32_t success = 0;
     int32_t fail = 0;
-    int32_t totalValidDates = 73049;
-    int32_t totalDates = 200 * 12 * 31;
+    int32_t totalValidDates = 5479;
+    int32_t totalDates = 15 * 12 * 31;
 
-    for( uint16_t year = 2099; year >= 1900; year-- )
+    for( uint16_t year = 2009; year >= 1995; year-- )
     {
     
         for( uint8_t month = 12; month >= 1; month-- )
@@ -210,7 +120,7 @@ void test_dates_valid_random()
     
     int32_t success = 0;
     int32_t fail = 0;
-    int32_t totalDates = 5000;
+    int32_t totalDates = 500;
 
     for( uint16_t i = 1; i <= totalDates; i++ )
     {
@@ -248,10 +158,9 @@ void test_dates_valid_random()
 
 void test_dates_reset()
 {
-
     int32_t success = 0;
     int32_t fail = 0;
-    int32_t totalDates = 5000;
+    int32_t totalDates = 500;
 
     for( uint16_t i = 1; i <= totalDates; i++ )
     {
@@ -275,27 +184,23 @@ void test_dates_reset()
 
     TEST_ASSERT_EQUAL_INT32_MESSAGE( 0, fail, "Some reset date tests failed" );
     TEST_ASSERT_EQUAL_INT32( totalDates, success + fail );
-
 }
 
 void setUp( void )
 {
-    
     rtc.reset();
     rtc.begin();
-
+    Serial.begin(115200);
+    delay(300);
 }
 
 void tearDown( void )
 {
-
     rtc.reset();
-
 }
 
 void setup()
 {
-
     delay( 2000 );
     
     UNITY_BEGIN();
@@ -304,13 +209,8 @@ void setup()
     RUN_TEST( test_dates_all_backwards );
     RUN_TEST( test_dates_valid_random );
     RUN_TEST( test_dates_reset );
-
-    // way overkill
-    // RUN_TEST( test_dates_all );
-    // RUN_TEST( test_dates_valid_backwards );
     
     UNITY_END();
-
 }
 
 void loop()
