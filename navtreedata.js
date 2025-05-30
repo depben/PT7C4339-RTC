@@ -26,7 +26,6 @@ var NAVTREE =
 [
   [ "PT7C4339-RTC", "index.html", [
     [ "PT7C4339-RTC Library", "index.html", "index" ],
-    [ "Todo List", "todo.html", null ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],

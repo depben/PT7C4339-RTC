@@ -21,6 +21,23 @@ var _p_t7_c4339__r_t_c_8h =
     [ "PT7C4339_REG_STATUS", "_p_t7_c4339-_r_t_c_8h.html#aa537a09e19cfeb31f0ee0de127ac6ff0", null ],
     [ "PT7C4339_REG_TRICKLE_CHARGER", "_p_t7_c4339-_r_t_c_8h.html#af43818b991596a2baa47da40485cbd30", null ],
     [ "PT7C4339_REG_YEARS", "_p_t7_c4339-_r_t_c_8h.html#a0e1690bdd5ebf9d7b6d358096a487776", null ],
+    [ "PT7C4339_A1_rate", "_p_t7_c4339-_r_t_c_8h.html#a79aa625485d58be86de415ad6cc9f631", [
+      [ "PT7C4339_A1_EVERY_SECOND", "_p_t7_c4339-_r_t_c_8h.html#a79aa625485d58be86de415ad6cc9f631a30f6aec4c3d36280470e7c81a17cd3b9", null ],
+      [ "PT7C4339_A1_SECONDS_MATCH", "_p_t7_c4339-_r_t_c_8h.html#a79aa625485d58be86de415ad6cc9f631a210045ac104f806c5a218e2e01489586", null ],
+      [ "PT7C4339_A1_MINUTES_SECONDS_MATCH", "_p_t7_c4339-_r_t_c_8h.html#a79aa625485d58be86de415ad6cc9f631adf358e5408406155aad2a2bfea3b3830", null ],
+      [ "PT7C4339_A1_HOURS_MINUTES_SECONDS_MATCH", "_p_t7_c4339-_r_t_c_8h.html#a79aa625485d58be86de415ad6cc9f631a779d2a65f5af874a56c768195f746a0c", null ],
+      [ "PT7C4339_A1_DAY_HOURS_MINUTES_SECONDS_MATCH", "_p_t7_c4339-_r_t_c_8h.html#a79aa625485d58be86de415ad6cc9f631a2d3d98fe1c0976196bfbc5b0544daa5c", null ],
+      [ "PT7C4339_A1_WEEKDAY_HOURS_MINUTES_SECONDS_MATCH", "_p_t7_c4339-_r_t_c_8h.html#a79aa625485d58be86de415ad6cc9f631ad3308f1464e5fceef2be83efc7c9d156", null ],
+      [ "PT7C4339_A1_DISABLE", "_p_t7_c4339-_r_t_c_8h.html#a79aa625485d58be86de415ad6cc9f631a0d17f9fbc7ba4485f782e1b630308262", null ]
+    ] ],
+    [ "PT7C4339_A2_rate", "_p_t7_c4339-_r_t_c_8h.html#a05d717e3012ef45feb86a154a55507c2", [
+      [ "PT7C4339_A2_EVERY_MINUTE", "_p_t7_c4339-_r_t_c_8h.html#a05d717e3012ef45feb86a154a55507c2a4ee90779894c5ed35387f43acc9cb087", null ],
+      [ "PT7C4339_A2_MINUTES_MATCH", "_p_t7_c4339-_r_t_c_8h.html#a05d717e3012ef45feb86a154a55507c2aa46259060a711d67143a9f909002d307", null ],
+      [ "PT7C4339_A2_HOURS_MINUTES_MATCH", "_p_t7_c4339-_r_t_c_8h.html#a05d717e3012ef45feb86a154a55507c2a384c858c253961ef48973da643018edc", null ],
+      [ "PT7C4339_A2_DAY_HOURS_MINUTES_MATCH", "_p_t7_c4339-_r_t_c_8h.html#a05d717e3012ef45feb86a154a55507c2afd594debd25ac422752ac20be5b2df9c", null ],
+      [ "PT7C4339_A2_WEEKDAY_HOURS_MINUTES_MATCH", "_p_t7_c4339-_r_t_c_8h.html#a05d717e3012ef45feb86a154a55507c2a29c480c29f64b87c3ad0d6b93b78511b", null ],
+      [ "PT7C4339_A2_DISABLE", "_p_t7_c4339-_r_t_c_8h.html#a05d717e3012ef45feb86a154a55507c2a9ff25575bdc8ac5346837a24dc77de94", null ]
+    ] ],
     [ "PT7C4339_daysOfWeek", "_p_t7_c4339-_r_t_c_8h.html#ab72d2fc284f2656432dc303cd9526a11", [
       [ "PT7C4339_WEEKDAY_UNKNOWN", "_p_t7_c4339-_r_t_c_8h.html#ab72d2fc284f2656432dc303cd9526a11aa000fb922a9ed7174d9ebdae70f392a2", null ],
       [ "PT7C4339_MONDAY", "_p_t7_c4339-_r_t_c_8h.html#ab72d2fc284f2656432dc303cd9526a11a796cddda4318802b4fe35ccc58636bb0", null ],

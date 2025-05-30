@@ -32,7 +32,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">PT7C4339-RTC<span id="projectnumber">&#160;0.1.2</span>
+   <div id="projectname">PT7C4339-RTC<span id="projectnumber">&#160;1.0.0</span>
    </div>
    <div id="projectbrief">A library for interfacing with the PT7C4339 RTC chip over I2C in the Arduino framework.</div>
   </td>
@@ -224,16 +224,40 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:a472d1a7bd0921376a7ad014144cc23c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">&lt; Enum for the trickle charger resistor settings of the PT7C43339 RTC  <a href="#a472d1a7bd0921376a7ad014144cc23c8">More...</a><br /></td></tr>
 <tr class="separator:a472d1a7bd0921376a7ad014144cc23c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79aa625485d58be86de415ad6cc9f631" id="r_a79aa625485d58be86de415ad6cc9f631"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a79aa625485d58be86de415ad6cc9f631">PT7C4339_A1_rate</a> { <br />
+&#160;&#160;<a class="el" href="#a79aa625485d58be86de415ad6cc9f631a30f6aec4c3d36280470e7c81a17cd3b9">PT7C4339_A1_EVERY_SECOND</a> = 0x0F
+, <a class="el" href="#a79aa625485d58be86de415ad6cc9f631a210045ac104f806c5a218e2e01489586">PT7C4339_A1_SECONDS_MATCH</a> = 0x0E
+, <a class="el" href="#a79aa625485d58be86de415ad6cc9f631adf358e5408406155aad2a2bfea3b3830">PT7C4339_A1_MINUTES_SECONDS_MATCH</a> = 0x0C
+, <a class="el" href="#a79aa625485d58be86de415ad6cc9f631a779d2a65f5af874a56c768195f746a0c">PT7C4339_A1_HOURS_MINUTES_SECONDS_MATCH</a> = 0x08
+, <br />
+&#160;&#160;<a class="el" href="#a79aa625485d58be86de415ad6cc9f631a2d3d98fe1c0976196bfbc5b0544daa5c">PT7C4339_A1_DAY_HOURS_MINUTES_SECONDS_MATCH</a> = 0x00
+, <a class="el" href="#a79aa625485d58be86de415ad6cc9f631ad3308f1464e5fceef2be83efc7c9d156">PT7C4339_A1_WEEKDAY_HOURS_MINUTES_SECONDS_MATCH</a> = 0x10
+, <a class="el" href="#a79aa625485d58be86de415ad6cc9f631a0d17f9fbc7ba4485f782e1b630308262">PT7C4339_A1_DISABLE</a> = 0x01
+<br />
+ }</td></tr>
+<tr class="memdesc:a79aa625485d58be86de415ad6cc9f631"><td class="mdescLeft">&#160;</td><td class="mdescRight">&lt; Enum for the trigger rate of alarm 1 of the PT7C43339 RTC  <a href="#a79aa625485d58be86de415ad6cc9f631">More...</a><br /></td></tr>
+<tr class="separator:a79aa625485d58be86de415ad6cc9f631"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05d717e3012ef45feb86a154a55507c2" id="r_a05d717e3012ef45feb86a154a55507c2"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a05d717e3012ef45feb86a154a55507c2">PT7C4339_A2_rate</a> { <br />
+&#160;&#160;<a class="el" href="#a05d717e3012ef45feb86a154a55507c2a4ee90779894c5ed35387f43acc9cb087">PT7C4339_A2_EVERY_MINUTE</a> = 0x07
+, <a class="el" href="#a05d717e3012ef45feb86a154a55507c2aa46259060a711d67143a9f909002d307">PT7C4339_A2_MINUTES_MATCH</a> = 0x06
+, <a class="el" href="#a05d717e3012ef45feb86a154a55507c2a384c858c253961ef48973da643018edc">PT7C4339_A2_HOURS_MINUTES_MATCH</a> = 0x04
+, <a class="el" href="#a05d717e3012ef45feb86a154a55507c2afd594debd25ac422752ac20be5b2df9c">PT7C4339_A2_DAY_HOURS_MINUTES_MATCH</a> = 0x00
+, <br />
+&#160;&#160;<a class="el" href="#a05d717e3012ef45feb86a154a55507c2a29c480c29f64b87c3ad0d6b93b78511b">PT7C4339_A2_WEEKDAY_HOURS_MINUTES_MATCH</a> = 0x08
+, <a class="el" href="#a05d717e3012ef45feb86a154a55507c2a9ff25575bdc8ac5346837a24dc77de94">PT7C4339_A2_DISABLE</a> = 0x01
+<br />
+ }</td></tr>
+<tr class="memdesc:a05d717e3012ef45feb86a154a55507c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">&lt; Enum for the trigger rate of alarm 2 of the PT7C43339 RTC  <a href="#a05d717e3012ef45feb86a154a55507c2">More...</a><br /></td></tr>
+<tr class="separator:a05d717e3012ef45feb86a154a55507c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Header file for the PT7C4339-RTC library. </p>
 <p>This library provides methods for communicating with the <a class="el" href="class_p_t7_c4339.html" title="&lt; Class for the PT7C4339 RTC">PT7C4339</a> RTC IC over I2C in the Arduino framework. It enables users to read and set the current time and date, manage the square wave output, control the trickle charger, and use the control mechanisms of the device. More info on the GitHub page: <a href="https://github.com/depben/PT7C4339-RTC">https://github.com/depben/PT7C4339-RTC</a></p>
 <dl class="section note"><dt>Note</dt><dd>This library uses 24-hour format for time representation and works from 1900-1-1 to 2099-12-31.</dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Bence Murin </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>2025-05-23 </dd></dl>
-<dl class="section version"><dt>Version</dt><dd>0.1.2 </dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>MIT License</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo</a></b></dt><dd>Implement alarm functionality.</dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2025-05-30 </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.0.0 </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>MIT License </dd></dl>
 
 <p class="definition">Definition in file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
@@ -251,7 +275,7 @@ Enumerations</h2></td></tr>
 
 <p>7bit I2C address of the <a class="el" href="class_p_t7_c4339.html" title="&lt; Class for the PT7C4339 RTC">PT7C4339</a> RTC </p>
 
-<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00026">26</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00024">24</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
 
 </div>
 </div>
@@ -269,7 +293,7 @@ Enumerations</h2></td></tr>
 
 <p>Register address for alarm 1 day/date. </p>
 
-<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00038">38</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00036">36</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
 
 </div>
 </div>
@@ -287,7 +311,7 @@ Enumerations</h2></td></tr>
 
 <p>Register address for alarm 1 hours. </p>
 
-<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00037">37</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00035">35</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
 
 </div>
 </div>
@@ -305,7 +329,7 @@ Enumerations</h2></td></tr>
 
 <p>Register address for alarm 1 minutes. </p>
 
-<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00036">36</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00034">34</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
 
 </div>
 </div>
@@ -323,7 +347,7 @@ Enumerations</h2></td></tr>
 
 <p>Register address for alarm 1 seconds. </p>
 
-<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00035">35</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00033">33</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
 
 </div>
 </div>
@@ -341,7 +365,7 @@ Enumerations</h2></td></tr>
 
 <p>Register address for alarm 2 day/date. </p>
 
-<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00041">41</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00039">39</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
 
 </div>
 </div>
@@ -359,7 +383,7 @@ Enumerations</h2></td></tr>
 
 <p>Register address for alarm 2 hours. </p>
 
-<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00040">40</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00038">38</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
 
 </div>
 </div>
@@ -377,7 +401,7 @@ Enumerations</h2></td></tr>
 
 <p>Register address for alarm 2 minutes. </p>
 
-<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00039">39</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00037">37</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
 
 </div>
 </div>
@@ -395,7 +419,7 @@ Enumerations</h2></td></tr>
 
 <p>Register address for control bits. </p>
 
-<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00042">42</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00040">40</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
 
 </div>
 </div>
@@ -413,7 +437,7 @@ Enumerations</h2></td></tr>
 
 <p>Register address for days. </p>
 
-<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00032">32</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00030">30</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
 
 </div>
 </div>
@@ -431,7 +455,7 @@ Enumerations</h2></td></tr>
 
 <p>Register address for days of the week. </p>
 
-<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00031">31</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00029">29</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
 
 </div>
 </div>
@@ -449,7 +473,7 @@ Enumerations</h2></td></tr>
 
 <p>Register address for hours. </p>
 
-<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00030">30</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00028">28</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
 
 </div>
 </div>
@@ -467,7 +491,7 @@ Enumerations</h2></td></tr>
 
 <p>Register address for minutes. </p>
 
-<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00029">29</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00027">27</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
 
 </div>
 </div>
@@ -485,7 +509,7 @@ Enumerations</h2></td></tr>
 
 <p>Register address for months. </p>
 
-<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00033">33</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00031">31</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
 
 </div>
 </div>
@@ -503,7 +527,7 @@ Enumerations</h2></td></tr>
 
 <p>Register address for seconds. </p>
 
-<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00028">28</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00026">26</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
 
 </div>
 </div>
@@ -521,7 +545,7 @@ Enumerations</h2></td></tr>
 
 <p>Register address for status bits. </p>
 
-<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00043">43</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00041">41</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
 
 </div>
 </div>
@@ -539,7 +563,7 @@ Enumerations</h2></td></tr>
 
 <p>Register address for the trickle charger. </p>
 
-<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00044">44</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00042">42</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
 
 </div>
 </div>
@@ -557,11 +581,107 @@ Enumerations</h2></td></tr>
 
 <p>Register address for years. </p>
 
-<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00034">34</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00032">32</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="a79aa625485d58be86de415ad6cc9f631" name="a79aa625485d58be86de415ad6cc9f631"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79aa625485d58be86de415ad6cc9f631">&#9670;&#160;</a></span>PT7C4339_A1_rate</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#a79aa625485d58be86de415ad6cc9f631">PT7C4339_A1_rate</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>&lt; Enum for the trigger rate of alarm 1 of the PT7C43339 RTC </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a79aa625485d58be86de415ad6cc9f631a30f6aec4c3d36280470e7c81a17cd3b9" name="a79aa625485d58be86de415ad6cc9f631a30f6aec4c3d36280470e7c81a17cd3b9"></a>PT7C4339_A1_EVERY_SECOND&#160;</td><td class="fielddoc"><p>Trigger alarm every second. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a79aa625485d58be86de415ad6cc9f631a210045ac104f806c5a218e2e01489586" name="a79aa625485d58be86de415ad6cc9f631a210045ac104f806c5a218e2e01489586"></a>PT7C4339_A1_SECONDS_MATCH&#160;</td><td class="fielddoc"><p>Trigger alarm if seconds match. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a79aa625485d58be86de415ad6cc9f631adf358e5408406155aad2a2bfea3b3830" name="a79aa625485d58be86de415ad6cc9f631adf358e5408406155aad2a2bfea3b3830"></a>PT7C4339_A1_MINUTES_SECONDS_MATCH&#160;</td><td class="fielddoc"><p>Trigger alarm if minutes and seconds match. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a79aa625485d58be86de415ad6cc9f631a779d2a65f5af874a56c768195f746a0c" name="a79aa625485d58be86de415ad6cc9f631a779d2a65f5af874a56c768195f746a0c"></a>PT7C4339_A1_HOURS_MINUTES_SECONDS_MATCH&#160;</td><td class="fielddoc"><p>Trigger alarm if hours, minutes, and seconds match. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a79aa625485d58be86de415ad6cc9f631a2d3d98fe1c0976196bfbc5b0544daa5c" name="a79aa625485d58be86de415ad6cc9f631a2d3d98fe1c0976196bfbc5b0544daa5c"></a>PT7C4339_A1_DAY_HOURS_MINUTES_SECONDS_MATCH&#160;</td><td class="fielddoc"><p>Trigger alarm if day of the month, hours, minutes, and seconds match. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a79aa625485d58be86de415ad6cc9f631ad3308f1464e5fceef2be83efc7c9d156" name="a79aa625485d58be86de415ad6cc9f631ad3308f1464e5fceef2be83efc7c9d156"></a>PT7C4339_A1_WEEKDAY_HOURS_MINUTES_SECONDS_MATCH&#160;</td><td class="fielddoc"><p>Trigger alarm if day of the week, hours, minutes, and seconds match. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a79aa625485d58be86de415ad6cc9f631a0d17f9fbc7ba4485f782e1b630308262" name="a79aa625485d58be86de415ad6cc9f631a0d17f9fbc7ba4485f782e1b630308262"></a>PT7C4339_A1_DISABLE&#160;</td><td class="fielddoc"><p>Disable alarm. </p>
+</td></tr>
+</table>
+
+<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00084">84</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   85</span>{</div>
+<div class="line"><span class="lineno">   86</span>  <a class="code hl_enumvalue" href="#a79aa625485d58be86de415ad6cc9f631a30f6aec4c3d36280470e7c81a17cd3b9">PT7C4339_A1_EVERY_SECOND</a> = 0x0F, </div>
+<div class="line"><span class="lineno">   87</span>  <a class="code hl_enumvalue" href="#a79aa625485d58be86de415ad6cc9f631a210045ac104f806c5a218e2e01489586">PT7C4339_A1_SECONDS_MATCH</a> = 0x0E, </div>
+<div class="line"><span class="lineno">   88</span>  <a class="code hl_enumvalue" href="#a79aa625485d58be86de415ad6cc9f631adf358e5408406155aad2a2bfea3b3830">PT7C4339_A1_MINUTES_SECONDS_MATCH</a> = 0x0C, </div>
+<div class="line"><span class="lineno">   89</span>  <a class="code hl_enumvalue" href="#a79aa625485d58be86de415ad6cc9f631a779d2a65f5af874a56c768195f746a0c">PT7C4339_A1_HOURS_MINUTES_SECONDS_MATCH</a> = 0x08, </div>
+<div class="line"><span class="lineno">   90</span>  <a class="code hl_enumvalue" href="#a79aa625485d58be86de415ad6cc9f631a2d3d98fe1c0976196bfbc5b0544daa5c">PT7C4339_A1_DAY_HOURS_MINUTES_SECONDS_MATCH</a> = 0x00, </div>
+<div class="line"><span class="lineno">   91</span>  <a class="code hl_enumvalue" href="#a79aa625485d58be86de415ad6cc9f631ad3308f1464e5fceef2be83efc7c9d156">PT7C4339_A1_WEEKDAY_HOURS_MINUTES_SECONDS_MATCH</a> = 0x10, </div>
+<div class="line"><span class="lineno">   92</span>  <a class="code hl_enumvalue" href="#a79aa625485d58be86de415ad6cc9f631a0d17f9fbc7ba4485f782e1b630308262">PT7C4339_A1_DISABLE</a> = 0x01 </div>
+<div class="line"><span class="lineno">   93</span>};</div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a79aa625485d58be86de415ad6cc9f631a0d17f9fbc7ba4485f782e1b630308262"><div class="ttname"><a href="#a79aa625485d58be86de415ad6cc9f631a0d17f9fbc7ba4485f782e1b630308262">PT7C4339_A1_DISABLE</a></div><div class="ttdeci">@ PT7C4339_A1_DISABLE</div><div class="ttdoc">Disable alarm.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00092">PT7C4339-RTC.h:92</a></div></div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a79aa625485d58be86de415ad6cc9f631a210045ac104f806c5a218e2e01489586"><div class="ttname"><a href="#a79aa625485d58be86de415ad6cc9f631a210045ac104f806c5a218e2e01489586">PT7C4339_A1_SECONDS_MATCH</a></div><div class="ttdeci">@ PT7C4339_A1_SECONDS_MATCH</div><div class="ttdoc">Trigger alarm if seconds match.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00087">PT7C4339-RTC.h:87</a></div></div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a79aa625485d58be86de415ad6cc9f631a2d3d98fe1c0976196bfbc5b0544daa5c"><div class="ttname"><a href="#a79aa625485d58be86de415ad6cc9f631a2d3d98fe1c0976196bfbc5b0544daa5c">PT7C4339_A1_DAY_HOURS_MINUTES_SECONDS_MATCH</a></div><div class="ttdeci">@ PT7C4339_A1_DAY_HOURS_MINUTES_SECONDS_MATCH</div><div class="ttdoc">Trigger alarm if day of the month, hours, minutes, and seconds match.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00090">PT7C4339-RTC.h:90</a></div></div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a79aa625485d58be86de415ad6cc9f631a30f6aec4c3d36280470e7c81a17cd3b9"><div class="ttname"><a href="#a79aa625485d58be86de415ad6cc9f631a30f6aec4c3d36280470e7c81a17cd3b9">PT7C4339_A1_EVERY_SECOND</a></div><div class="ttdeci">@ PT7C4339_A1_EVERY_SECOND</div><div class="ttdoc">Trigger alarm every second.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00086">PT7C4339-RTC.h:86</a></div></div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a79aa625485d58be86de415ad6cc9f631a779d2a65f5af874a56c768195f746a0c"><div class="ttname"><a href="#a79aa625485d58be86de415ad6cc9f631a779d2a65f5af874a56c768195f746a0c">PT7C4339_A1_HOURS_MINUTES_SECONDS_MATCH</a></div><div class="ttdeci">@ PT7C4339_A1_HOURS_MINUTES_SECONDS_MATCH</div><div class="ttdoc">Trigger alarm if hours, minutes, and seconds match.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00089">PT7C4339-RTC.h:89</a></div></div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a79aa625485d58be86de415ad6cc9f631ad3308f1464e5fceef2be83efc7c9d156"><div class="ttname"><a href="#a79aa625485d58be86de415ad6cc9f631ad3308f1464e5fceef2be83efc7c9d156">PT7C4339_A1_WEEKDAY_HOURS_MINUTES_SECONDS_MATCH</a></div><div class="ttdeci">@ PT7C4339_A1_WEEKDAY_HOURS_MINUTES_SECONDS_MATCH</div><div class="ttdoc">Trigger alarm if day of the week, hours, minutes, and seconds match.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00091">PT7C4339-RTC.h:91</a></div></div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a79aa625485d58be86de415ad6cc9f631adf358e5408406155aad2a2bfea3b3830"><div class="ttname"><a href="#a79aa625485d58be86de415ad6cc9f631adf358e5408406155aad2a2bfea3b3830">PT7C4339_A1_MINUTES_SECONDS_MATCH</a></div><div class="ttdeci">@ PT7C4339_A1_MINUTES_SECONDS_MATCH</div><div class="ttdoc">Trigger alarm if minutes and seconds match.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00088">PT7C4339-RTC.h:88</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a05d717e3012ef45feb86a154a55507c2" name="a05d717e3012ef45feb86a154a55507c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05d717e3012ef45feb86a154a55507c2">&#9670;&#160;</a></span>PT7C4339_A2_rate</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#a05d717e3012ef45feb86a154a55507c2">PT7C4339_A2_rate</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>&lt; Enum for the trigger rate of alarm 2 of the PT7C43339 RTC </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a05d717e3012ef45feb86a154a55507c2a4ee90779894c5ed35387f43acc9cb087" name="a05d717e3012ef45feb86a154a55507c2a4ee90779894c5ed35387f43acc9cb087"></a>PT7C4339_A2_EVERY_MINUTE&#160;</td><td class="fielddoc"><p>Trigger alarm at 00 seconds of every minute. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a05d717e3012ef45feb86a154a55507c2aa46259060a711d67143a9f909002d307" name="a05d717e3012ef45feb86a154a55507c2aa46259060a711d67143a9f909002d307"></a>PT7C4339_A2_MINUTES_MATCH&#160;</td><td class="fielddoc"><p>Trigger alarm if minutes match. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a05d717e3012ef45feb86a154a55507c2a384c858c253961ef48973da643018edc" name="a05d717e3012ef45feb86a154a55507c2a384c858c253961ef48973da643018edc"></a>PT7C4339_A2_HOURS_MINUTES_MATCH&#160;</td><td class="fielddoc"><p>Trigger alarm if hours and minutes match. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a05d717e3012ef45feb86a154a55507c2afd594debd25ac422752ac20be5b2df9c" name="a05d717e3012ef45feb86a154a55507c2afd594debd25ac422752ac20be5b2df9c"></a>PT7C4339_A2_DAY_HOURS_MINUTES_MATCH&#160;</td><td class="fielddoc"><p>Trigger alarm if day of the month, hours, and minutes match. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a05d717e3012ef45feb86a154a55507c2a29c480c29f64b87c3ad0d6b93b78511b" name="a05d717e3012ef45feb86a154a55507c2a29c480c29f64b87c3ad0d6b93b78511b"></a>PT7C4339_A2_WEEKDAY_HOURS_MINUTES_MATCH&#160;</td><td class="fielddoc"><p>Trigger alarm if day of the week, hours, and minutes match. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a05d717e3012ef45feb86a154a55507c2a9ff25575bdc8ac5346837a24dc77de94" name="a05d717e3012ef45feb86a154a55507c2a9ff25575bdc8ac5346837a24dc77de94"></a>PT7C4339_A2_DISABLE&#160;</td><td class="fielddoc"><p>Disable alarm. </p>
+</td></tr>
+</table>
+
+<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00095">95</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   96</span>{</div>
+<div class="line"><span class="lineno">   97</span>  <a class="code hl_enumvalue" href="#a05d717e3012ef45feb86a154a55507c2a4ee90779894c5ed35387f43acc9cb087">PT7C4339_A2_EVERY_MINUTE</a> = 0x07, </div>
+<div class="line"><span class="lineno">   98</span>  <a class="code hl_enumvalue" href="#a05d717e3012ef45feb86a154a55507c2aa46259060a711d67143a9f909002d307">PT7C4339_A2_MINUTES_MATCH</a> = 0x06, </div>
+<div class="line"><span class="lineno">   99</span>  <a class="code hl_enumvalue" href="#a05d717e3012ef45feb86a154a55507c2a384c858c253961ef48973da643018edc">PT7C4339_A2_HOURS_MINUTES_MATCH</a> = 0x04, </div>
+<div class="line"><span class="lineno">  100</span>  <a class="code hl_enumvalue" href="#a05d717e3012ef45feb86a154a55507c2afd594debd25ac422752ac20be5b2df9c">PT7C4339_A2_DAY_HOURS_MINUTES_MATCH</a> = 0x00, </div>
+<div class="line"><span class="lineno">  101</span>  <a class="code hl_enumvalue" href="#a05d717e3012ef45feb86a154a55507c2a29c480c29f64b87c3ad0d6b93b78511b">PT7C4339_A2_WEEKDAY_HOURS_MINUTES_MATCH</a> = 0x08, </div>
+<div class="line"><span class="lineno">  102</span>  <a class="code hl_enumvalue" href="#a05d717e3012ef45feb86a154a55507c2a9ff25575bdc8ac5346837a24dc77de94">PT7C4339_A2_DISABLE</a> = 0x01 </div>
+<div class="line"><span class="lineno">  103</span>};</div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a05d717e3012ef45feb86a154a55507c2a29c480c29f64b87c3ad0d6b93b78511b"><div class="ttname"><a href="#a05d717e3012ef45feb86a154a55507c2a29c480c29f64b87c3ad0d6b93b78511b">PT7C4339_A2_WEEKDAY_HOURS_MINUTES_MATCH</a></div><div class="ttdeci">@ PT7C4339_A2_WEEKDAY_HOURS_MINUTES_MATCH</div><div class="ttdoc">Trigger alarm if day of the week, hours, and minutes match.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00101">PT7C4339-RTC.h:101</a></div></div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a05d717e3012ef45feb86a154a55507c2a384c858c253961ef48973da643018edc"><div class="ttname"><a href="#a05d717e3012ef45feb86a154a55507c2a384c858c253961ef48973da643018edc">PT7C4339_A2_HOURS_MINUTES_MATCH</a></div><div class="ttdeci">@ PT7C4339_A2_HOURS_MINUTES_MATCH</div><div class="ttdoc">Trigger alarm if hours and minutes match.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00099">PT7C4339-RTC.h:99</a></div></div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a05d717e3012ef45feb86a154a55507c2a4ee90779894c5ed35387f43acc9cb087"><div class="ttname"><a href="#a05d717e3012ef45feb86a154a55507c2a4ee90779894c5ed35387f43acc9cb087">PT7C4339_A2_EVERY_MINUTE</a></div><div class="ttdeci">@ PT7C4339_A2_EVERY_MINUTE</div><div class="ttdoc">Trigger alarm at 00 seconds of every minute.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00097">PT7C4339-RTC.h:97</a></div></div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a05d717e3012ef45feb86a154a55507c2a9ff25575bdc8ac5346837a24dc77de94"><div class="ttname"><a href="#a05d717e3012ef45feb86a154a55507c2a9ff25575bdc8ac5346837a24dc77de94">PT7C4339_A2_DISABLE</a></div><div class="ttdeci">@ PT7C4339_A2_DISABLE</div><div class="ttdoc">Disable alarm.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00102">PT7C4339-RTC.h:102</a></div></div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a05d717e3012ef45feb86a154a55507c2aa46259060a711d67143a9f909002d307"><div class="ttname"><a href="#a05d717e3012ef45feb86a154a55507c2aa46259060a711d67143a9f909002d307">PT7C4339_A2_MINUTES_MATCH</a></div><div class="ttdeci">@ PT7C4339_A2_MINUTES_MATCH</div><div class="ttdoc">Trigger alarm if minutes match.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00098">PT7C4339-RTC.h:98</a></div></div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a05d717e3012ef45feb86a154a55507c2afd594debd25ac422752ac20be5b2df9c"><div class="ttname"><a href="#a05d717e3012ef45feb86a154a55507c2afd594debd25ac422752ac20be5b2df9c">PT7C4339_A2_DAY_HOURS_MINUTES_MATCH</a></div><div class="ttdeci">@ PT7C4339_A2_DAY_HOURS_MINUTES_MATCH</div><div class="ttdoc">Trigger alarm if day of the month, hours, and minutes match.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00100">PT7C4339-RTC.h:100</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="ab72d2fc284f2656432dc303cd9526a11" name="ab72d2fc284f2656432dc303cd9526a11"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab72d2fc284f2656432dc303cd9526a11">&#9670;&#160;</a></span>PT7C4339_daysOfWeek</h2>
 
@@ -594,27 +714,25 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00046">46</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   47</span>{</div>
-<div class="line"><span class="lineno">   48</span> </div>
-<div class="line"><span class="lineno">   49</span>  <a class="code hl_enumvalue" href="#ab72d2fc284f2656432dc303cd9526a11aa000fb922a9ed7174d9ebdae70f392a2">PT7C4339_WEEKDAY_UNKNOWN</a> = 0, </div>
-<div class="line"><span class="lineno">   50</span>  <a class="code hl_enumvalue" href="#ab72d2fc284f2656432dc303cd9526a11a796cddda4318802b4fe35ccc58636bb0">PT7C4339_MONDAY</a> = 1, </div>
-<div class="line"><span class="lineno">   51</span>  <a class="code hl_enumvalue" href="#ab72d2fc284f2656432dc303cd9526a11a7749439b622be9fa531acf9a7459e486">PT7C4339_TUESDAY</a> = 2, </div>
-<div class="line"><span class="lineno">   52</span>  <a class="code hl_enumvalue" href="#ab72d2fc284f2656432dc303cd9526a11a4a72f78949a5d39f010b3cd1a574ea2a">PT7C4339_WEDNESDAY</a> = 3, </div>
-<div class="line"><span class="lineno">   53</span>  <a class="code hl_enumvalue" href="#ab72d2fc284f2656432dc303cd9526a11a25592ff94d972eaf313f153aecbd9e37">PT7C4339_THURSDAY</a> = 4, </div>
-<div class="line"><span class="lineno">   54</span>  <a class="code hl_enumvalue" href="#ab72d2fc284f2656432dc303cd9526a11a837c4b0300187ae8e357a2ed1984523e">PT7C4339_FRIDAY</a> = 5, </div>
-<div class="line"><span class="lineno">   55</span>  <a class="code hl_enumvalue" href="#ab72d2fc284f2656432dc303cd9526a11ae76f0f38e3d4d9e6a72233dc659a243a">PT7C4339_SATURDAY</a> = 6, </div>
-<div class="line"><span class="lineno">   56</span>  <a class="code hl_enumvalue" href="#ab72d2fc284f2656432dc303cd9526a11a2705a0e4dee58462fc9a9008cccdb2f2">PT7C4339_SUNDAY</a> = 7 </div>
-<div class="line"><span class="lineno">   57</span> </div>
-<div class="line"><span class="lineno">   58</span>};</div>
-<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_ab72d2fc284f2656432dc303cd9526a11a25592ff94d972eaf313f153aecbd9e37"><div class="ttname"><a href="#ab72d2fc284f2656432dc303cd9526a11a25592ff94d972eaf313f153aecbd9e37">PT7C4339_THURSDAY</a></div><div class="ttdeci">@ PT7C4339_THURSDAY</div><div class="ttdoc">Thursday.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00053">PT7C4339-RTC.h:53</a></div></div>
-<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_ab72d2fc284f2656432dc303cd9526a11a2705a0e4dee58462fc9a9008cccdb2f2"><div class="ttname"><a href="#ab72d2fc284f2656432dc303cd9526a11a2705a0e4dee58462fc9a9008cccdb2f2">PT7C4339_SUNDAY</a></div><div class="ttdeci">@ PT7C4339_SUNDAY</div><div class="ttdoc">Sunday.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00056">PT7C4339-RTC.h:56</a></div></div>
-<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_ab72d2fc284f2656432dc303cd9526a11a4a72f78949a5d39f010b3cd1a574ea2a"><div class="ttname"><a href="#ab72d2fc284f2656432dc303cd9526a11a4a72f78949a5d39f010b3cd1a574ea2a">PT7C4339_WEDNESDAY</a></div><div class="ttdeci">@ PT7C4339_WEDNESDAY</div><div class="ttdoc">Wednesday.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00052">PT7C4339-RTC.h:52</a></div></div>
-<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_ab72d2fc284f2656432dc303cd9526a11a7749439b622be9fa531acf9a7459e486"><div class="ttname"><a href="#ab72d2fc284f2656432dc303cd9526a11a7749439b622be9fa531acf9a7459e486">PT7C4339_TUESDAY</a></div><div class="ttdeci">@ PT7C4339_TUESDAY</div><div class="ttdoc">Tuesday.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00051">PT7C4339-RTC.h:51</a></div></div>
-<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_ab72d2fc284f2656432dc303cd9526a11a796cddda4318802b4fe35ccc58636bb0"><div class="ttname"><a href="#ab72d2fc284f2656432dc303cd9526a11a796cddda4318802b4fe35ccc58636bb0">PT7C4339_MONDAY</a></div><div class="ttdeci">@ PT7C4339_MONDAY</div><div class="ttdoc">Monday.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00050">PT7C4339-RTC.h:50</a></div></div>
-<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_ab72d2fc284f2656432dc303cd9526a11a837c4b0300187ae8e357a2ed1984523e"><div class="ttname"><a href="#ab72d2fc284f2656432dc303cd9526a11a837c4b0300187ae8e357a2ed1984523e">PT7C4339_FRIDAY</a></div><div class="ttdeci">@ PT7C4339_FRIDAY</div><div class="ttdoc">Friday.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00054">PT7C4339-RTC.h:54</a></div></div>
-<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_ab72d2fc284f2656432dc303cd9526a11aa000fb922a9ed7174d9ebdae70f392a2"><div class="ttname"><a href="#ab72d2fc284f2656432dc303cd9526a11aa000fb922a9ed7174d9ebdae70f392a2">PT7C4339_WEEKDAY_UNKNOWN</a></div><div class="ttdeci">@ PT7C4339_WEEKDAY_UNKNOWN</div><div class="ttdoc">Used for calling setDate()</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00049">PT7C4339-RTC.h:49</a></div></div>
-<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_ab72d2fc284f2656432dc303cd9526a11ae76f0f38e3d4d9e6a72233dc659a243a"><div class="ttname"><a href="#ab72d2fc284f2656432dc303cd9526a11ae76f0f38e3d4d9e6a72233dc659a243a">PT7C4339_SATURDAY</a></div><div class="ttdeci">@ PT7C4339_SATURDAY</div><div class="ttdoc">Saturday.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00055">PT7C4339-RTC.h:55</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00044">44</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   45</span>{</div>
+<div class="line"><span class="lineno">   46</span>  <a class="code hl_enumvalue" href="#ab72d2fc284f2656432dc303cd9526a11aa000fb922a9ed7174d9ebdae70f392a2">PT7C4339_WEEKDAY_UNKNOWN</a> = 0, </div>
+<div class="line"><span class="lineno">   47</span>  <a class="code hl_enumvalue" href="#ab72d2fc284f2656432dc303cd9526a11a796cddda4318802b4fe35ccc58636bb0">PT7C4339_MONDAY</a> = 1, </div>
+<div class="line"><span class="lineno">   48</span>  <a class="code hl_enumvalue" href="#ab72d2fc284f2656432dc303cd9526a11a7749439b622be9fa531acf9a7459e486">PT7C4339_TUESDAY</a> = 2, </div>
+<div class="line"><span class="lineno">   49</span>  <a class="code hl_enumvalue" href="#ab72d2fc284f2656432dc303cd9526a11a4a72f78949a5d39f010b3cd1a574ea2a">PT7C4339_WEDNESDAY</a> = 3, </div>
+<div class="line"><span class="lineno">   50</span>  <a class="code hl_enumvalue" href="#ab72d2fc284f2656432dc303cd9526a11a25592ff94d972eaf313f153aecbd9e37">PT7C4339_THURSDAY</a> = 4, </div>
+<div class="line"><span class="lineno">   51</span>  <a class="code hl_enumvalue" href="#ab72d2fc284f2656432dc303cd9526a11a837c4b0300187ae8e357a2ed1984523e">PT7C4339_FRIDAY</a> = 5, </div>
+<div class="line"><span class="lineno">   52</span>  <a class="code hl_enumvalue" href="#ab72d2fc284f2656432dc303cd9526a11ae76f0f38e3d4d9e6a72233dc659a243a">PT7C4339_SATURDAY</a> = 6, </div>
+<div class="line"><span class="lineno">   53</span>  <a class="code hl_enumvalue" href="#ab72d2fc284f2656432dc303cd9526a11a2705a0e4dee58462fc9a9008cccdb2f2">PT7C4339_SUNDAY</a> = 7 </div>
+<div class="line"><span class="lineno">   54</span>};</div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_ab72d2fc284f2656432dc303cd9526a11a25592ff94d972eaf313f153aecbd9e37"><div class="ttname"><a href="#ab72d2fc284f2656432dc303cd9526a11a25592ff94d972eaf313f153aecbd9e37">PT7C4339_THURSDAY</a></div><div class="ttdeci">@ PT7C4339_THURSDAY</div><div class="ttdoc">Thursday.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00050">PT7C4339-RTC.h:50</a></div></div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_ab72d2fc284f2656432dc303cd9526a11a2705a0e4dee58462fc9a9008cccdb2f2"><div class="ttname"><a href="#ab72d2fc284f2656432dc303cd9526a11a2705a0e4dee58462fc9a9008cccdb2f2">PT7C4339_SUNDAY</a></div><div class="ttdeci">@ PT7C4339_SUNDAY</div><div class="ttdoc">Sunday.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00053">PT7C4339-RTC.h:53</a></div></div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_ab72d2fc284f2656432dc303cd9526a11a4a72f78949a5d39f010b3cd1a574ea2a"><div class="ttname"><a href="#ab72d2fc284f2656432dc303cd9526a11a4a72f78949a5d39f010b3cd1a574ea2a">PT7C4339_WEDNESDAY</a></div><div class="ttdeci">@ PT7C4339_WEDNESDAY</div><div class="ttdoc">Wednesday.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00049">PT7C4339-RTC.h:49</a></div></div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_ab72d2fc284f2656432dc303cd9526a11a7749439b622be9fa531acf9a7459e486"><div class="ttname"><a href="#ab72d2fc284f2656432dc303cd9526a11a7749439b622be9fa531acf9a7459e486">PT7C4339_TUESDAY</a></div><div class="ttdeci">@ PT7C4339_TUESDAY</div><div class="ttdoc">Tuesday.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00048">PT7C4339-RTC.h:48</a></div></div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_ab72d2fc284f2656432dc303cd9526a11a796cddda4318802b4fe35ccc58636bb0"><div class="ttname"><a href="#ab72d2fc284f2656432dc303cd9526a11a796cddda4318802b4fe35ccc58636bb0">PT7C4339_MONDAY</a></div><div class="ttdeci">@ PT7C4339_MONDAY</div><div class="ttdoc">Monday.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00047">PT7C4339-RTC.h:47</a></div></div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_ab72d2fc284f2656432dc303cd9526a11a837c4b0300187ae8e357a2ed1984523e"><div class="ttname"><a href="#ab72d2fc284f2656432dc303cd9526a11a837c4b0300187ae8e357a2ed1984523e">PT7C4339_FRIDAY</a></div><div class="ttdeci">@ PT7C4339_FRIDAY</div><div class="ttdoc">Friday.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00051">PT7C4339-RTC.h:51</a></div></div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_ab72d2fc284f2656432dc303cd9526a11aa000fb922a9ed7174d9ebdae70f392a2"><div class="ttname"><a href="#ab72d2fc284f2656432dc303cd9526a11aa000fb922a9ed7174d9ebdae70f392a2">PT7C4339_WEEKDAY_UNKNOWN</a></div><div class="ttdeci">@ PT7C4339_WEEKDAY_UNKNOWN</div><div class="ttdoc">Used for calling setDate()</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00046">PT7C4339-RTC.h:46</a></div></div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_ab72d2fc284f2656432dc303cd9526a11ae76f0f38e3d4d9e6a72233dc659a243a"><div class="ttname"><a href="#ab72d2fc284f2656432dc303cd9526a11ae76f0f38e3d4d9e6a72233dc659a243a">PT7C4339_SATURDAY</a></div><div class="ttdeci">@ PT7C4339_SATURDAY</div><div class="ttdoc">Saturday.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00052">PT7C4339-RTC.h:52</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -642,19 +760,17 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00060">60</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   61</span>{</div>
-<div class="line"><span class="lineno">   62</span> </div>
-<div class="line"><span class="lineno">   63</span>  <a class="code hl_enumvalue" href="#a36c4f4690dd816515f2a270eec5a1f3ba034500b84abb6ed24873e78facfc440e">PT7C4339_SQW_1HZ</a> = 0x00, </div>
-<div class="line"><span class="lineno">   64</span>  <a class="code hl_enumvalue" href="#a36c4f4690dd816515f2a270eec5a1f3ba1fbeea8e899ba860a90542f49eae9a4d">PT7C4339_SQW_4_96KHZ</a> = 0x01, </div>
-<div class="line"><span class="lineno">   65</span>  <a class="code hl_enumvalue" href="#a36c4f4690dd816515f2a270eec5a1f3ba283d442ddcaa7109588e33bc6c513ec7">PT7C4339_SQW_8_192KHZ</a> = 0x02, </div>
-<div class="line"><span class="lineno">   66</span>  <a class="code hl_enumvalue" href="#a36c4f4690dd816515f2a270eec5a1f3baf198966e7a96549e37afe57f0613ecb7">PT7C4339_SQW_32_768KHZ</a> = 0x03 </div>
-<div class="line"><span class="lineno">   67</span> </div>
-<div class="line"><span class="lineno">   68</span>};</div>
-<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a36c4f4690dd816515f2a270eec5a1f3ba034500b84abb6ed24873e78facfc440e"><div class="ttname"><a href="#a36c4f4690dd816515f2a270eec5a1f3ba034500b84abb6ed24873e78facfc440e">PT7C4339_SQW_1HZ</a></div><div class="ttdeci">@ PT7C4339_SQW_1HZ</div><div class="ttdoc">1Hz square wave output</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00063">PT7C4339-RTC.h:63</a></div></div>
-<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a36c4f4690dd816515f2a270eec5a1f3ba1fbeea8e899ba860a90542f49eae9a4d"><div class="ttname"><a href="#a36c4f4690dd816515f2a270eec5a1f3ba1fbeea8e899ba860a90542f49eae9a4d">PT7C4339_SQW_4_96KHZ</a></div><div class="ttdeci">@ PT7C4339_SQW_4_96KHZ</div><div class="ttdoc">4.96kHz square wave output</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00064">PT7C4339-RTC.h:64</a></div></div>
-<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a36c4f4690dd816515f2a270eec5a1f3ba283d442ddcaa7109588e33bc6c513ec7"><div class="ttname"><a href="#a36c4f4690dd816515f2a270eec5a1f3ba283d442ddcaa7109588e33bc6c513ec7">PT7C4339_SQW_8_192KHZ</a></div><div class="ttdeci">@ PT7C4339_SQW_8_192KHZ</div><div class="ttdoc">8.192kHz square wave output</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00065">PT7C4339-RTC.h:65</a></div></div>
-<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a36c4f4690dd816515f2a270eec5a1f3baf198966e7a96549e37afe57f0613ecb7"><div class="ttname"><a href="#a36c4f4690dd816515f2a270eec5a1f3baf198966e7a96549e37afe57f0613ecb7">PT7C4339_SQW_32_768KHZ</a></div><div class="ttdeci">@ PT7C4339_SQW_32_768KHZ</div><div class="ttdoc">32.768kHz square wave output</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00066">PT7C4339-RTC.h:66</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00056">56</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   57</span>{</div>
+<div class="line"><span class="lineno">   58</span>  <a class="code hl_enumvalue" href="#a36c4f4690dd816515f2a270eec5a1f3ba034500b84abb6ed24873e78facfc440e">PT7C4339_SQW_1HZ</a> = 0x00, </div>
+<div class="line"><span class="lineno">   59</span>  <a class="code hl_enumvalue" href="#a36c4f4690dd816515f2a270eec5a1f3ba1fbeea8e899ba860a90542f49eae9a4d">PT7C4339_SQW_4_96KHZ</a> = 0x01, </div>
+<div class="line"><span class="lineno">   60</span>  <a class="code hl_enumvalue" href="#a36c4f4690dd816515f2a270eec5a1f3ba283d442ddcaa7109588e33bc6c513ec7">PT7C4339_SQW_8_192KHZ</a> = 0x02, </div>
+<div class="line"><span class="lineno">   61</span>  <a class="code hl_enumvalue" href="#a36c4f4690dd816515f2a270eec5a1f3baf198966e7a96549e37afe57f0613ecb7">PT7C4339_SQW_32_768KHZ</a> = 0x03 </div>
+<div class="line"><span class="lineno">   62</span>};</div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a36c4f4690dd816515f2a270eec5a1f3ba034500b84abb6ed24873e78facfc440e"><div class="ttname"><a href="#a36c4f4690dd816515f2a270eec5a1f3ba034500b84abb6ed24873e78facfc440e">PT7C4339_SQW_1HZ</a></div><div class="ttdeci">@ PT7C4339_SQW_1HZ</div><div class="ttdoc">1Hz square wave output</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00058">PT7C4339-RTC.h:58</a></div></div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a36c4f4690dd816515f2a270eec5a1f3ba1fbeea8e899ba860a90542f49eae9a4d"><div class="ttname"><a href="#a36c4f4690dd816515f2a270eec5a1f3ba1fbeea8e899ba860a90542f49eae9a4d">PT7C4339_SQW_4_96KHZ</a></div><div class="ttdeci">@ PT7C4339_SQW_4_96KHZ</div><div class="ttdoc">4.96kHz square wave output</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00059">PT7C4339-RTC.h:59</a></div></div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a36c4f4690dd816515f2a270eec5a1f3ba283d442ddcaa7109588e33bc6c513ec7"><div class="ttname"><a href="#a36c4f4690dd816515f2a270eec5a1f3ba283d442ddcaa7109588e33bc6c513ec7">PT7C4339_SQW_8_192KHZ</a></div><div class="ttdeci">@ PT7C4339_SQW_8_192KHZ</div><div class="ttdoc">8.192kHz square wave output</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00060">PT7C4339-RTC.h:60</a></div></div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a36c4f4690dd816515f2a270eec5a1f3baf198966e7a96549e37afe57f0613ecb7"><div class="ttname"><a href="#a36c4f4690dd816515f2a270eec5a1f3baf198966e7a96549e37afe57f0613ecb7">PT7C4339_SQW_32_768KHZ</a></div><div class="ttdeci">@ PT7C4339_SQW_32_768KHZ</div><div class="ttdoc">32.768kHz square wave output</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00061">PT7C4339-RTC.h:61</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -678,15 +794,13 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00078">78</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   79</span>{</div>
-<div class="line"><span class="lineno">   80</span> </div>
-<div class="line"><span class="lineno">   81</span>  <a class="code hl_enumvalue" href="#a6e6d5b68fcda2438e087bcbf8b34b257a19e18227b2c2e985115383c40c44f0e3">PT7C4339_DIODE_DISABLE</a> = 0x01, </div>
-<div class="line"><span class="lineno">   82</span>  <a class="code hl_enumvalue" href="#a6e6d5b68fcda2438e087bcbf8b34b257ac8988a5cbfb4b741ec793c7a8456b194">PT7C4339_DIODE_ENABLE</a> = 0x02 </div>
-<div class="line"><span class="lineno">   83</span> </div>
-<div class="line"><span class="lineno">   84</span>};</div>
-<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a6e6d5b68fcda2438e087bcbf8b34b257a19e18227b2c2e985115383c40c44f0e3"><div class="ttname"><a href="#a6e6d5b68fcda2438e087bcbf8b34b257a19e18227b2c2e985115383c40c44f0e3">PT7C4339_DIODE_DISABLE</a></div><div class="ttdeci">@ PT7C4339_DIODE_DISABLE</div><div class="ttdoc">No series diode from Vcc to Vbackup.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00081">PT7C4339-RTC.h:81</a></div></div>
-<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a6e6d5b68fcda2438e087bcbf8b34b257ac8988a5cbfb4b741ec793c7a8456b194"><div class="ttname"><a href="#a6e6d5b68fcda2438e087bcbf8b34b257ac8988a5cbfb4b741ec793c7a8456b194">PT7C4339_DIODE_ENABLE</a></div><div class="ttdeci">@ PT7C4339_DIODE_ENABLE</div><div class="ttdoc">Series diode from Vcc to Vbackup.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00082">PT7C4339-RTC.h:82</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00070">70</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   71</span>{</div>
+<div class="line"><span class="lineno">   72</span>  <a class="code hl_enumvalue" href="#a6e6d5b68fcda2438e087bcbf8b34b257a19e18227b2c2e985115383c40c44f0e3">PT7C4339_DIODE_DISABLE</a> = 0x01, </div>
+<div class="line"><span class="lineno">   73</span>  <a class="code hl_enumvalue" href="#a6e6d5b68fcda2438e087bcbf8b34b257ac8988a5cbfb4b741ec793c7a8456b194">PT7C4339_DIODE_ENABLE</a> = 0x02 </div>
+<div class="line"><span class="lineno">   74</span>};</div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a6e6d5b68fcda2438e087bcbf8b34b257a19e18227b2c2e985115383c40c44f0e3"><div class="ttname"><a href="#a6e6d5b68fcda2438e087bcbf8b34b257a19e18227b2c2e985115383c40c44f0e3">PT7C4339_DIODE_DISABLE</a></div><div class="ttdeci">@ PT7C4339_DIODE_DISABLE</div><div class="ttdoc">No series diode from Vcc to Vbackup.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00072">PT7C4339-RTC.h:72</a></div></div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a6e6d5b68fcda2438e087bcbf8b34b257ac8988a5cbfb4b741ec793c7a8456b194"><div class="ttname"><a href="#a6e6d5b68fcda2438e087bcbf8b34b257ac8988a5cbfb4b741ec793c7a8456b194">PT7C4339_DIODE_ENABLE</a></div><div class="ttdeci">@ PT7C4339_DIODE_ENABLE</div><div class="ttdoc">Series diode from Vcc to Vbackup.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00073">PT7C4339-RTC.h:73</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -710,15 +824,13 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00070">70</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   71</span>{</div>
-<div class="line"><span class="lineno">   72</span> </div>
-<div class="line"><span class="lineno">   73</span>  <a class="code hl_enumvalue" href="#abd6cb1fc9e041cd698055af20fef83c6a48fad1c8ba4b81b2d09c5f2e64f28f63">PT7C4339_TRICKLE_DISABLE</a> = 0x00, </div>
-<div class="line"><span class="lineno">   74</span>  <a class="code hl_enumvalue" href="#abd6cb1fc9e041cd698055af20fef83c6a6b517cee909ab0f789723363699f193b">PT7C4339_TRICKLE_ENABLE</a> = 0x0A </div>
-<div class="line"><span class="lineno">   75</span> </div>
-<div class="line"><span class="lineno">   76</span>};</div>
-<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_abd6cb1fc9e041cd698055af20fef83c6a48fad1c8ba4b81b2d09c5f2e64f28f63"><div class="ttname"><a href="#abd6cb1fc9e041cd698055af20fef83c6a48fad1c8ba4b81b2d09c5f2e64f28f63">PT7C4339_TRICKLE_DISABLE</a></div><div class="ttdeci">@ PT7C4339_TRICKLE_DISABLE</div><div class="ttdoc">The trickle charger is disabled.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00073">PT7C4339-RTC.h:73</a></div></div>
-<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_abd6cb1fc9e041cd698055af20fef83c6a6b517cee909ab0f789723363699f193b"><div class="ttname"><a href="#abd6cb1fc9e041cd698055af20fef83c6a6b517cee909ab0f789723363699f193b">PT7C4339_TRICKLE_ENABLE</a></div><div class="ttdeci">@ PT7C4339_TRICKLE_ENABLE</div><div class="ttdoc">The trickle charger is enabled.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00074">PT7C4339-RTC.h:74</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00064">64</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   65</span>{</div>
+<div class="line"><span class="lineno">   66</span>  <a class="code hl_enumvalue" href="#abd6cb1fc9e041cd698055af20fef83c6a48fad1c8ba4b81b2d09c5f2e64f28f63">PT7C4339_TRICKLE_DISABLE</a> = 0x00, </div>
+<div class="line"><span class="lineno">   67</span>  <a class="code hl_enumvalue" href="#abd6cb1fc9e041cd698055af20fef83c6a6b517cee909ab0f789723363699f193b">PT7C4339_TRICKLE_ENABLE</a> = 0x0A </div>
+<div class="line"><span class="lineno">   68</span>};</div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_abd6cb1fc9e041cd698055af20fef83c6a48fad1c8ba4b81b2d09c5f2e64f28f63"><div class="ttname"><a href="#abd6cb1fc9e041cd698055af20fef83c6a48fad1c8ba4b81b2d09c5f2e64f28f63">PT7C4339_TRICKLE_DISABLE</a></div><div class="ttdeci">@ PT7C4339_TRICKLE_DISABLE</div><div class="ttdoc">The trickle charger is disabled.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00066">PT7C4339-RTC.h:66</a></div></div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_abd6cb1fc9e041cd698055af20fef83c6a6b517cee909ab0f789723363699f193b"><div class="ttname"><a href="#abd6cb1fc9e041cd698055af20fef83c6a6b517cee909ab0f789723363699f193b">PT7C4339_TRICKLE_ENABLE</a></div><div class="ttdeci">@ PT7C4339_TRICKLE_ENABLE</div><div class="ttdoc">The trickle charger is enabled.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00067">PT7C4339-RTC.h:67</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -746,19 +858,17 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00086">86</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   87</span>{</div>
-<div class="line"><span class="lineno">   88</span> </div>
-<div class="line"><span class="lineno">   89</span>  <a class="code hl_enumvalue" href="#a472d1a7bd0921376a7ad014144cc23c8a0ff2aef384097da29f47d58944c09625">PT7C4339_RESISTOR_DISABLE</a> = 0x00, </div>
-<div class="line"><span class="lineno">   90</span>  <a class="code hl_enumvalue" href="#a472d1a7bd0921376a7ad014144cc23c8ac99191a9c113324840f55609ba671320">PT7C4339_RESISTOR_200R</a> = 0x01, </div>
-<div class="line"><span class="lineno">   91</span>  <a class="code hl_enumvalue" href="#a472d1a7bd0921376a7ad014144cc23c8a9526015ea142d98456888c34f486bba3">PT7C4339_RESISTOR_2K</a> = 0x02, </div>
-<div class="line"><span class="lineno">   92</span>  <a class="code hl_enumvalue" href="#a472d1a7bd0921376a7ad014144cc23c8a66c1d39d190c17e01d8e53e639845f8c">PT7C4339_RESISTOR_4K</a> = 0x03 </div>
-<div class="line"><span class="lineno">   93</span> </div>
-<div class="line"><span class="lineno">   94</span>};</div>
-<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a472d1a7bd0921376a7ad014144cc23c8a0ff2aef384097da29f47d58944c09625"><div class="ttname"><a href="#a472d1a7bd0921376a7ad014144cc23c8a0ff2aef384097da29f47d58944c09625">PT7C4339_RESISTOR_DISABLE</a></div><div class="ttdeci">@ PT7C4339_RESISTOR_DISABLE</div><div class="ttdoc">No resistor from Vcc to Vbackup - trickle charger disabled.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00089">PT7C4339-RTC.h:89</a></div></div>
-<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a472d1a7bd0921376a7ad014144cc23c8a66c1d39d190c17e01d8e53e639845f8c"><div class="ttname"><a href="#a472d1a7bd0921376a7ad014144cc23c8a66c1d39d190c17e01d8e53e639845f8c">PT7C4339_RESISTOR_4K</a></div><div class="ttdeci">@ PT7C4339_RESISTOR_4K</div><div class="ttdoc">4K Ohm resistor from Vcc to Vbackup</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00092">PT7C4339-RTC.h:92</a></div></div>
-<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a472d1a7bd0921376a7ad014144cc23c8a9526015ea142d98456888c34f486bba3"><div class="ttname"><a href="#a472d1a7bd0921376a7ad014144cc23c8a9526015ea142d98456888c34f486bba3">PT7C4339_RESISTOR_2K</a></div><div class="ttdeci">@ PT7C4339_RESISTOR_2K</div><div class="ttdoc">2K Ohm resistor from Vcc to Vbackup</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00091">PT7C4339-RTC.h:91</a></div></div>
-<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a472d1a7bd0921376a7ad014144cc23c8ac99191a9c113324840f55609ba671320"><div class="ttname"><a href="#a472d1a7bd0921376a7ad014144cc23c8ac99191a9c113324840f55609ba671320">PT7C4339_RESISTOR_200R</a></div><div class="ttdeci">@ PT7C4339_RESISTOR_200R</div><div class="ttdoc">200 Ohm resistor from Vcc to Vbackup</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00090">PT7C4339-RTC.h:90</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html#l00076">76</a> of file <a class="el" href="_p_t7_c4339-_r_t_c_8h_source.html">PT7C4339-RTC.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   77</span>{</div>
+<div class="line"><span class="lineno">   78</span>  <a class="code hl_enumvalue" href="#a472d1a7bd0921376a7ad014144cc23c8a0ff2aef384097da29f47d58944c09625">PT7C4339_RESISTOR_DISABLE</a> = 0x00, </div>
+<div class="line"><span class="lineno">   79</span>  <a class="code hl_enumvalue" href="#a472d1a7bd0921376a7ad014144cc23c8ac99191a9c113324840f55609ba671320">PT7C4339_RESISTOR_200R</a> = 0x01, </div>
+<div class="line"><span class="lineno">   80</span>  <a class="code hl_enumvalue" href="#a472d1a7bd0921376a7ad014144cc23c8a9526015ea142d98456888c34f486bba3">PT7C4339_RESISTOR_2K</a> = 0x02, </div>
+<div class="line"><span class="lineno">   81</span>  <a class="code hl_enumvalue" href="#a472d1a7bd0921376a7ad014144cc23c8a66c1d39d190c17e01d8e53e639845f8c">PT7C4339_RESISTOR_4K</a> = 0x03 </div>
+<div class="line"><span class="lineno">   82</span>};</div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a472d1a7bd0921376a7ad014144cc23c8a0ff2aef384097da29f47d58944c09625"><div class="ttname"><a href="#a472d1a7bd0921376a7ad014144cc23c8a0ff2aef384097da29f47d58944c09625">PT7C4339_RESISTOR_DISABLE</a></div><div class="ttdeci">@ PT7C4339_RESISTOR_DISABLE</div><div class="ttdoc">No resistor from Vcc to Vbackup - trickle charger disabled.</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00078">PT7C4339-RTC.h:78</a></div></div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a472d1a7bd0921376a7ad014144cc23c8a66c1d39d190c17e01d8e53e639845f8c"><div class="ttname"><a href="#a472d1a7bd0921376a7ad014144cc23c8a66c1d39d190c17e01d8e53e639845f8c">PT7C4339_RESISTOR_4K</a></div><div class="ttdeci">@ PT7C4339_RESISTOR_4K</div><div class="ttdoc">4K Ohm resistor from Vcc to Vbackup</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00081">PT7C4339-RTC.h:81</a></div></div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a472d1a7bd0921376a7ad014144cc23c8a9526015ea142d98456888c34f486bba3"><div class="ttname"><a href="#a472d1a7bd0921376a7ad014144cc23c8a9526015ea142d98456888c34f486bba3">PT7C4339_RESISTOR_2K</a></div><div class="ttdeci">@ PT7C4339_RESISTOR_2K</div><div class="ttdoc">2K Ohm resistor from Vcc to Vbackup</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00080">PT7C4339-RTC.h:80</a></div></div>
+<div class="ttc" id="a_p_t7_c4339-_r_t_c_8h_html_a472d1a7bd0921376a7ad014144cc23c8ac99191a9c113324840f55609ba671320"><div class="ttname"><a href="#a472d1a7bd0921376a7ad014144cc23c8ac99191a9c113324840f55609ba671320">PT7C4339_RESISTOR_200R</a></div><div class="ttdeci">@ PT7C4339_RESISTOR_200R</div><div class="ttdoc">200 Ohm resistor from Vcc to Vbackup</div><div class="ttdef"><b>Definition</b> <a href="_p_t7_c4339-_r_t_c_8h_source.html#l00079">PT7C4339-RTC.h:79</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
