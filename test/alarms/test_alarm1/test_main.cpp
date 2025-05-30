@@ -15,19 +15,19 @@ void test_alarm1_disable()
     uint32_t total = 2;
 
     rtc.setDate( { 2025, 5, 30, PT7C4339_WEEKDAY_UNKNOWN } );
-    rtc.setTime( { 13, 45, 59 } );
+    rtc.setTime( { 13, 45, 55 } );
     rtc.setA1DayDate( { 0, 0, 0, PT7C4339_FRIDAY } );
-    rtc.setA1Time( { 13, 46, 0 } );
+    rtc.setA1Time( { 13, 45, 56 } );
     rtc.clearA1Flag();
     rtc.setA1Rate( PT7C4339_A1_DISABLE );
 
-    delay( 1500 );
+    delay( 1050 );
     if( digitalRead( INT ) && !rtc.getA1Flag() ) success++;
     else fail++;
 
     rtc.setDate( { 2000, 1, 1, PT7C4339_WEEKDAY_UNKNOWN } );
-    rtc.setTime( { 0, 0, 0 } );
-    delay( 1500 );
+    rtc.setTime( { 0, 0, 1 } );
+    delay( 1050 );
     if( digitalRead( INT ) && !rtc.getA1Flag() ) success++;
     else fail++;
 
